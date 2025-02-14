@@ -41,7 +41,6 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is Authenticated) {
-          // TODO: move to home / layout page
           context.go(kHomeRoute);
         } else if (state is AuthError) {
           await showAdaptiveDialog(
@@ -89,10 +88,22 @@ class _LoginPageState extends State<LoginPage> {
                           type: Type.password,
                         ),
                         const SizedBox(height: 24),
+                        Row(
+                          children: [
+                            const Text('Forget password?'),
+                            TextButton(
+                              onPressed: () {
+                                context.go(kResetPasswordRoute);
+                              },
+                              child: const Text('Reset password'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
                         FormButton(
                           label: 'Log In',
                           isLoading: isLoading,
-                          onPress: () {},
+                          onPress: validateForm,
                         ),
                         const SizedBox(height: 24),
                         // const Row(
@@ -118,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         // )
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "Don't have an account?",
@@ -125,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                context.go(kSignUpRoute);
+                                context.push(kSignUpRoute);
                               },
                               child: const Text('Signup'),
                             ),
@@ -141,5 +153,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void validateForm() {
+    final isValid = formKey.currentState!.validate();
+
+    if (isValid) {
+      setState(() {
+        isLoading = true;
+      });
+      context.read<AuthBloc>().add(
+            SignInEvent(
+              email: emailController.text,
+              password: passwordController.text,
+            ),
+          );
+    }
   }
 }
