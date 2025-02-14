@@ -7,7 +7,7 @@ class UserModel extends User {
     required super.name,
   });
 
-  factory UserModel.fromFirebase(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uid: json['uid'],
       email: json['email'],

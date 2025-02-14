@@ -1,5 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
+import 'package:trackit/core/errors/failures.dart';
+import 'package:trackit/core/strings/failures.dart';
 import 'package:trackit/domain/entities/user.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
 import 'package:trackit/domain/usecases/user/login.dart';
@@ -24,15 +27,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is SignUpEvent) {
         emit(AuthLoading());
-
-        final user = await createUser(event.email, event.name, event.password);
-        emit(Authenticated(user));
+        try {
+          final res = await createUser(
+            event.email,
+            event.name,
+            event.password,
+          );
+          emit(_mapResponseToState(res));
+        } catch (error) {
+          emit(AuthError(message: error.toString()));
+        }
       }
       if (event is SignInEvent) {
         emit(AuthLoading());
-
-        final user = await login(event.email, event.password);
-        emit(Authenticated(user));
+        try {
+          final res = await login(event.email, event.password);
+          emit(_mapResponseToState(res));
+        } catch (error) {
+          emit(AuthError(message: error.toString()));
+        }
       }
       if (event is LogOutEvent) {
         emit(AuthLoading());
@@ -45,5 +58,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await resetPassword(event.email);
       }
     });
+  }
+
+  AuthState _mapResponseToState(Either<Failure, User> res) {
+    return res.fold(
+      (failure) => AuthError(message: _getMessage(failure)),
+      (user) => Authenticated(user),
+    );
+  }
+
+  String _getMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case EmptyCacheFailure():
+        return kEmptyCacheFailureMessage;
+      case UserNotFoundAuthFailure():
+        return kUserNotFoundFailureMessage;
+      case UserNotLoggedInAuthFailure():
+        return kUserNotLoggedInFailureMessage;
+      case WrongPasswordAuthFailure():
+        return kWrongPasswordFailureMessage;
+      case WeakPasswordAuthFailure():
+        return kWeakPasswordFailureMessage;
+      case EmailAlreadyInUseAuthFailure():
+        return kEmailAlreadyInUserFailureMessage;
+      case InvalidEmailAuthFailure():
+        return kInvalidEmailFailureMessage;
+      default:
+        return kGenericFailureMessage;
+    }
   }
 }

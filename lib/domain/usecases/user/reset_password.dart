@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
 
 class ResetPasswordUsecase {
@@ -5,7 +6,7 @@ class ResetPasswordUsecase {
 
   ResetPasswordUsecase({required this.repository});
 
-  Future<void> call(String email) async {
+  Future<Unit> call(String email) async {
     return await repository.resetPassword(email);
   }
 }

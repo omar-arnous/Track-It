@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
 
 class LogoutUsecase {
@@ -5,7 +6,7 @@ class LogoutUsecase {
 
   LogoutUsecase({required this.repository});
 
-  Future<void> call() async {
+  Future<Unit> call() async {
     return await repository.logOut();
   }
 }
