@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/theme/theme.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
-import 'package:trackit/presentation/pages/auth/login_page.dart';
-import 'package:trackit/presentation/pages/auth/signup_page.dart';
+import 'package:trackit/config/router.dart';
 import 'firebase_options.dart';
 
 import 'package:trackit/config/injection_container.dart' as di;
@@ -15,7 +15,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await di.init();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -23,12 +28,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final routes = Routes();
     return MultiBlocProvider(
       providers: [BlocProvider(create: (_) => di.sl<AuthBloc>())],
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Track It',
         theme: TrackItTheme.light(),
-        home: const LoginPage(),
+        routerConfig: routes.getRouter,
       ),
     );
   }

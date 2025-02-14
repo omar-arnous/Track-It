@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
@@ -13,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
   late TextEditingController emailController;
   late TextEditingController nameController;
   late TextEditingController passwordController;
@@ -39,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) async {
         if (state is Authenticated) {
           // TODO: move to home / layout page
+          context.go(kHomeRoute);
         } else if (state is AuthError) {
           await showAdaptiveDialog(
             context: context,
@@ -85,7 +89,11 @@ class _LoginPageState extends State<LoginPage> {
                           type: Type.password,
                         ),
                         const SizedBox(height: 24),
-                        FormButton(label: 'Log In', onPress: () {}),
+                        FormButton(
+                          label: 'Log In',
+                          isLoading: isLoading,
+                          onPress: () {},
+                        ),
                         const SizedBox(height: 24),
                         // const Row(
                         //   children: [
@@ -116,8 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                             TextButton(
-                              // TODO: implement navigating to signup page
-                              onPressed: () {},
+                              onPressed: () {
+                                context.go(kSignUpRoute);
+                              },
                               child: const Text('Signup'),
                             ),
                           ],

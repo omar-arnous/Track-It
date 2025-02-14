@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
@@ -16,6 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late TextEditingController emailController;
   late TextEditingController nameController;
   late TextEditingController passwordController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -38,7 +41,8 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is Authenticated) {
-          // TODO: move to home / layout page
+          // TODO: Implement navigating to home page
+          context.go(kHomeRoute);
         } else if (state is AuthError) {
           await showAdaptiveDialog(
             context: context,
@@ -90,7 +94,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           type: Type.password,
                         ),
                         const SizedBox(height: 24),
-                        FormButton(label: 'Sign Up', onPress: () {}),
+                        FormButton(
+                          label: 'Sign Up',
+                          isLoading: isLoading,
+                          onPress: validateForm,
+                        ),
                         const SizedBox(height: 24),
                         // const Row(
                         //   children: [
@@ -121,8 +129,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                             TextButton(
-                              // TODO: implement navigating to login page
-                              onPressed: () {},
+                              onPressed: () {
+                                context.go(kLogInRoute);
+                              },
                               child: const Text('Login'),
                             ),
                           ],
@@ -137,5 +146,22 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  void validateForm() {
+    final isValid = formKey.currentState!.validate();
+
+    if (isValid) {
+      setState(() {
+        isLoading = true;
+      });
+      context.read<AuthBloc>().add(
+            SignUpEvent(
+              email: emailController.text,
+              name: nameController.text,
+              password: passwordController.text,
+            ),
+          );
+    }
   }
 }

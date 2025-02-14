@@ -91,6 +91,7 @@ class TrackItTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
+          elevation: 0,
         ),
       ),
     );
