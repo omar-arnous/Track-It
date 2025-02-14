@@ -4,14 +4,14 @@ import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController nameController;
@@ -60,11 +60,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sign Up',
+                    'Log In',
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                   Text(
-                    "Let's create a new account",
+                    "Welcome back",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 24),
@@ -79,18 +79,13 @@ class _SignUpPageState extends State<SignUpPage> {
                           focus: true,
                         ),
                         FormInput(
-                          controller: nameController,
-                          label: 'User Name',
-                          require: true,
-                        ),
-                        FormInput(
                           controller: passwordController,
                           label: 'Password',
                           secure: true,
                           type: Type.password,
                         ),
                         const SizedBox(height: 24),
-                        FormButton(label: 'Sign Up', onPress: () {}),
+                        FormButton(label: 'Log In', onPress: () {}),
                         const SizedBox(height: 24),
                         // const Row(
                         //   children: [
@@ -117,13 +112,13 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Already have an account?",
+                              "Don't have an account?",
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                             TextButton(
-                              // TODO: implement navigating to login page
+                              // TODO: implement navigating to signup page
                               onPressed: () {},
-                              child: const Text('Login'),
+                              child: const Text('Signup'),
                             ),
                           ],
                         )

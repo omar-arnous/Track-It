@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackit/config/local_service.dart';
@@ -46,7 +48,11 @@ Future<void> init() async {
   // external
   final database = LocalService.instance;
   final sharedPreferences = await SharedPreferences.getInstance();
+  final firebaseAuth = FirebaseAuth.instance;
+  final fireStore = FirebaseFirestore.instance;
 
   sl.registerLazySingleton(() => database);
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => firebaseAuth);
+  sl.registerLazySingleton(() => fireStore);
 }
