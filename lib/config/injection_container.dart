@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackit/config/local_service.dart';
+import 'package:trackit/data/datasources/auth_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth_remote_datasource.dart';
 import 'package:trackit/data/repositories/auth_repository_impl.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
@@ -31,12 +32,15 @@ Future<void> init() async {
 
   // repositories
   sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(remoteDatasource: sl()),
+    () => AuthRepositoryImpl(remoteDatasource: sl(), cacheDatasource: sl()),
   );
 
   // datasources
   sl.registerLazySingleton<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(firebaseAuth: sl(), firestore: sl()),
+  );
+  sl.registerLazySingleton<AuthCacheDatasource>(
+    () => AuthCacheDatasourceImpl(sharedPreferences: sl()),
   );
 
   // external
