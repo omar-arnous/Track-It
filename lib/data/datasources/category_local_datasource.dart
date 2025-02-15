@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:trackit/config/local_service.dart';
 import 'package:trackit/core/constants/db_constants.dart';
 import 'package:trackit/core/errors/exceptions.dart';
