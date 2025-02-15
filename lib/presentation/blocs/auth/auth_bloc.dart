@@ -69,19 +69,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case EmptyCacheFailure():
+      case EmptyCacheFailure:
         return kEmptyCacheFailureMessage;
-      case UserNotFoundAuthFailure():
+      case UserNotFoundAuthFailure:
         return kUserNotFoundFailureMessage;
-      case UserNotLoggedInAuthFailure():
+      case UserNotLoggedInAuthFailure:
         return kUserNotLoggedInFailureMessage;
-      case WrongPasswordAuthFailure():
+      case WrongPasswordAuthFailure:
         return kWrongPasswordFailureMessage;
-      case WeakPasswordAuthFailure():
+      case WeakPasswordAuthFailure:
         return kWeakPasswordFailureMessage;
-      case EmailAlreadyInUseAuthFailure():
+      case EmailAlreadyInUseAuthFailure:
         return kEmailAlreadyInUserFailureMessage;
-      case InvalidEmailAuthFailure():
+      case InvalidEmailAuthFailure:
         return kInvalidEmailFailureMessage;
       default:
         return kGenericFailureMessage;

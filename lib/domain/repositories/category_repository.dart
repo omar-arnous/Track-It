@@ -4,5 +4,5 @@ import 'package:trackit/domain/entities/category.dart';
 
 abstract class CategoryRepository {
   Future<Either<Failure, List<Category>>> getCategories();
-  Future<Unit> addCategory(List<Category> categories);
+  Future<Either<Failure, Unit>> addCategory(List<Category> categories);
 }

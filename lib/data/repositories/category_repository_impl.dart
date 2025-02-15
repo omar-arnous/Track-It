@@ -12,13 +12,17 @@ class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({required this.localDatasource});
 
   @override
-  Future<Unit> addCategory(List<Category> categories) async {
-    List<CategoryModel> categoriesData = categories
-        .map((category) => CategoryModel(
-            name: category.name, icon: category.icon, color: category.color))
-        .toList();
-    await localDatasource.addCategory(categoriesData);
-    return Future.value(unit);
+  Future<Either<Failure, Unit>> addCategory(List<Category> categories) async {
+    try {
+      List<CategoryModel> categoriesData = categories
+          .map((category) => CategoryModel(
+              name: category.name, icon: category.icon, color: category.color))
+          .toList();
+      await localDatasource.addCategory(categoriesData);
+      return const Right(unit);
+    } on OfflineDatabaseException {
+      return Left(OfflineDatabaseFailure());
+    }
   }
 
   @override

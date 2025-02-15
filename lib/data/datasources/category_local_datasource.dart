@@ -16,10 +16,17 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
   @override
   Future<Unit> addCategory(List<CategoryModel> categories) async {
     final db = await dbService.database;
-    categories.map((category) async {
-      final data = category.toJson();
-      await db.insert(kCategoriesTable, data);
-    });
+    categories.map(
+      (category) async {
+        final data = category.toJson();
+        final res = await db.insert(kCategoriesTable, data);
+        if (res > 0) {
+          return Future.value(unit);
+        } else {
+          throw OfflineDatabaseException();
+        }
+      },
+    );
 
     return Future.value(unit);
   }

@@ -106,14 +106,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategoryEvent>((event, emit) async {
       if (event is AddCategoryEvent) {
         emit(LoadingCategoriesState());
-        try {
-          await addCategories(
-            event.categories,
-          );
-          add(GetCategoriesEvent());
-        } catch (error) {
-          emit(ErrorCategoryState(message: error.toString()));
-        }
+        final res = await addCategories(
+          event.categories,
+        );
+
+        emit(_mapResponseToUnit(res, event.categories));
       } else if (event is GetCategoriesEvent) {
         emit(LoadingCategoriesState());
 
@@ -130,9 +127,17 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     );
   }
 
+  CategoryState _mapResponseToUnit(
+      Either<Failure, Unit> res, List<Category> categories) {
+    return res.fold(
+        (failure) => ErrorCategoryState(message: _getMessage(failure)),
+        (_) => LoadedCategoriesState(categories: categories));
+  }
+
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case EmptyDatabaseFailure():
+      case EmptyDatabaseFailure:
+        print('empty database');
         add(AddCategoryEvent(categories: defaultCategories));
         return kEmptyDatabaseFailureMessage;
       default:
