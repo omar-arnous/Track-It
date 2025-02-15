@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
+import 'package:trackit/presentation/pages/category/category_item.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 
 class CategoryList extends StatelessWidget {
@@ -18,10 +19,13 @@ class CategoryList extends StatelessWidget {
                 return const Spinner();
               } else if (state is LoadedCategoriesState) {
                 final categories = state.categories;
-                return ListView.builder(
+                return ListView.separated(
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
-                    return Text(categories[index].name);
+                    return CategoryItem(categoryItem: categories[index]);
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(thickness: 1);
                   },
                 );
               } else if (state is ErrorCategoryState) {
