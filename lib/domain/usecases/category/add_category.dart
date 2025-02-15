@@ -7,7 +7,7 @@ class AddCategoryUsecase {
 
   AddCategoryUsecase({required this.repository});
 
-  Future<Unit> call(Category category) async {
-    return await repository.addCategory(category);
+  Future<Unit> call(List<Category> categories) async {
+    return await repository.addCategory(categories);
   }
 }

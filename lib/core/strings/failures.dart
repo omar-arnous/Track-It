@@ -1,6 +1,7 @@
 const String kEmptyCacheFailureMessage = 'No data';
 const String kOfflineDatabaseFailureMessage =
     'Please check your database connection';
+const String kEmptyDatabaseFailureMessage = 'No data';
 const String kUserNotFoundFailureMessage = 'Provided user not found';
 const String kUserNotLoggedInFailureMessage = 'User not logged in';
 const String kWrongPasswordFailureMessage = 'Invalid credentials';

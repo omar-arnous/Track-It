@@ -12,6 +12,11 @@ class OfflineDatabaseFailure extends Failure {
   List<Object?> get props => [];
 }
 
+class EmptyDatabaseFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
 class UserNotFoundAuthFailure extends Failure {
   @override
   List<Object?> get props => [];

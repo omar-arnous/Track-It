@@ -4,6 +4,8 @@ class EmptyCacheException implements Exception {}
 // Database Exceptions
 class OfflineDatabaseException implements Exception {}
 
+class EmptyDatabaseException implements Exception {}
+
 // Login Exceptions
 class UserNotFoundAuthException implements Exception {}
 
