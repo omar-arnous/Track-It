@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:trackit/core/errors/exceptions.dart';
 import 'package:trackit/core/errors/failures.dart';
-import 'package:trackit/data/datasources/auth_cache_datasource.dart';
-import 'package:trackit/data/datasources/auth_remote_datasource.dart';
+import 'package:trackit/data/datasources/auth/auth_cache_datasource.dart';
+import 'package:trackit/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:trackit/domain/entities/user.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
 

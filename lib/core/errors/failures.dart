@@ -51,3 +51,28 @@ class GenericAuthFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class DatabaseAddFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
+class DatabaseEditFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
+class DatabaseDeleteFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
+class FirestoreAddFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
+class FirestoreGetFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}

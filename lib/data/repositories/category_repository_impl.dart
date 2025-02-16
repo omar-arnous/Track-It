@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:trackit/core/errors/exceptions.dart';
 import 'package:trackit/core/errors/failures.dart';
-import 'package:trackit/data/datasources/category_local_datasource.dart';
+import 'package:trackit/data/datasources/category/category_local_datasource.dart';
 import 'package:trackit/data/models/category_model.dart';
 import 'package:trackit/domain/entities/category.dart';
 import 'package:trackit/domain/repositories/category_repository.dart';

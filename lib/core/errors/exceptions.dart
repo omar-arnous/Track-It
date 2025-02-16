@@ -22,3 +22,15 @@ class InvalidEmailAuthException implements Exception {}
 class GenreicAuthException implements Exception {}
 
 class UserNotLoggedInAuthException implements Exception {}
+
+// CRUD
+class DatabaseAddException implements Exception {}
+
+class DatabaseEditException implements Exception {}
+
+class DatabaseDeleteException implements Exception {}
+
+// Firestore
+class FirestoreAddException implements Exception {}
+
+class FirestoreGetException implements Exception {}

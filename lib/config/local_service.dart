@@ -25,7 +25,7 @@ class LocalService {
     await db.execute('''
       CREATE TABLE $kAccountsTable (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        name TEXT NOT NULL UNIQUE,
         type TEXT,
         balance REAL,
         currency TEXT
