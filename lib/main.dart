@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/theme/theme.dart';
+import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/config/router.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.sl<AuthBloc>()),
         BlocProvider(
           create: (_) => di.sl<CategoryBloc>()..add(GetCategoriesEvent()),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<AccountBloc>()..add(GetAccountsEvent()),
         ),
       ],
       child: MaterialApp.router(
