@@ -5,8 +5,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Home Page'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('TrackIt'),
+        centerTitle: true,
+      ),
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Pie Chart'),
+          Text('Transactions List'),
+        ],
+      ),
     );
   }
 }

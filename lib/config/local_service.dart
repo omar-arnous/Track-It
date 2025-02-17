@@ -28,6 +28,7 @@ class LocalService {
         name TEXT NOT NULL UNIQUE,
         type TEXT,
         balance REAL,
+        color TEXT,
         currency TEXT
       )
     ''');
