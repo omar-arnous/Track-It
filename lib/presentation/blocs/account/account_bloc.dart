@@ -30,7 +30,12 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         emit(LoadingAccountState());
 
         final res = await getAccounts();
-        emit(_mapGetResponseToState(res));
+        emit(_mapGetResponseToState(res, null));
+      } else if (event is SelectAccountEvent) {
+        emit(LoadingAccountState());
+
+        final res = await getAccounts();
+        emit(_mapGetResponseToState(res, event.id));
       } else if (event is AddAccountEvent) {
         emit(LoadingAccountState());
 
@@ -50,10 +55,14 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     });
   }
 
-  AccountState _mapGetResponseToState(Either<Failure, List<Account>> res) {
+  AccountState _mapGetResponseToState(
+      Either<Failure, List<Account>> res, int? id) {
     return res.fold(
       (failure) => ErrorAccountState(message: _getMessage(failure)),
-      (accounts) => LoadedAccountState(accounts: accounts),
+      (accounts) => LoadedAccountState(
+        accounts: accounts,
+        selectedAccountId: id ?? accounts[0].id!,
+      ),
     );
   }
 

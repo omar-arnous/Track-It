@@ -19,6 +19,7 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
   Future<List<AccountModel>> getAccounts() async {
     final db = await dbService.database;
     final data = await db.query(kAccountsTable);
+
     if (data.isNotEmpty) {
       final List<AccountModel> accounts = data
           .map<AccountModel>((account) => AccountModel.fromJson(account))

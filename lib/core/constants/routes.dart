@@ -5,3 +5,4 @@ const String kLogInRoute = '/sign-in';
 const String kResetPasswordRoute = '/reset-password';
 const String kHomeRoute = '/home';
 const String kCategoryRoute = '/category';
+const String kAddEditAccount = '/add-edit-account';

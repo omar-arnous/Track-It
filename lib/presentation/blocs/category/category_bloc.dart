@@ -44,19 +44,14 @@ List<Category> defaultCategories = [
     color: Colors.green,
   ),
   const Category(
-    name: 'Transport',
-    icon: Icons.bus_alert,
-    color: Colors.grey,
-  ),
-  const Category(
     name: 'Electrical devices',
     icon: Icons.electric_bolt,
-    color: Colors.grey,
+    color: Colors.orange,
   ),
   const Category(
     name: 'Communication, PC',
     icon: Icons.phone,
-    color: Colors.grey,
+    color: Colors.orange,
   ),
   const Category(
     name: 'Housing',
@@ -92,6 +87,21 @@ List<Category> defaultCategories = [
     name: 'Shopping',
     icon: Icons.shopping_bag,
     color: Colors.blue,
+  ),
+  const Category(
+    name: 'Transport',
+    icon: Icons.bus_alert,
+    color: Colors.grey,
+  ),
+  const Category(
+    name: 'Charity, Gift',
+    icon: Icons.card_giftcard,
+    color: Colors.grey,
+  ),
+  const Category(
+    name: 'Other',
+    icon: Icons.menu,
+    color: Colors.grey,
   ),
 ];
 

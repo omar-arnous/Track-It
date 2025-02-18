@@ -14,16 +14,16 @@ class CategoryModel extends Category {
     return CategoryModel(
       id: json['id'],
       name: json['name'],
-      icon: IconConvertor().stringToIconData(json['icon']),
-      color: ColorConvertor().hexStringToColor(json['color']),
+      icon: IconConvertor.stringToIconData(json['icon']),
+      color: ColorConvertor.hexStringToColor(json['color']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'icon': IconConvertor().iconDataToString(icon),
-      'color': ColorConvertor().colorToHexString(color),
+      'icon': IconConvertor.iconDataToString(icon),
+      'color': ColorConvertor.colorToHexString(color),
     };
   }
 }

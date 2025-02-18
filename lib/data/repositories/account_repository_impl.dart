@@ -30,6 +30,7 @@ class AccountRepositoryImpl implements AccountRepository {
         name: account.name,
         type: account.type,
         balance: account.balance,
+        color: account.color,
         currency: account.currency,
       );
 
@@ -48,6 +49,7 @@ class AccountRepositoryImpl implements AccountRepository {
         name: account.name,
         type: account.type,
         balance: account.balance,
+        color: account.color,
         currency: account.currency,
       );
 

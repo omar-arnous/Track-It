@@ -9,7 +9,7 @@ import 'package:trackit/presentation/pages/home_page.dart';
 class Routes {
   final _router = GoRouter(
     // initialLocation: '/spalsh',
-    initialLocation: kCategoryRoute,
+    initialLocation: kHomeRoute,
     routes: [
       GoRoute(
         name: 'Sign Up',
@@ -34,6 +34,11 @@ class Routes {
       GoRoute(
         name: 'Categories',
         path: kCategoryRoute,
+        builder: (context, state) => const CategoryList(),
+      ),
+      GoRoute(
+        name: 'Add Edit account',
+        path: kAddEditAccount,
         builder: (context, state) => const CategoryList(),
       ),
     ],
