@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
-import 'package:trackit/presentation/widgets/show_error.dart';
 import 'package:trackit/presentation/widgets/show_snack_message.dart';
 
 class AccountsListDialog extends StatelessWidget {

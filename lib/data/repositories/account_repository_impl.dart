@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:trackit/core/errors/exceptions.dart';
 import 'package:trackit/core/errors/failures.dart';
+import 'package:trackit/data/datasources/account/account_cache_datasource.dart';
 import 'package:trackit/data/datasources/account/account_local_datasource.dart';
 import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/domain/entities/account.dart';
@@ -8,9 +9,11 @@ import 'package:trackit/domain/repositories/account_repository.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
   final AccountLocalDatasource localDatasource;
+  final AccountCacheDatasource cacheDatasource;
 
   AccountRepositoryImpl({
     required this.localDatasource,
+    required this.cacheDatasource,
   });
 
   @override
@@ -67,6 +70,26 @@ class AccountRepositoryImpl implements AccountRepository {
       return const Right(unit);
     } on DatabaseDeleteException {
       return Left(DatabaseDeleteFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Account>> getSelectedAccount() async {
+    try {
+      final account = await cacheDatasource.getCachedAccount();
+      return Right(account);
+    } on EmptyCacheException {
+      return Left(EmptyCacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> setSelectedAccount(int id) async {
+    try {
+      await cacheDatasource.cacheAccount(id);
+      return const Right(unit);
+    } on EmptyCacheException {
+      return Left(EmptyCacheFailure());
     }
   }
 }

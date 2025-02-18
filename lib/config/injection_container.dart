@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackit/config/local_service.dart';
+import 'package:trackit/data/datasources/account/account_cache_datasource.dart';
 import 'package:trackit/data/datasources/account/account_local_datasource.dart';
 import 'package:trackit/data/datasources/account/account_remote_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_cache_datasource.dart';
@@ -18,6 +19,8 @@ import 'package:trackit/domain/usecases/account/add_account.dart';
 import 'package:trackit/domain/usecases/account/delete_account.dart';
 import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
+import 'package:trackit/domain/usecases/account/get_selected_account.dart';
+import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 import 'package:trackit/domain/usecases/category/add_category.dart';
 import 'package:trackit/domain/usecases/category/get_categories.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
@@ -47,10 +50,13 @@ Future<void> init() async {
 
   sl.registerFactory(
     () => AccountBloc(
-        getAccounts: sl(),
-        addAccount: sl(),
-        editAccount: sl(),
-        deleteAccount: sl()),
+      getAccounts: sl(),
+      addAccount: sl(),
+      editAccount: sl(),
+      deleteAccount: sl(),
+      setSelectedAccount: sl(),
+      getSelectedAccount: sl(),
+    ),
   );
 
   // usecases
@@ -64,6 +70,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => EditAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteAccountUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SetSelectedAccountUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetSelectedAccountUsecase(repository: sl()));
 
   // repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -73,7 +81,10 @@ Future<void> init() async {
     () => CategoryRepositoryImpl(localDatasource: sl()),
   );
   sl.registerLazySingleton<AccountRepository>(
-    () => AccountRepositoryImpl(localDatasource: sl()),
+    () => AccountRepositoryImpl(
+      localDatasource: sl(),
+      cacheDatasource: sl(),
+    ),
   );
 
   // datasources
@@ -91,6 +102,10 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AccountRemoteDatasource>(
     () => AccountRemoteDatasourceImpl(firestore: sl()),
+  );
+
+  sl.registerLazySingleton<AccountCacheDatasource>(
+    () => AccountCacheDatasourceImpl(sharedPreferences: sl()),
   );
 
   // external

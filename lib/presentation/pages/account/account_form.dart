@@ -66,7 +66,7 @@ class _AccountFormState extends State<AccountForm> {
             require: true,
           ),
           const SizedBox(height: 15),
-          _AccountTypeField(),
+          _accountTypeField(),
           const SizedBox(height: 15),
           FormInput(
             controller: _balanceController,
@@ -74,9 +74,9 @@ class _AccountFormState extends State<AccountForm> {
             type: Type.number,
           ),
           const SizedBox(height: 15),
-          _CurrencyTypeField(),
+          _currencyTypeField(),
           const SizedBox(height: 15),
-          _ColorPicker(context),
+          _colorPicker(context),
           const SizedBox(height: 24),
           FormButton(
             label: widget.isUpdate ? 'Update account' : 'Add account',
@@ -88,7 +88,7 @@ class _AccountFormState extends State<AccountForm> {
     );
   }
 
-  Widget _CurrencyTypeField() {
+  Widget _currencyTypeField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -119,7 +119,7 @@ class _AccountFormState extends State<AccountForm> {
     );
   }
 
-  Widget _AccountTypeField() {
+  Widget _accountTypeField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -172,7 +172,7 @@ class _AccountFormState extends State<AccountForm> {
     );
   }
 
-  Widget _ColorPicker(BuildContext context) {
+  Widget _colorPicker(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

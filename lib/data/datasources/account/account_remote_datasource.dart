@@ -31,8 +31,7 @@ class AccountRemoteDatasourceImpl implements AccountRemoteDatasource {
         await accountCollection.add(account.toJson());
       }
       return Future.value(unit);
-    } on FirebaseException catch (error) {
-      print('Firebase error: ${error.message}');
+    } on FirebaseException catch (_) {
       throw FirestoreAddException();
     }
   }

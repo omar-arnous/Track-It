@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/widgets/Spinner.dart';
 import 'package:trackit/presentation/widgets/account_card.dart';
-import 'package:trackit/presentation/widgets/show_error.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

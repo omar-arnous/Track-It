@@ -9,6 +9,8 @@ import 'package:trackit/domain/usecases/account/add_account.dart';
 import 'package:trackit/domain/usecases/account/delete_account.dart';
 import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
+import 'package:trackit/domain/usecases/account/get_selected_account.dart';
+import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
@@ -18,22 +20,35 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final AddAccountUsecase addAccount;
   final EditAccountUsecase editAccount;
   final DeleteAccountUsecase deleteAccount;
+  final SetSelectedAccountUsecase setSelectedAccount;
+  final GetSelectedAccountUsecase getSelectedAccount;
 
   AccountBloc({
     required this.getAccounts,
     required this.addAccount,
     required this.editAccount,
     required this.deleteAccount,
+    required this.setSelectedAccount,
+    required this.getSelectedAccount,
   }) : super(InitialAccountState()) {
     on<AccountEvent>((event, emit) async {
       if (event is GetAccountsEvent) {
         emit(LoadingAccountState());
 
         final res = await getAccounts();
-        emit(_mapGetResponseToState(res, null));
+        final cacheRes = await getSelectedAccount();
+        final state = _mapCacheResponseToState(cacheRes);
+        if (state is ErrorAccountState) {
+          emit(_mapGetResponseToState(res, null));
+        } else if (state is LoadedAccountState) {
+          emit(_mapGetResponseToState(res, state.selectedAccountId));
+        } else {
+          emit(_mapGetResponseToState(res, null));
+        }
       } else if (event is SelectAccountEvent) {
         emit(LoadingAccountState());
 
+        await setSelectedAccount(event.id);
         final res = await getAccounts();
         emit(_mapGetResponseToState(res, event.id));
       } else if (event is AddAccountEvent) {
@@ -53,6 +68,16 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         emit(_mapResponseToState(res, kSuccessfullDelete));
       }
     });
+  }
+
+  AccountState _mapCacheResponseToState(Either<Failure, Account> cacheRes) {
+    return cacheRes.fold(
+      (failure) => ErrorAccountState(message: _getMessage(failure)),
+      (account) => LoadedAccountState(
+        accounts: const [],
+        selectedAccountId: account.id!,
+      ),
+    );
   }
 
   AccountState _mapGetResponseToState(
@@ -86,6 +111,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         return '$kFailureEdit account';
       case DatabaseDeleteFailure:
         return '$kFailureDelete account';
+      case EmptyCacheFailure:
+        return kEmptyCacheFailureMessage;
       default:
         return kGenericFailureMessage;
     }
