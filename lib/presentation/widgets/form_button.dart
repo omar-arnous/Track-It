@@ -24,7 +24,6 @@ class FormButton extends StatelessWidget {
             ? const Spinner()
             : Text(
                 label,
-                style: Theme.of(context).textTheme.labelLarge,
               ),
       ),
     );

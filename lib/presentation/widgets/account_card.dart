@@ -21,13 +21,33 @@ class AccountCard extends StatelessWidget {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(account == null ? '' : account!.name),
-                Text(account == null ? '' : account!.type.toString()),
+                Text(
+                  account == null ? '' : account!.name,
+                  style: TextStyle(
+                    fontFamily:
+                        Theme.of(context).textTheme.displayLarge!.fontFamily,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  account == null ? '' : account!.type.name,
+                  style: TextStyle(
+                    fontFamily:
+                        Theme.of(context).textTheme.labelMedium!.fontFamily,
+                    color: Colors.white,
+                  ),
+                ),
                 Text(
                   '${Formatter.formatBalance(account == null ? 0 : account!.balance)} ${Formatter.formatCurrency(
-                    account == null ? 'usd' : account!.currency.toString(),
+                    account == null ? 'usd' : account!.currency.name,
                   )}',
+                  style: TextStyle(
+                    fontFamily:
+                        Theme.of(context).textTheme.bodyLarge!.fontFamily,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
@@ -40,7 +60,10 @@ class AccountCard extends StatelessWidget {
                   },
                 );
               },
-              icon: const Icon(Icons.more_horiz),
+              icon: const Icon(
+                Icons.more_horiz,
+                color: Colors.white,
+              ),
               alignment: Alignment.topLeft,
             ),
           ],

@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TrackIt'),
-        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),

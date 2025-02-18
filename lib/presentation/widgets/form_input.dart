@@ -114,7 +114,6 @@ class _FormInputState extends State<FormInput> {
               ? '${widget.label} is required'
               : null,
           decoration: InputDecoration(
-            hintText: widget.label,
             label: Text(widget.label),
           ),
         ),
