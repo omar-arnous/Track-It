@@ -6,13 +6,16 @@ import 'package:trackit/config/local_service.dart';
 import 'package:trackit/data/datasources/account/account_cache_datasource.dart';
 import 'package:trackit/data/datasources/account/account_local_datasource.dart';
 import 'package:trackit/data/datasources/account/account_remote_datasource.dart';
+import 'package:trackit/data/datasources/app/app_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:trackit/data/datasources/category/category_local_datasource.dart';
 import 'package:trackit/data/repositories/account_repository_impl.dart';
+import 'package:trackit/data/repositories/app_repository_impl.dart';
 import 'package:trackit/data/repositories/auth_repository_impl.dart';
 import 'package:trackit/data/repositories/category_repository_impl.dart';
 import 'package:trackit/domain/repositories/account_repository.dart';
+import 'package:trackit/domain/repositories/app_repository.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
 import 'package:trackit/domain/repositories/category_repository.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
@@ -21,6 +24,10 @@ import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
 import 'package:trackit/domain/usecases/account/get_selected_account.dart';
 import 'package:trackit/domain/usecases/account/set_selected_account.dart';
+import 'package:trackit/domain/usecases/app/get_onboarding_state.dart';
+import 'package:trackit/domain/usecases/app/get_theme.dart';
+import 'package:trackit/domain/usecases/app/set_onboarding_state.dart';
+import 'package:trackit/domain/usecases/app/set_theme.dart';
 import 'package:trackit/domain/usecases/category/add_category.dart';
 import 'package:trackit/domain/usecases/category/get_categories.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
@@ -28,6 +35,7 @@ import 'package:trackit/domain/usecases/user/login.dart';
 import 'package:trackit/domain/usecases/user/logout.dart';
 import 'package:trackit/domain/usecases/user/reset_password.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
+import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 
@@ -35,6 +43,14 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // Bloc
+  sl.registerFactory(
+    () => AppBloc(
+      setOnboardingState: sl(),
+      getOnboardingState: sl(),
+      setTheme: sl(),
+      getTheme: sl(),
+    ),
+  );
   sl.registerFactory(
     () => AuthBloc(
       createUser: sl(),
@@ -60,6 +76,10 @@ Future<void> init() async {
   );
 
   // usecases
+  sl.registerLazySingleton(() => SetOnboardingStateUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetOnboardingStateUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SetThemeUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetThemeUsecase(repository: sl()));
   sl.registerLazySingleton(() => LoginUsecase(repository: sl()));
   sl.registerLazySingleton(() => LogoutUsecase(repository: sl()));
   sl.registerLazySingleton(() => CreateUserUsecase(repository: sl()));
@@ -74,6 +94,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetSelectedAccountUsecase(repository: sl()));
 
   // repositories
+  sl.registerLazySingleton<AppRepository>(
+    () => AppRepositoryImpl(cacheDatasource: sl()),
+  );
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(remoteDatasource: sl(), cacheDatasource: sl()),
   );
@@ -88,6 +111,9 @@ Future<void> init() async {
   );
 
   // datasources
+  sl.registerLazySingleton<AppCacheDatasource>(
+    () => AppCacheDatasourceImpl(sharedPreferences: sl()),
+  );
   sl.registerLazySingleton<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(firebaseAuth: sl(), firestore: sl()),
   );
