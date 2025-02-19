@@ -1,9 +1,9 @@
 import 'package:trackit/domain/repositories/app_repository.dart';
 
-class SetTheme {
+class SetThemeUsecase {
   final AppRepository repository;
 
-  SetTheme({required this.repository});
+  SetThemeUsecase({required this.repository});
 
   Future<void> call(bool isDark) async {
     return await repository.setTheme(isDark);

@@ -1,9 +1,9 @@
 import 'package:trackit/domain/repositories/app_repository.dart';
 
-class GetTheme {
+class GetThemeUsecase {
   final AppRepository repository;
 
-  GetTheme({required this.repository});
+  GetThemeUsecase({required this.repository});
 
   Future<bool> call() async {
     return await repository.getTheme();

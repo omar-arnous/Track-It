@@ -28,12 +28,22 @@ class AppCacheDatasourceImpl implements AppCacheDatasource {
   @override
   Future<bool> getIsDarkTheme() {
     final res = sharedPreferences.getBool(kThemeKey);
-    return Future.value(res);
+    if (res != null) {
+      return Future.value(res);
+    } else {
+      cacheIsDarkTheme(false);
+      return Future.value(false);
+    }
   }
 
   @override
   Future<bool> getOnBoardingState() {
     final res = sharedPreferences.getBool(kOnBoardingStateKey);
-    return Future.value(res);
+    if (res != null) {
+      return Future.value(res);
+    } else {
+      cacheOnBoardingState(false);
+      return Future.value(false);
+    }
   }
 }
