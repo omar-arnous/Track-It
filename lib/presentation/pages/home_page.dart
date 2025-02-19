@@ -9,45 +9,83 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('TrackIt'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Your Accounts',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            BlocBuilder<AccountBloc, AccountState>(
-              builder: (context, state) {
-                if (state is LoadingAccountState) {
-                  return const Spinner();
-                } else if (state is LoadedAccountState) {
-                  final account = state.accounts.firstWhere(
-                    (account) => account.id == state.selectedAccountId,
-                  );
-                  return AccountCard(account: account);
-                } else if (state is ErrorAccountState) {
-                  // if (context.mounted) {
-                  //   Future.microtask(
-                  //     () => ShowError.show(context, state.message),
-                  //   );
-                  // }
-                  return const AccountCard();
-                } else {
-                  return const AccountCard();
-                }
-              },
-            ),
-            const Text('Pie Chart'),
-            const Text('Transactions List'),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Your Accounts',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          BlocBuilder<AccountBloc, AccountState>(
+            builder: (context, state) {
+              if (state is LoadingAccountState) {
+                return const Spinner();
+              } else if (state is LoadedAccountState) {
+                final account = state.accounts.firstWhere(
+                  (account) => account.id == state.selectedAccountId,
+                );
+                return AccountCard(account: account);
+              } else if (state is ErrorAccountState) {
+                // if (context.mounted) {
+                //   Future.microtask(
+                //     () => ShowError.show(context, state.message),
+                //   );
+                // }
+                return const AccountCard();
+              } else {
+                return const AccountCard();
+              }
+            },
+          ),
+          const Text('Pie Chart'),
+          const Text('Transactions List'),
+        ],
       ),
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: const Text('TrackIt'),
+  //     ),
+  //     body: Padding(
+  //       padding: const EdgeInsets.all(15),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             'Your Accounts',
+  //             style: Theme.of(context).textTheme.bodyLarge,
+  //           ),
+  //           BlocBuilder<AccountBloc, AccountState>(
+  //             builder: (context, state) {
+  //               if (state is LoadingAccountState) {
+  //                 return const Spinner();
+  //               } else if (state is LoadedAccountState) {
+  //                 final account = state.accounts.firstWhere(
+  //                   (account) => account.id == state.selectedAccountId,
+  //                 );
+  //                 return AccountCard(account: account);
+  //               } else if (state is ErrorAccountState) {
+  //                 // if (context.mounted) {
+  //                 //   Future.microtask(
+  //                 //     () => ShowError.show(context, state.message),
+  //                 //   );
+  //                 // }
+  //                 return const AccountCard();
+  //               } else {
+  //                 return const AccountCard();
+  //               }
+  //             },
+  //           ),
+  //           const Text('Pie Chart'),
+  //           const Text('Transactions List'),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

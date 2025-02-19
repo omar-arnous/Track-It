@@ -77,10 +77,11 @@ class TrackItTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
-          centerTitle: true,
-          titleTextStyle: lightTextTheme.titleMedium,
-          color: Colors.black,
-          iconTheme: const IconThemeData(color: Colors.white)),
+        centerTitle: true,
+        titleTextStyle: lightTextTheme.titleMedium,
+        color: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       textTheme: lightTextTheme,
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: lightTextTheme.labelMedium,
@@ -109,6 +110,13 @@ class TrackItTheme {
             fontWeight: lightTextTheme.labelLarge!.fontWeight,
           ),
         ),
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
+        unselectedItemColor: Colors.white,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }

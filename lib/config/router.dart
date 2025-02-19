@@ -6,11 +6,12 @@ import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
 import 'package:trackit/presentation/pages/auth/signup_page.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/home_page.dart';
+import 'package:trackit/presentation/pages/layout.dart';
 
 class Routes {
   final _router = GoRouter(
     // initialLocation: '/spalsh',
-    initialLocation: kHomeRoute,
+    initialLocation: kLayoutRoute,
     routes: [
       GoRoute(
         name: 'Sign Up',
@@ -26,6 +27,11 @@ class Routes {
         name: 'Reset Password',
         path: kResetPasswordRoute,
         builder: (context, state) => const ResetPasswordPage(),
+      ),
+      GoRoute(
+        name: 'Layout',
+        path: kLayoutRoute,
+        builder: (context, state) => const Layout(),
       ),
       GoRoute(
         name: 'Home',
