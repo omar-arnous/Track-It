@@ -33,11 +33,11 @@ class Routes {
         path: kLayoutRoute,
         builder: (context, state) => const Layout(),
       ),
-      GoRoute(
-        name: 'Home',
-        path: kHomeRoute,
-        builder: (context, state) => const HomePage(),
-      ),
+      // GoRoute(
+      //   name: 'Home',
+      //   path: kHomeRoute,
+      //   builder: (context, state) => const HomePage(),
+      // ),
       GoRoute(
         name: 'Categories',
         path: kCategoryRoute,

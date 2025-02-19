@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is Authenticated) {
-          context.go(kHomeRoute);
+          context.go(kLayoutRoute);
         } else if (state is AuthError) {
           await showAdaptiveDialog(
             context: context,
