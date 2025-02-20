@@ -82,7 +82,10 @@ class Layout extends StatelessWidget {
     switch (index) {
       case 0:
         return AppBar(
-          title: const Text('TrackIt'),
+          title: const Text(
+            'TrackIt',
+            style: TextStyle(color: Colors.black),
+          ),
           actions: [
             IconButton(
               onPressed: () {},
@@ -92,7 +95,10 @@ class Layout extends StatelessWidget {
         );
       case 1:
         return AppBar(
-          title: const Text('Accounts'),
+          title: const Text(
+            'Accounts',
+            style: TextStyle(color: Colors.black),
+          ),
           actions: [
             IconButton(
               onPressed: () => context.push(kAddEditAccount),
@@ -102,15 +108,25 @@ class Layout extends StatelessWidget {
         );
       case 2:
         return AppBar(
-          title: const Text('Categories'),
+          backgroundColor: Colors.white,
+          title: const Text(
+            'Categories',
+            style: TextStyle(color: Colors.black),
+          ),
         );
       case 3:
         return AppBar(
-          title: const Text('Settings'),
+          title: const Text(
+            'Settings',
+            style: TextStyle(color: Colors.black),
+          ),
         );
       default:
         return AppBar(
-          title: const Text('TrackIt'),
+          title: const Text(
+            'TrackIt',
+            style: TextStyle(color: Colors.black),
+          ),
         );
     }
   }

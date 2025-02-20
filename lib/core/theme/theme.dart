@@ -75,12 +75,14 @@ class TrackItTheme {
   static ThemeData light() {
     return ThemeData(
       useMaterial3: true,
+      secondaryHeaderColor: Colors.black,
       brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         centerTitle: true,
         titleTextStyle: lightTextTheme.titleMedium,
-        color: Colors.black,
-        iconTheme: const IconThemeData(color: Colors.white),
+        color: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       textTheme: lightTextTheme,
       inputDecorationTheme: InputDecorationTheme(
