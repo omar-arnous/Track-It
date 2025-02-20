@@ -46,13 +46,15 @@ class LocalService {
         type TEXT NOT NULL, 
         amount REAL DEFAULT 0,
         currency TEXT,
-        exchange_rate REAL,
-        converted_amount REAL,
+        exchange_rate REAL default 0,
+        converted_amount REAL default 0,
         note TEXT,
         date TEXT,
         account_id INTEGER NOT NULL,
+        target_account_id INTEGER NOT NULL,
         category_id INTEGER NOT NULL,
         FOREIGN KEY (account_id) REFERENCES $kAccountsTable (id),
+        FOREIGN KEY (target_account_id) REFERENCES $kAccountsTable (id),
         FOREIGN KEY (category_id) REFERENCES $kCategoriesTable (id)
       )
     ''');

@@ -1,9 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-enum AccountType { cash, bank, saving, credit }
-
-enum CurrencyType { usd, syp }
+import 'package:trackit/domain/entities/account_type.dart';
+import 'package:trackit/domain/entities/currency_type.dart';
 
 class Account extends Equatable {
   final int? id;

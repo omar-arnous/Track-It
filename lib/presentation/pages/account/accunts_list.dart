@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/pages/account/account_item.dart';
 import 'package:trackit/presentation/widgets/empty_page.dart';
-import 'package:trackit/presentation/widgets/show_error.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 
 class AccountsList extends StatelessWidget {

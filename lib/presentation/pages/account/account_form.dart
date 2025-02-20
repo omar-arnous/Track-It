@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:trackit/domain/entities/account.dart';
+import 'package:trackit/domain/entities/account_type.dart';
+import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';

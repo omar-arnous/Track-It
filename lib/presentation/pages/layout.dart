@@ -7,7 +7,6 @@ import 'package:trackit/presentation/pages/account/accunts_list.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/home_page.dart';
 import 'package:trackit/presentation/widgets/empty_page.dart';
-import 'package:trackit/presentation/widgets/show_error.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 
 const screens = [
