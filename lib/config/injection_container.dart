@@ -10,14 +10,17 @@ import 'package:trackit/data/datasources/app/app_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:trackit/data/datasources/category/category_local_datasource.dart';
+import 'package:trackit/data/datasources/transaction/transaction_local_datasource.dart';
 import 'package:trackit/data/repositories/account_repository_impl.dart';
 import 'package:trackit/data/repositories/app_repository_impl.dart';
 import 'package:trackit/data/repositories/auth_repository_impl.dart';
 import 'package:trackit/data/repositories/category_repository_impl.dart';
+import 'package:trackit/data/repositories/transaction_repository_impl.dart';
 import 'package:trackit/domain/repositories/account_repository.dart';
 import 'package:trackit/domain/repositories/app_repository.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
 import 'package:trackit/domain/repositories/category_repository.dart';
+import 'package:trackit/domain/repositories/transaction_repository.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
 import 'package:trackit/domain/usecases/account/delete_account.dart';
 import 'package:trackit/domain/usecases/account/edit_account.dart';
@@ -30,6 +33,10 @@ import 'package:trackit/domain/usecases/app/set_onboarding_state.dart';
 import 'package:trackit/domain/usecases/app/set_theme.dart';
 import 'package:trackit/domain/usecases/category/add_category.dart';
 import 'package:trackit/domain/usecases/category/get_categories.dart';
+import 'package:trackit/domain/usecases/transaction/add_transaction.dart';
+import 'package:trackit/domain/usecases/transaction/delete_transaction.dart';
+import 'package:trackit/domain/usecases/transaction/get_transactions_by_account_id.dart';
+import 'package:trackit/domain/usecases/transaction/update_transaction.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
 import 'package:trackit/domain/usecases/user/login.dart';
 import 'package:trackit/domain/usecases/user/logout.dart';
@@ -38,6 +45,7 @@ import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
+import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -75,6 +83,15 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => TransactionBloc(
+      getTransactionsByAccountId: sl(),
+      addTransaction: sl(),
+      updateTransaction: sl(),
+      deleteTransaction: sl(),
+    ),
+  );
+
   // usecases
   sl.registerLazySingleton(() => SetOnboardingStateUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetOnboardingStateUsecase(repository: sl()));
@@ -92,6 +109,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => SetSelectedAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetSelectedAccountUsecase(repository: sl()));
+  sl.registerLazySingleton(
+    () => GetTransactionsByAccountIdUsecase(repository: sl()),
+  );
+  sl.registerLazySingleton(() => AddTransactionUsecase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateTransactionUsecase(repository: sl()));
+  sl.registerLazySingleton(() => DeleteTransactionUsecase(repository: sl()));
 
   // repositories
   sl.registerLazySingleton<AppRepository>(
@@ -107,6 +130,11 @@ Future<void> init() async {
     () => AccountRepositoryImpl(
       localDatasource: sl(),
       cacheDatasource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<TransactionRepository>(
+    () => TransactionRepositoryImpl(
+      localDatasource: sl(),
     ),
   );
 
@@ -132,6 +160,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AccountCacheDatasource>(
     () => AccountCacheDatasourceImpl(sharedPreferences: sl()),
+  );
+  sl.registerLazySingleton<TransactionLocalDatasource>(
+    () => TransactionLocalDatasourceImpl(dbService: sl()),
   );
 
   // external
