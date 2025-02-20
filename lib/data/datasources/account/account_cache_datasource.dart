@@ -8,7 +8,7 @@ import 'package:trackit/data/models/account_model.dart';
 
 abstract class AccountCacheDatasource {
   Future<AccountModel> getCachedAccount();
-  Future<Unit> cacheAccount(int id);
+  Future<Unit> cacheAccount(AccountModel account);
 }
 
 class AccountCacheDatasourceImpl implements AccountCacheDatasource {
@@ -17,8 +17,11 @@ class AccountCacheDatasourceImpl implements AccountCacheDatasource {
   AccountCacheDatasourceImpl({required this.sharedPreferences});
 
   @override
-  Future<Unit> cacheAccount(int id) {
-    sharedPreferences.setString(kSelectedAccountKey, json.encode({"id": id}));
+  Future<Unit> cacheAccount(AccountModel account) {
+    sharedPreferences.setString(
+      kSelectedAccountKey,
+      json.encode(account.toJson()),
+    );
     return Future.value(unit);
   }
 

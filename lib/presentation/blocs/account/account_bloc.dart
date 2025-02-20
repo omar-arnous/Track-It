@@ -48,9 +48,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       } else if (event is SelectAccountEvent) {
         emit(LoadingAccountState());
 
-        await setSelectedAccount(event.id);
+        await setSelectedAccount(event.account);
         final res = await getAccounts();
-        emit(_mapGetResponseToState(res, event.id));
+        emit(_mapGetResponseToState(res, event.account.id));
       } else if (event is AddAccountEvent) {
         emit(LoadingAccountState());
 

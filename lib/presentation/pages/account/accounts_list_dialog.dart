@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
-import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
+import 'package:trackit/presentation/pages/account/account_item.dart';
 import 'package:trackit/presentation/widgets/show_snack_message.dart';
 
 class AccountsListDialog extends StatelessWidget {
@@ -48,76 +48,7 @@ class AccountsListDialog extends StatelessWidget {
                       return ListView.separated(
                         itemCount: accounts.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            onTap: () {
-                              context.read<AccountBloc>().add(
-                                    SelectAccountEvent(
-                                      id: accounts[index].id!,
-                                    ),
-                                  );
-                              context.pop();
-                            },
-                            tileColor: accounts[index].color,
-                            contentPadding: const EdgeInsets.all(8),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  accounts[index].name,
-                                  style: TextStyle(
-                                    fontFamily: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontFamily,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  accounts[index].type.name,
-                                  style: TextStyle(
-                                    fontFamily: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .fontFamily,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  '${Formatter.formatBalance(accounts[index].balance)} ${Formatter.formatCurrency(
-                                    accounts[index].currency.name,
-                                  )}',
-                                  style: TextStyle(
-                                    fontFamily: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .fontFamily,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            // trailing: Row(
-                            //   children: [
-                            //     IconButton(
-                            //       onPressed: () {},
-                            //       icon: Icon(
-                            //         Icons.edit,
-                            //         color: Colors.cyanAccent[300],
-                            //       ),
-                            //     ),
-                            //     IconButton(
-                            //       onPressed: () {},
-                            //       icon: Icon(
-                            //         Icons.delete,
-                            //         color: Colors.red[600],
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                          );
+                          return AccountItem(account: accounts[index]);
                         },
                         separatorBuilder: (context, index) {
                           return const SizedBox(height: 12);

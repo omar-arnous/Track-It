@@ -147,7 +147,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
       case EmptyDatabaseFailure:
-        print('empty database');
         add(AddCategoryEvent(categories: defaultCategories));
         return kEmptyDatabaseFailureMessage;
       default:

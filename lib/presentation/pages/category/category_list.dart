@@ -9,39 +9,36 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      child: BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          if (state is LoadingCategoriesState) {
-            return const Spinner();
-          } else if (state is LoadedCategoriesState) {
-            final categories = state.categories;
-            return ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                return CategoryItem(categoryItem: categories[index]);
-              },
-              separatorBuilder: (context, index) {
-                return const Divider(thickness: 1);
-              },
-            );
-          } else if (state is ErrorCategoryState) {
-            return AlertDialog.adaptive(
-              title: const Text('Error'),
-              content: Text(state.message),
-            );
-          } else {
-            return Center(
-              child: Text(
-                'No Categories',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            );
-          }
-        },
-      ),
+    return BlocBuilder<CategoryBloc, CategoryState>(
+      builder: (context, state) {
+        if (state is LoadingCategoriesState) {
+          return const Spinner();
+        } else if (state is LoadedCategoriesState) {
+          final categories = state.categories;
+          return ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              return CategoryItem(categoryItem: categories[index]);
+            },
+            separatorBuilder: (context, index) {
+              return const Divider(thickness: 1);
+            },
+          );
+        } else if (state is ErrorCategoryState) {
+          return AlertDialog.adaptive(
+            title: const Text('Error'),
+            content: Text(state.message),
+          );
+        } else {
+          return Center(
+            child: Text(
+              'No Categories',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          );
+        }
+      },
     );
     // return SafeArea(
     //   child: Scaffold(

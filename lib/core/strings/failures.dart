@@ -1,4 +1,4 @@
-const String kEmptyCacheFailureMessage = 'No data';
+const String kEmptyCacheFailureMessage = 'No';
 const String kOfflineDatabaseFailureMessage =
     'Please check your database connection';
 const String kEmptyDatabaseFailureMessage = 'No data';

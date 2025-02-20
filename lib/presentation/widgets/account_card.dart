@@ -24,7 +24,7 @@ class AccountCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  account == null ? '' : account!.name,
+                  account == null ? 'account name' : account!.name,
                   style: TextStyle(
                     fontFamily:
                         Theme.of(context).textTheme.displayLarge!.fontFamily,
@@ -32,7 +32,7 @@ class AccountCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  account == null ? '' : account!.type.name,
+                  account == null ? 'account type' : account!.type.name,
                   style: TextStyle(
                     fontFamily:
                         Theme.of(context).textTheme.labelMedium!.fontFamily,

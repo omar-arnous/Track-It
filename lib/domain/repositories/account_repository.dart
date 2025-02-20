@@ -8,5 +8,5 @@ abstract class AccountRepository {
   Future<Either<Failure, Unit>> editAccount(Account account);
   Future<Either<Failure, Unit>> deleteAccount(int id);
   Future<Either<Failure, Account>> getSelectedAccount();
-  Future<Either<Failure, Unit>> setSelectedAccount(int id);
+  Future<Either<Failure, Unit>> setSelectedAccount(Account account);
 }

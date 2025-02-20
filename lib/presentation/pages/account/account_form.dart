@@ -227,16 +227,30 @@ class _AccountFormState extends State<AccountForm> {
       setState(() {
         isLoading = true;
       });
-      final account = Account(
-        name: _nameController.text,
-        type: _accountType,
-        balance: double.parse(_balanceController.text),
-        currency: _currencyType,
-        color: _currentColor,
-      );
-      context.read<AccountBloc>().add(
-            AddAccountEvent(account: account),
-          );
+      if (widget.isUpdate) {
+        final updateAccount = Account(
+          id: widget.account!.id,
+          name: _nameController.text,
+          type: _accountType,
+          balance: double.parse(_balanceController.text),
+          currency: _currencyType,
+          color: _currentColor,
+        );
+        context.read<AccountBloc>().add(
+              UpdateAccountEvent(account: updateAccount),
+            );
+      } else {
+        final newAccount = Account(
+          name: _nameController.text,
+          type: _accountType,
+          balance: double.parse(_balanceController.text),
+          currency: _currencyType,
+          color: _currentColor,
+        );
+        context.read<AccountBloc>().add(
+              AddAccountEvent(account: newAccount),
+            );
+      }
       setState(() {
         isLoading = false;
       });

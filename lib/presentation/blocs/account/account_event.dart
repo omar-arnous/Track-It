@@ -10,11 +10,11 @@ abstract class AccountEvent extends Equatable {
 class GetAccountsEvent extends AccountEvent {}
 
 class SelectAccountEvent extends AccountEvent {
-  final int id;
-  const SelectAccountEvent({required this.id});
+  final Account account;
+  const SelectAccountEvent({required this.account});
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [account];
 }
 
 class AddAccountEvent extends AccountEvent {

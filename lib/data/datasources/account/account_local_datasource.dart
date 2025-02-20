@@ -21,10 +21,10 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
     final data = await db.query(kAccountsTable);
 
     if (data.isNotEmpty) {
+      print("accounts: $data");
       final List<AccountModel> accounts = data
           .map<AccountModel>((account) => AccountModel.fromJson(account))
           .toList();
-
       return accounts;
     } else {
       throw EmptyDatabaseException();

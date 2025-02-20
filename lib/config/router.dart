@@ -1,12 +1,19 @@
 import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
+import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/presentation/pages/account/account_add_edit_page.dart';
 import 'package:trackit/presentation/pages/auth/login_page.dart';
 import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
 import 'package:trackit/presentation/pages/auth/signup_page.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
-import 'package:trackit/presentation/pages/home_page.dart';
 import 'package:trackit/presentation/pages/layout.dart';
+
+class AddEditParams {
+  final bool isUpdating;
+  final Account? account;
+
+  AddEditParams({this.account, this.isUpdating = false});
+}
 
 class Routes {
   final _router = GoRouter(
@@ -33,11 +40,6 @@ class Routes {
         path: kLayoutRoute,
         builder: (context, state) => const Layout(),
       ),
-      // GoRoute(
-      //   name: 'Home',
-      //   path: kHomeRoute,
-      //   builder: (context, state) => const HomePage(),
-      // ),
       GoRoute(
         name: 'Categories',
         path: kCategoryRoute,
@@ -46,7 +48,13 @@ class Routes {
       GoRoute(
         name: 'Add Edit account',
         path: kAddEditAccount,
-        builder: (context, state) => const AccountAddEditPage(),
+        builder: (context, state) {
+          final params = state.extra as AddEditParams?;
+          return AccountAddEditPage(
+            isUpdateAccount: params?.isUpdating ?? false,
+            account: params?.account,
+          );
+        },
       ),
     ],
   );

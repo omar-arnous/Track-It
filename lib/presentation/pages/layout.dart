@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
+import 'package:trackit/presentation/pages/account/accunts_list.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/home_page.dart';
 import 'package:trackit/presentation/widgets/empty_page.dart';
@@ -11,7 +12,7 @@ import 'package:trackit/presentation/widgets/spinner.dart';
 
 const screens = [
   HomePage(),
-  Text('Accounts'),
+  AccountsList(),
   CategoryList(),
   Text('Settings'),
 ];
@@ -29,9 +30,13 @@ class Layout extends StatelessWidget {
           } else if (state is LoadedAppState) {
             return Scaffold(
               appBar: buildAppBar(context, state.selectedIndex),
-              body: screens[state.selectedIndex],
+              body: Padding(
+                padding: const EdgeInsets.all(15),
+                child: screens[state.selectedIndex],
+              ),
               bottomNavigationBar: Container(
                 margin: const EdgeInsets.all(15),
+                height: 80,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: BottomNavigationBar(
@@ -66,17 +71,7 @@ class Layout extends StatelessWidget {
               ),
             );
           } else {
-            if (context.mounted) {
-              Future.microtask(
-                () => ShowError.show(
-                  context,
-                  "Unable to load the app, Please try again",
-                ),
-              );
-              return const EmptyPage();
-            } else {
-              return const EmptyPage();
-            }
+            return const EmptyPage();
           }
         },
       ),

@@ -84,9 +84,16 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> setSelectedAccount(int id) async {
+  Future<Either<Failure, Unit>> setSelectedAccount(Account account) async {
     try {
-      await cacheDatasource.cacheAccount(id);
+      final AccountModel accountModel = AccountModel(
+        id: account.id,
+        name: account.name,
+        type: account.type,
+        balance: account.balance,
+        currency: account.currency,
+      );
+      await cacheDatasource.cacheAccount(accountModel);
       return const Right(unit);
     } on EmptyCacheException {
       return Left(EmptyCacheFailure());

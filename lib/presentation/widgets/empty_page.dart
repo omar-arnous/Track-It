@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
 class EmptyPage extends StatelessWidget {
-  const EmptyPage({super.key});
+  final String? message;
+  const EmptyPage({super.key, this.message});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(),
+      body: Center(
+        child: Text(
+          message ?? '',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      ),
     );
   }
 }
