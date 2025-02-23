@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:trackit/data/models/transaction_model.dart';
@@ -28,6 +29,7 @@ void main() {
       convertedAmount: 0.0,
       note: "updated transaction",
       date: DateTime.now(),
+      time: TimeOfDay.now(),
       accountId: 1,
       targetAccountId: 1,
       categoryId: 1,

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
 
@@ -10,7 +11,8 @@ class Transaction extends Equatable {
   final double? exchangeRate;
   final double? convertedAmount;
   final String? note;
-  final DateTime? date;
+  final DateTime date;
+  final TimeOfDay time;
   final int accountId;
   final int? targetAccountId;
   final int categoryId;
@@ -23,7 +25,8 @@ class Transaction extends Equatable {
     this.exchangeRate = 0,
     this.convertedAmount = 0,
     this.note,
-    this.date,
+    required this.date,
+    required this.time,
     required this.accountId,
     this.targetAccountId,
     required this.categoryId,

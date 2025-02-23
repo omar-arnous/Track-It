@@ -6,4 +6,5 @@ const String kResetPasswordRoute = '/reset-password';
 const String kLayoutRoute = '/layout';
 // const String kHomeRoute = '/home';
 const String kCategoryRoute = '/category';
-const String kAddEditAccount = '/add-edit-account';
+const String kAddEditAccountRoute = '/add-edit-account';
+const String kAddTransactionRoute = '/add-transaction';

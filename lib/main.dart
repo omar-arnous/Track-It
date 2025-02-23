@@ -8,6 +8,7 @@ import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/config/router.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
+import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'firebase_options.dart';
 
 import 'package:trackit/config/injection_container.dart' as di;
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<CategoryBloc>()..add(GetCategoriesEvent()),
         ),
+        BlocProvider(create: (_) => di.sl<TransactionBloc>()),
         BlocProvider(
           create: (_) => di.sl<AccountBloc>()..add(GetAccountsEvent()),
         ),

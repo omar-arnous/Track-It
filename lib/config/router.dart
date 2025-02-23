@@ -7,6 +7,7 @@ import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
 import 'package:trackit/presentation/pages/auth/signup_page.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/layout.dart';
+import 'package:trackit/presentation/pages/transation/add_transaction.dart';
 
 class AddEditParams {
   final bool isUpdating;
@@ -47,13 +48,20 @@ class Routes {
       ),
       GoRoute(
         name: 'Add Edit account',
-        path: kAddEditAccount,
+        path: kAddEditAccountRoute,
         builder: (context, state) {
           final params = state.extra as AddEditParams?;
           return AccountAddEditPage(
             isUpdateAccount: params?.isUpdating ?? false,
             account: params?.account,
           );
+        },
+      ),
+      GoRoute(
+        name: 'Add transaction',
+        path: kAddTransactionRoute,
+        builder: (context, state) {
+          return const AddTransaction();
         },
       ),
     ],

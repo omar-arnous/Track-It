@@ -87,7 +87,7 @@ class Layout extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => context.push(kAddTransactionRoute),
               icon: const Icon(Icons.add),
             ),
           ],
@@ -100,14 +100,13 @@ class Layout extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () => context.push(kAddEditAccount),
+              onPressed: () => context.push(kAddEditAccountRoute),
               icon: const Icon(Icons.add),
             ),
           ],
         );
       case 2:
         return AppBar(
-          backgroundColor: Colors.white,
           title: const Text(
             'Categories',
             style: TextStyle(color: Colors.black),

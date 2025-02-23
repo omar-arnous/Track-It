@@ -9,10 +9,9 @@ class CategoryItem extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.all(5),
       leading: CircleAvatar(
-        backgroundColor: categoryItem.color,
         child: Icon(
           categoryItem.icon,
-          color: Colors.white,
+          color: categoryItem.color,
         ),
       ),
       title: Text(

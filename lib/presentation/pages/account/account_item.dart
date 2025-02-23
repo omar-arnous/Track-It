@@ -27,7 +27,7 @@ class AccountItem extends StatelessWidget {
       onTap: () {
         if (actionable == true) {
           context.push(
-            kAddEditAccount,
+            kAddEditAccountRoute,
             extra: AddEditParams(
               isUpdating: true,
               account: account,

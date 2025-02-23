@@ -88,16 +88,40 @@ class TrackItTheme {
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: lightTextTheme.labelMedium,
         labelStyle: lightTextTheme.labelLarge,
-        // border: const OutlineInputBorder(
-        //   borderRadius: BorderRadius.all(
-        //     Radius.circular(8),
-        //   ),
-        // ),
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        activeIndicatorBorder: const BorderSide(),
+        filled: true,
+        fillColor: Colors.grey[200],
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.transparent), // Invisible border
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.transparent), // Invisible border
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.transparent), // Invisible border
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.red), // Red border for errors
+        ),
+        disabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.transparent), // Invisible border
+        ),
       ),
       listTileTheme: const ListTileThemeData(
-        iconColor: Colors.white,
-        textColor: Colors.white,
-      ),
+          iconColor: Colors.black,
+          textColor: Colors.black,
+          tileColor: Color(0xFFEEEEEE),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(8),
+            ),
+          )),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

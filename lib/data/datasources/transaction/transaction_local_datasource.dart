@@ -18,7 +18,7 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
   @override
   Future<List<TransactionModel>> getTransactionByAccountId(int id) async {
     final db = await dbService.database;
-    final data = await db.query(kTransactionsTable);
+    final data = await db.query(kTransactionsTable, orderBy: "date DESC");
 
     if (data.isNotEmpty) {
       final List<TransactionModel> transactions = data

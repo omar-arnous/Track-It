@@ -23,7 +23,7 @@ class AccountsListDialog extends StatelessWidget {
               ListTile(
                 onTap: () {
                   context.pop();
-                  context.push(kAddEditAccount);
+                  context.push(kAddEditAccountRoute);
                 },
                 leading: const Icon(
                   Icons.add,

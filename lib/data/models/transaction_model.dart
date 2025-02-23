@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
@@ -11,13 +12,18 @@ class TransactionModel extends Transaction {
     super.exchangeRate,
     super.convertedAmount,
     super.note,
-    super.date,
+    required super.date,
+    required super.time,
     required super.accountId,
     super.targetAccountId,
     required super.categoryId,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
+    final parts = json['time'].split(":");
+    final hour = int.parse(parts[0]);
+    final minute = int.parse(parts[1]);
+
     return TransactionModel(
       id: json['id'],
       transactionType: TransactionType.values.firstWhere(
@@ -31,6 +37,7 @@ class TransactionModel extends Transaction {
       convertedAmount: json['converted_amount'],
       note: json['note'],
       date: DateTime.parse(json['date']),
+      time: TimeOfDay(hour: hour, minute: minute),
       accountId: json['account_id'],
       targetAccountId: json['target_account_id'],
       categoryId: json['category_id'],
@@ -46,7 +53,8 @@ class TransactionModel extends Transaction {
       "exchange_rate": exchangeRate,
       "converted_amount": convertedAmount,
       "note": note,
-      "date": date!.toIso8601String(),
+      "date": date.toIso8601String(),
+      "time": time.toString(),
       "account_id": accountId,
       "target_account_id": targetAccountId ?? accountId,
       "category_id": categoryId,
