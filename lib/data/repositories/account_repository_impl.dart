@@ -99,4 +99,28 @@ class AccountRepositoryImpl implements AccountRepository {
       return Left(EmptyCacheFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> decreaseBalance(int id, double value) async {
+    try {
+      await localDatasource.decreaseBalance(id, value);
+      return const Right(unit);
+    } on DatabaseEditException {
+      return Left(DatabaseEditFailure());
+    } on EmptyDatabaseException {
+      return Left(EmptyDatabaseFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> increaseBalance(int id, double value) async {
+    try {
+      await localDatasource.increaseBalance(id, value);
+      return const Right(unit);
+    } on DatabaseEditException {
+      return Left(DatabaseEditFailure());
+    } on EmptyDatabaseException {
+      return Left(EmptyDatabaseFailure());
+    }
+  }
 }

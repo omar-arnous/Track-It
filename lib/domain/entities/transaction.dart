@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:trackit/domain/entities/account.dart';
+import 'package:trackit/domain/entities/category.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
@@ -15,9 +17,9 @@ class Transaction extends Equatable {
   final String? note;
   final DateTime date;
   final TimeOfDay time;
-  final int accountId;
-  final int? targetAccountId;
-  final int categoryId;
+  final Account account;
+  final Account? targetAccount;
+  final Category category;
 
   const Transaction({
     this.id,
@@ -30,11 +32,25 @@ class Transaction extends Equatable {
     this.note,
     required this.date,
     required this.time,
-    required this.accountId,
-    this.targetAccountId,
-    required this.categoryId,
+    required this.account,
+    this.targetAccount,
+    required this.category,
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        id,
+        transactionType,
+        amount,
+        paymentType,
+        currency,
+        exchangeRate,
+        convertedAmount,
+        note,
+        date,
+        time,
+        account,
+        targetAccount,
+        category,
+      ];
 }

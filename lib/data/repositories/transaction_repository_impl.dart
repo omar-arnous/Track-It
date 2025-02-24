@@ -35,9 +35,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
         note: transaction.note,
         date: transaction.date,
         time: transaction.time,
-        accountId: transaction.accountId,
-        targetAccountId: null,
-        categoryId: transaction.categoryId,
+        account: transaction.account,
+        targetAccount: transaction.targetAccount,
+        category: transaction.category,
       );
       await localDatasource.addTransaction(data);
       return const Right(unit);
@@ -61,9 +61,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
         note: transaction.note,
         date: transaction.date,
         time: transaction.time,
-        accountId: transaction.accountId,
-        targetAccountId: transaction.targetAccountId,
-        categoryId: transaction.categoryId,
+        account: transaction.account,
+        targetAccount: transaction.targetAccount,
+        category: transaction.category,
       );
       await localDatasource.updateTransaction(data);
       return const Right(unit);

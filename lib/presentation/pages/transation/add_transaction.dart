@@ -11,7 +11,6 @@ import 'package:trackit/domain/entities/transaction_type.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
-import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/transation/transaction_type_widget.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
 import 'package:trackit/presentation/widgets/payment_tile.dart';
@@ -75,24 +74,7 @@ class _AddTransactionState extends State<AddTransaction>
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              // final transaction = Transaction(
-              //   transactionType: transactionType,
-              //   amount: double.parse(amountController.text),
-              //   paymentType: paymentType,
-              //   currency: currencyType,
-              //   date: date,
-              //   time: timeOfDay,
-              //   note: noteController.text,
-              //   convertedAmount: 0,
-              //   exchangeRate: 0,
-              //   accountId: account!.id!,
-              //   targetAccountId: account!.id!,
-              //   categoryId: category!.id!,
-              // );
-              print(
-                  "Transaction: $transactionType, ${double.parse(amountController.text)}, $paymentType, $currencyType, $date, $timeOfDay, ${noteController.text} $account, $category");
-            },
+            onPressed: validateForm,
             icon: const Icon(Icons.check),
           ),
         ],
@@ -385,15 +367,43 @@ class _AddTransactionState extends State<AddTransaction>
         note: noteController.text,
         convertedAmount: 0,
         exchangeRate: 0,
-        accountId: account!.id!,
-        targetAccountId: account!.id!,
-        categoryId: category!.id!,
+        account: account!,
+        targetAccount: account!,
+        category: category!,
       );
-      print("Transaction: $transaction");
-      // context.read<TransactionBloc>().add(
-      //       AddTransactionEvent(transaction: transaction),
-      //     );
-      // context.pop();
+
+      context.read<TransactionBloc>().add(
+            AddTransactionEvent(transaction: transaction),
+          );
+      if (transactionType == TransactionType.expense) {
+        context.read<AccountBloc>().add(
+              DecreaseBalanceEvent(
+                id: transaction.account.id!,
+                value: transaction.amount,
+              ),
+            );
+      } else if (transactionType == TransactionType.income) {
+        context.read<AccountBloc>().add(
+              IncreaseBalanceEvent(
+                id: transaction.account.id!,
+                value: transaction.amount,
+              ),
+            );
+      } else {
+        context.read<AccountBloc>().add(
+              DecreaseBalanceEvent(
+                id: transaction.account.id!,
+                value: transaction.amount,
+              ),
+            );
+        context.read<AccountBloc>().add(
+              IncreaseBalanceEvent(
+                id: transaction.targetAccount!.id!,
+                value: transaction.amount,
+              ),
+            );
+      }
+      context.pop();
     }
   }
 }

@@ -6,10 +6,12 @@ import 'package:trackit/core/strings/failures.dart';
 import 'package:trackit/core/strings/messages.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
+import 'package:trackit/domain/usecases/account/decrease_balance.dart';
 import 'package:trackit/domain/usecases/account/delete_account.dart';
 import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
 import 'package:trackit/domain/usecases/account/get_selected_account.dart';
+import 'package:trackit/domain/usecases/account/increasse_balance.dart';
 import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 
 part 'account_event.dart';
@@ -22,6 +24,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final DeleteAccountUsecase deleteAccount;
   final SetSelectedAccountUsecase setSelectedAccount;
   final GetSelectedAccountUsecase getSelectedAccount;
+  final DecreaseBalanceUsecase decreaseBalance;
+  final IncreaseBalanceUsecase increaseBalance;
 
   AccountBloc({
     required this.getAccounts,
@@ -30,6 +34,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this.deleteAccount,
     required this.setSelectedAccount,
     required this.getSelectedAccount,
+    required this.decreaseBalance,
+    required this.increaseBalance,
   }) : super(InitialAccountState()) {
     on<AccountEvent>((event, emit) async {
       if (event is GetAccountsEvent) {
@@ -66,6 +72,16 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
         final res = await deleteAccount(event.id);
         emit(_mapResponseToState(res, kSuccessfullDelete));
+      } else if (event is DecreaseBalanceEvent) {
+        emit(LoadingAccountState());
+
+        final res = await decreaseBalance(event.id, event.value);
+        emit(_mapResponseToState(res, kSuccessfullEdit));
+      } else if (event is IncreaseBalanceEvent) {
+        emit(LoadingAccountState());
+
+        final res = await increaseBalance(event.id, event.value);
+        emit(_mapResponseToState(res, kSuccessfullEdit));
       }
     });
   }

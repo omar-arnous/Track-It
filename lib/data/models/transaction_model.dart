@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trackit/data/models/account_model.dart';
+import 'package:trackit/data/models/category_model.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/transaction.dart';
@@ -16,12 +18,17 @@ class TransactionModel extends Transaction {
     super.note,
     required super.date,
     required super.time,
-    required super.accountId,
-    super.targetAccountId,
-    required super.categoryId,
+    required super.account,
+    super.targetAccount,
+    required super.category,
   });
 
-  factory TransactionModel.fromJson(Map<String, dynamic> json) {
+  factory TransactionModel.fromJson(
+    Map<String, dynamic> json,
+    AccountModel account,
+    AccountModel targetAccount,
+    CategoryModel category,
+  ) {
     final parts = json['time'].split(":");
     final hour = int.parse(parts[0]);
     final minute = int.parse(parts[1]);
@@ -43,9 +50,9 @@ class TransactionModel extends Transaction {
       note: json['note'],
       date: DateTime.parse(json['date']),
       time: TimeOfDay(hour: hour, minute: minute),
-      accountId: json['account_id'],
-      targetAccountId: json['target_account_id'],
-      categoryId: json['category_id'],
+      account: account,
+      targetAccount: targetAccount,
+      category: category,
     );
   }
 
@@ -60,10 +67,10 @@ class TransactionModel extends Transaction {
       "converted_amount": convertedAmount,
       "note": note,
       "date": date.toIso8601String(),
-      "time": time.toString(),
-      "account_id": accountId,
-      "target_account_id": targetAccountId ?? accountId,
-      "category_id": categoryId,
+      "time": "${time.hour}:${time.minute}",
+      "account_id": account.id,
+      "target_account_id": targetAccount?.id ?? account.id,
+      "category_id": category.id,
     };
   }
 }

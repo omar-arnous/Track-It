@@ -18,49 +18,44 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Your Accounts',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          BlocBuilder<AccountBloc, AccountState>(
-            builder: (context, state) {
-              if (state is LoadingAccountState) {
-                return const Spinner();
-              } else if (state is LoadedAccountState) {
-                account = state.accounts.firstWhere(
-                  (account) => account.id == state.selectedAccountId,
-                );
-                return AccountCard(account: account);
-              } else if (state is ErrorAccountState) {
-                return const AccountCard();
-              } else {
-                return const AccountCard();
-              }
-            },
-          ),
-          const SizedBox(height: 24),
-          const Text('Pie Chart'),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Transactions',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 8),
-                const TransactionList(),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Your Accounts',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        BlocBuilder<AccountBloc, AccountState>(
+          builder: (context, state) {
+            if (state is LoadingAccountState) {
+              return const Spinner();
+            } else if (state is LoadedAccountState) {
+              account = state.accounts.firstWhere(
+                (account) => account.id == state.selectedAccountId,
+              );
+              return AccountCard(account: account);
+            } else if (state is ErrorAccountState) {
+              return const AccountCard();
+            } else {
+              return const AccountCard();
+            }
+          },
+        ),
+        const SizedBox(height: 24),
+        const Text('Pie Chart'),
+        const SizedBox(height: 24),
+        Text(
+          'Transactions',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        const SizedBox(height: 8),
+        const TransactionList(),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //   ],
+        // ),
+      ],
     );
   }
 }

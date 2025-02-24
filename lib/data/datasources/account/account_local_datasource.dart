@@ -9,6 +9,8 @@ abstract class AccountLocalDatasource {
   Future<Unit> addAccount(AccountModel account);
   Future<Unit> editAccount(AccountModel account);
   Future<Unit> deleteAccount(int id);
+  Future<Unit> decreaseBalance(int id, double value);
+  Future<Unit> increaseBalance(int id, double value);
 }
 
 class AccountLocalDatasourceImpl implements AccountLocalDatasource {
@@ -74,5 +76,69 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
     }
 
     return Future.value(unit);
+  }
+
+  @override
+  Future<Unit> decreaseBalance(int id, double value) async {
+    final db = await dbService.database;
+    List<Map<String, dynamic>> accounts = await db.query(
+      kAccountsTable,
+      columns: ['balance'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (accounts.isNotEmpty) {
+      double currentBalance = accounts.first['balance'];
+
+      double newBalance = currentBalance - value;
+
+      final res = await db.update(
+        kAccountsTable,
+        {'balance': newBalance},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (res == 0) {
+        throw DatabaseEditException();
+      } else {
+        return Future.value(unit);
+      }
+    } else {
+      throw EmptyDatabaseException();
+    }
+  }
+
+  @override
+  Future<Unit> increaseBalance(int id, double value) async {
+    final db = await dbService.database;
+    List<Map<String, dynamic>> accounts = await db.query(
+      kAccountsTable,
+      columns: ['balance'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (accounts.isNotEmpty) {
+      double currentBalance = accounts.first['balance'];
+
+      double newBalance = currentBalance + value;
+
+      final res = await db.update(
+        kAccountsTable,
+        {'balance': newBalance},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (res == 0) {
+        throw DatabaseEditException();
+      } else {
+        return Future.value(unit);
+      }
+    } else {
+      throw EmptyDatabaseException();
+    }
   }
 }

@@ -40,3 +40,23 @@ class DeleteAccountEvent extends AccountEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class DecreaseBalanceEvent extends AccountEvent {
+  final int id;
+  final double value;
+
+  const DecreaseBalanceEvent({required this.id, required this.value});
+
+  @override
+  List<Object?> get props => [id, value];
+}
+
+class IncreaseBalanceEvent extends AccountEvent {
+  final int id;
+  final double value;
+
+  const IncreaseBalanceEvent({required this.id, required this.value});
+
+  @override
+  List<Object?> get props => [id, value];
+}

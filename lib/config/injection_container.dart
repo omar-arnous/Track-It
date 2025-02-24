@@ -22,10 +22,12 @@ import 'package:trackit/domain/repositories/auth_repository.dart';
 import 'package:trackit/domain/repositories/category_repository.dart';
 import 'package:trackit/domain/repositories/transaction_repository.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
+import 'package:trackit/domain/usecases/account/decrease_balance.dart';
 import 'package:trackit/domain/usecases/account/delete_account.dart';
 import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
 import 'package:trackit/domain/usecases/account/get_selected_account.dart';
+import 'package:trackit/domain/usecases/account/increasse_balance.dart';
 import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 import 'package:trackit/domain/usecases/app/get_onboarding_state.dart';
 import 'package:trackit/domain/usecases/app/get_theme.dart';
@@ -80,6 +82,8 @@ Future<void> init() async {
       deleteAccount: sl(),
       setSelectedAccount: sl(),
       getSelectedAccount: sl(),
+      decreaseBalance: sl(),
+      increaseBalance: sl(),
     ),
   );
 
@@ -107,6 +111,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => EditAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteAccountUsecase(repository: sl()));
+  sl.registerLazySingleton(() => DecreaseBalanceUsecase(repository: sl()));
+  sl.registerLazySingleton(() => IncreaseBalanceUsecase(repository: sl()));
   sl.registerLazySingleton(() => SetSelectedAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetSelectedAccountUsecase(repository: sl()));
   sl.registerLazySingleton(

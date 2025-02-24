@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:trackit/config/local_service.dart';
 import 'package:trackit/core/constants/db_constants.dart';
 import 'package:trackit/core/errors/exceptions.dart';
+import 'package:trackit/data/models/account_model.dart';
+import 'package:trackit/data/models/category_model.dart';
 import 'package:trackit/data/models/transaction_model.dart';
 
 abstract class TransactionLocalDatasource {
@@ -21,10 +23,31 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
     final data = await db.query(kTransactionsTable, orderBy: "date DESC");
 
     if (data.isNotEmpty) {
-      final List<TransactionModel> transactions = data
-          .map<TransactionModel>(
-              (transaction) => TransactionModel.fromJson(transaction))
-          .toList();
+      List<TransactionModel> transactions = [];
+      for (var transaction in data) {
+        final accountData = await db.query(
+          kAccountsTable,
+          where: 'id = ?',
+          whereArgs: [transaction['account_id']],
+        );
+        final account = AccountModel.fromJson(accountData.first);
+        final targetAccountData = await db.query(
+          kAccountsTable,
+          where: 'id = ?',
+          whereArgs: [transaction['target_account_id']],
+        );
+        final targetAccount = AccountModel.fromJson(targetAccountData.first);
+        final categoryData = await db.query(
+          kCategoriesTable,
+          where: 'id = ?',
+          whereArgs: [transaction['category_id']],
+        );
+        final category = CategoryModel.fromJson(categoryData.first);
+        transactions.add(
+          TransactionModel.fromJson(
+              transaction, account, targetAccount, category),
+        );
+      }
       return transactions;
     } else {
       throw EmptyDatabaseException();
@@ -57,6 +80,7 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
     if (res == 0) {
       throw DatabaseEditException();
     } else {
+      // final account = db.query(kAccountsTable, );
       return Future.value(unit);
     }
   }
