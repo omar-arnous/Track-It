@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
@@ -34,7 +33,7 @@ class TransactionList extends StatelessWidget {
           } else if (state is EmptyTransactionState) {
             return NoData(message: state.message);
           } else {
-            return const EmptyPage();
+            return const Spinner();
           }
         },
       ),

@@ -16,7 +16,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
     try {
       List<CategoryModel> categoriesData = categories
           .map((category) => CategoryModel(
-              name: category.name, icon: category.icon, color: category.color))
+                id: category.id,
+                name: category.name,
+                icon: category.icon,
+                color: category.color,
+              ))
           .toList();
       await localDatasource.addCategory(categoriesData);
       return const Right(unit);

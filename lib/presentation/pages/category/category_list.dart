@@ -19,7 +19,9 @@ class CategoryList extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemCount: categories.length,
             itemBuilder: (context, index) {
-              return CategoryItem(categoryItem: categories[index]);
+              return CategoryItem(
+                categoryItem: categories[index],
+              );
             },
             separatorBuilder: (context, index) {
               return const Divider(thickness: 1);

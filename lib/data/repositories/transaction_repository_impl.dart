@@ -28,6 +28,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       final data = TransactionModel(
         transactionType: transaction.transactionType,
         amount: transaction.amount,
+        paymentType: transaction.paymentType,
         currency: transaction.currency,
         exchangeRate: transaction.exchangeRate,
         convertedAmount: transaction.convertedAmount,
@@ -53,6 +54,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
         id: transaction.id,
         transactionType: transaction.transactionType,
         amount: transaction.amount,
+        paymentType: transaction.paymentType,
         currency: transaction.currency,
         exchangeRate: transaction.exchangeRate,
         convertedAmount: transaction.convertedAmount,

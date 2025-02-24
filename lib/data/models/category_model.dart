@@ -4,7 +4,7 @@ import 'package:trackit/domain/entities/category.dart';
 
 class CategoryModel extends Category {
   const CategoryModel({
-    super.id,
+    required super.id,
     required super.name,
     required super.icon,
     required super.color,
@@ -21,6 +21,7 @@ class CategoryModel extends Category {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'icon': IconConvertor.iconDataToString(icon),
       'color': ColorConvertor.colorToHexString(color),

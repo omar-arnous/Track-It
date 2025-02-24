@@ -34,7 +34,7 @@ class LocalService {
     ''');
     await db.execute('''
       CREATE TABLE $kCategoriesTable (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         icon TEXT,
         color TEXT 

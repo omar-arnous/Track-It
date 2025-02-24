@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
+import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
 
@@ -8,6 +9,7 @@ class TransactionModel extends Transaction {
     super.id,
     required super.transactionType,
     required super.amount,
+    required super.paymentType,
     required super.currency,
     super.exchangeRate,
     super.convertedAmount,
@@ -30,6 +32,9 @@ class TransactionModel extends Transaction {
         (e) => e.toString() == json['type'],
       ),
       amount: json['amount'],
+      paymentType: PaymentType.values.firstWhere(
+        (e) => e.toString() == json['payment_type'],
+      ),
       currency: CurrencyType.values.firstWhere(
         (e) => e.toString() == json['currency'],
       ),
@@ -49,6 +54,7 @@ class TransactionModel extends Transaction {
       "id": id,
       "type": transactionType.toString(),
       "amount": amount,
+      "payment_type": paymentType.toString(),
       "currency": currency.toString(),
       "exchange_rate": exchangeRate,
       "converted_amount": convertedAmount,

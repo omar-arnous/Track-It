@@ -25,7 +25,6 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
           .map<TransactionModel>(
               (transaction) => TransactionModel.fromJson(transaction))
           .toList();
-      print("Transactions: $transactions");
       return transactions;
     } else {
       throw EmptyDatabaseException();
@@ -37,7 +36,6 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
     final db = await dbService.database;
     final data = transaction.toJson();
     final res = await db.insert(kTransactionsTable, data);
-    print("Add Transaction res: $res");
     if (res > 0) {
       return Future.value(unit);
     } else {

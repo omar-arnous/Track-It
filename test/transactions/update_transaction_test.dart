@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:trackit/data/models/transaction_model.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
+import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
 import 'package:trackit/domain/repositories/transaction_repository.dart';
 import 'package:trackit/domain/usecases/transaction/update_transaction.dart';
@@ -24,6 +25,7 @@ void main() {
       id: 1,
       transactionType: TransactionType.income,
       amount: 1000,
+      paymentType: PaymentType.cash,
       currency: CurrencyType.syp,
       exchangeRate: 0,
       convertedAmount: 0.0,

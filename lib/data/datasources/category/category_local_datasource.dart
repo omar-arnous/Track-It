@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:trackit/config/local_service.dart';
 import 'package:trackit/core/constants/db_constants.dart';
 import 'package:trackit/core/errors/exceptions.dart';
@@ -19,7 +20,11 @@ class CategoryLocalDatasourceImpl implements CategoryLocalDatasource {
     categories.map(
       (category) async {
         final data = category.toJson();
-        final res = await db.insert(kCategoriesTable, data);
+        final res = await db.insert(
+          kCategoriesTable,
+          data,
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
         if (res > 0) {
           return Future.value(unit);
         } else {

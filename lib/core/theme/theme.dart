@@ -78,13 +78,13 @@ class TrackItTheme {
       secondaryHeaderColor: Colors.black,
       brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
+      textTheme: lightTextTheme,
       appBarTheme: AppBarTheme(
         centerTitle: true,
         titleTextStyle: lightTextTheme.titleMedium,
         color: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      textTheme: lightTextTheme,
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: lightTextTheme.labelMedium,
         labelStyle: lightTextTheme.labelLarge,
@@ -114,14 +114,15 @@ class TrackItTheme {
         ),
       ),
       listTileTheme: const ListTileThemeData(
-          iconColor: Colors.black,
-          textColor: Colors.black,
-          tileColor: Color(0xFFEEEEEE),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
-            ),
-          )),
+        iconColor: Colors.black,
+        textColor: Colors.black,
+        tileColor: Color(0xFFEEEEEE),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+        ),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

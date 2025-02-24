@@ -7,8 +7,10 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: Colors.white,
       contentPadding: const EdgeInsets.all(5),
       leading: CircleAvatar(
+        backgroundColor: Colors.grey[100],
         child: Icon(
           categoryItem.icon,
           color: categoryItem.color,
