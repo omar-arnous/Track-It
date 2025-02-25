@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
+import 'package:trackit/presentation/pages/transation/transaction_tile.dart';
 import 'package:trackit/presentation/widgets/no_data.dart';
 import 'package:trackit/presentation/widgets/show_snack_message.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
@@ -52,29 +52,7 @@ class TransactionList extends StatelessWidget {
       child: ListView.separated(
         itemCount: count ?? transactions.length,
         itemBuilder: (context, index) {
-          final transaction = transactions[index];
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.grey[100],
-              child: Icon(
-                transaction.category.icon,
-                color: transaction.category.color,
-              ),
-            ),
-            title: Column(
-              children: [
-                Text(transaction.category.name),
-                Text(transaction.account.type.name),
-                Text(transaction.note ?? ''),
-              ],
-            ),
-            trailing: Column(
-              children: [
-                Text(Formatter.formatBalance(transaction.amount)),
-                Text(Formatter.formatDate(transaction.date)),
-              ],
-            ),
-          );
+          return TransactionTile(transaction: transactions[index]);
         },
         separatorBuilder: (context, index) {
           return const SizedBox(height: 8);

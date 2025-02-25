@@ -42,10 +42,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<CategoryBloc>()..add(GetCategoriesEvent()),
         ),
-        BlocProvider(create: (_) => di.sl<TransactionBloc>()),
         BlocProvider(
           create: (_) => di.sl<AccountBloc>()..add(GetAccountsEvent()),
         ),
+        BlocProvider(create: (_) => di.sl<TransactionBloc>()),
       ],
       child: MaterialApp.router(
         title: 'Track It',
