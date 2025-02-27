@@ -10,6 +10,7 @@ class AccountModel extends Account {
     required super.name,
     required super.type,
     required super.balance,
+    required super.oldBalance,
     super.color,
     required super.currency,
   });
@@ -20,6 +21,7 @@ class AccountModel extends Account {
       name: json['name'],
       type: AccountType.values.firstWhere((e) => e.toString() == json['type']),
       balance: json['balance'],
+      oldBalance: json['old_balance'],
       color: ColorConvertor.hexStringToColor(json['color']),
       currency: CurrencyType.values
           .firstWhere((e) => e.toString() == json['currency']),
@@ -34,6 +36,7 @@ class AccountModel extends Account {
       type: AccountType.values
           .firstWhere((e) => e.toString() == snapshot.data()['type']),
       balance: snapshot.data()['balance'],
+      oldBalance: snapshot.data()['old_balance'],
       color: ColorConvertor.hexStringToColor(snapshot.data()['color']),
       currency: CurrencyType.values
           .firstWhere((e) => e.toString() == snapshot.data()['currency']),
@@ -46,6 +49,7 @@ class AccountModel extends Account {
       'name': name,
       'type': type.toString(),
       'balance': balance,
+      'old_balance': oldBalance,
       'color': ColorConvertor.colorToHexString(color),
       'currency': currency.toString(),
     };

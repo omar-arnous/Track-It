@@ -11,4 +11,5 @@ abstract class AccountRepository {
   Future<Either<Failure, Unit>> setSelectedAccount(Account account);
   Future<Either<Failure, Unit>> decreaseBalance(int id, double value);
   Future<Either<Failure, Unit>> increaseBalance(int id, double value);
+  Future<Either<Failure, Unit>> reverseBalance(int id);
 }

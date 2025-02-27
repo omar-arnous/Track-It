@@ -33,6 +33,7 @@ class AccountRepositoryImpl implements AccountRepository {
         name: account.name,
         type: account.type,
         balance: account.balance,
+        oldBalance: account.oldBalance,
         color: account.color,
         currency: account.currency,
       );
@@ -52,6 +53,7 @@ class AccountRepositoryImpl implements AccountRepository {
         name: account.name,
         type: account.type,
         balance: account.balance,
+        oldBalance: account.oldBalance,
         color: account.color,
         currency: account.currency,
       );
@@ -91,6 +93,7 @@ class AccountRepositoryImpl implements AccountRepository {
         name: account.name,
         type: account.type,
         balance: account.balance,
+        oldBalance: account.oldBalance,
         currency: account.currency,
       );
       await cacheDatasource.cacheAccount(accountModel);
@@ -121,6 +124,16 @@ class AccountRepositoryImpl implements AccountRepository {
       return Left(DatabaseEditFailure());
     } on EmptyDatabaseException {
       return Left(EmptyDatabaseFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> reverseBalance(int id) async {
+    try {
+      await localDatasource.reverseBalance(id);
+      return const Right(unit);
+    } on DatabaseEditException {
+      return Left(DatabaseEditFailure());
     }
   }
 }

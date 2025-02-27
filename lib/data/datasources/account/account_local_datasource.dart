@@ -11,6 +11,7 @@ abstract class AccountLocalDatasource {
   Future<Unit> deleteAccount(int id);
   Future<Unit> decreaseBalance(int id, double value);
   Future<Unit> increaseBalance(int id, double value);
+  Future<Unit> reverseBalance(int id);
 }
 
 class AccountLocalDatasourceImpl implements AccountLocalDatasource {
@@ -83,7 +84,7 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
     final db = await dbService.database;
     List<Map<String, dynamic>> accounts = await db.query(
       kAccountsTable,
-      columns: ['balance'],
+      columns: ['balance', 'old_balance'],
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -95,7 +96,7 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
 
       final res = await db.update(
         kAccountsTable,
-        {'balance': newBalance},
+        {'balance': newBalance, 'old_balance': currentBalance},
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -115,7 +116,7 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
     final db = await dbService.database;
     List<Map<String, dynamic>> accounts = await db.query(
       kAccountsTable,
-      columns: ['balance'],
+      columns: ['balance', 'old_balance'],
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -127,7 +128,39 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
 
       final res = await db.update(
         kAccountsTable,
-        {'balance': newBalance},
+        {'balance': newBalance, 'old_balance': currentBalance},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+      if (res == 0) {
+        throw DatabaseEditException();
+      } else {
+        return Future.value(unit);
+      }
+    } else {
+      throw EmptyDatabaseException();
+    }
+  }
+
+  @override
+  Future<Unit> reverseBalance(int id) async {
+    final db = await dbService.database;
+    List<Map<String, dynamic>> accounts = await db.query(
+      kAccountsTable,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (accounts.isNotEmpty) {
+      final account = accounts.first;
+
+      final res = await db.update(
+        kAccountsTable,
+        {
+          "balance": account['old_balance'],
+          "old_balance": account['balance'],
+        },
         where: 'id = ?',
         whereArgs: [id],
       );

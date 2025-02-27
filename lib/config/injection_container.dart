@@ -28,6 +28,7 @@ import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
 import 'package:trackit/domain/usecases/account/get_selected_account.dart';
 import 'package:trackit/domain/usecases/account/increasse_balance.dart';
+import 'package:trackit/domain/usecases/account/reverse_balance.dart';
 import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 import 'package:trackit/domain/usecases/app/get_onboarding_state.dart';
 import 'package:trackit/domain/usecases/app/get_theme.dart';
@@ -84,6 +85,7 @@ Future<void> init() async {
       getSelectedAccount: sl(),
       decreaseBalance: sl(),
       increaseBalance: sl(),
+      reverseBalance: sl(),
     ),
   );
 
@@ -113,6 +115,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => DecreaseBalanceUsecase(repository: sl()));
   sl.registerLazySingleton(() => IncreaseBalanceUsecase(repository: sl()));
+  sl.registerLazySingleton(() => ReverseBalanceUsecase(repository: sl()));
   sl.registerLazySingleton(() => SetSelectedAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetSelectedAccountUsecase(repository: sl()));
   sl.registerLazySingleton(

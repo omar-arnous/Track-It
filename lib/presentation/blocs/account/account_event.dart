@@ -60,3 +60,12 @@ class IncreaseBalanceEvent extends AccountEvent {
   @override
   List<Object?> get props => [id, value];
 }
+
+class ReverseBalanceEvent extends AccountEvent {
+  final int id;
+
+  const ReverseBalanceEvent({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}

@@ -5,6 +5,7 @@ import 'package:trackit/core/errors/exceptions.dart';
 import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/data/models/category_model.dart';
 import 'package:trackit/data/models/transaction_model.dart';
+import 'package:trackit/domain/entities/transaction_type.dart';
 
 abstract class TransactionLocalDatasource {
   Future<List<TransactionModel>> getTransactionByAccountId(int id);
@@ -88,6 +89,46 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
   @override
   Future<Unit> deleteTransaction(int id) async {
     final db = await dbService.database;
+    List<Map<String, dynamic>> transactions = await db.query(
+      kTransactionsTable,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (transactions.isEmpty) {
+      throw EmptyDatabaseException();
+    }
+
+    final transaction = transactions.first;
+
+    List<Map<String, dynamic>> accounts = await db.query(
+      kAccountsTable,
+      where: 'id = ?',
+      whereArgs: [
+        transactions.first['account_id'],
+      ],
+    );
+
+    if (accounts.isEmpty) {
+      throw Exception("Account not found");
+    }
+
+    final account = accounts.first;
+    double newBalance = account['balance'].toDouble();
+
+    if (transaction['type'] == TransactionType.expense.toString()) {
+      newBalance += transaction['amount'];
+    } else if (transaction['type'] == TransactionType.income.toString()) {
+      newBalance -= transaction['amount'];
+    }
+
+    await db.update(
+      kAccountsTable,
+      {'balance': newBalance},
+      where: 'id = ?',
+      whereArgs: [account['id']],
+    );
+
     final res = await db.delete(
       kTransactionsTable,
       where: 'id = ?',

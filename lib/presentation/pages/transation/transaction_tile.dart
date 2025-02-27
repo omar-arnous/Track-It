@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:trackit/config/router.dart';
+import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
+import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
 
@@ -10,6 +14,13 @@ class TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => context.push(
+        kAddEditTransactionRoute,
+        extra: AddEditTransactionParams(
+          isUpdating: true,
+          transaction: transaction,
+        ),
+      ),
       leading: CircleAvatar(
         backgroundColor: Colors.grey[100],
         child: Icon(
@@ -25,18 +36,20 @@ class TransactionTile extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(
-            transaction.account.type.name,
+            mapPaymentTypeToString(transaction.paymentType),
             style: Theme.of(context).textTheme.labelMedium,
           ),
           Text(
             transaction.note ?? '',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
           ),
         ],
       ),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             transaction.transactionType == TransactionType.expense

@@ -1,19 +1,27 @@
 import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/domain/entities/account.dart';
+import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/presentation/pages/account/account_add_edit_page.dart';
 import 'package:trackit/presentation/pages/auth/login_page.dart';
 import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
 import 'package:trackit/presentation/pages/auth/signup_page.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/layout.dart';
-import 'package:trackit/presentation/pages/transation/add_transaction.dart';
+import 'package:trackit/presentation/pages/transation/add_edit_transaction.dart';
 
-class AddEditParams {
+class AddEditAccountParams {
   final bool isUpdating;
   final Account? account;
 
-  AddEditParams({this.account, this.isUpdating = false});
+  AddEditAccountParams({this.account, this.isUpdating = false});
+}
+
+class AddEditTransactionParams {
+  final bool isUpdating;
+  final Transaction? transaction;
+
+  AddEditTransactionParams({this.transaction, this.isUpdating = false});
 }
 
 class Routes {
@@ -50,7 +58,7 @@ class Routes {
         name: 'Add Edit account',
         path: kAddEditAccountRoute,
         builder: (context, state) {
-          final params = state.extra as AddEditParams?;
+          final params = state.extra as AddEditAccountParams?;
           return AccountAddEditPage(
             isUpdateAccount: params?.isUpdating ?? false,
             account: params?.account,
@@ -59,9 +67,13 @@ class Routes {
       ),
       GoRoute(
         name: 'Add transaction',
-        path: kAddTransactionRoute,
+        path: kAddEditTransactionRoute,
         builder: (context, state) {
-          return const AddTransaction();
+          final params = state.extra as AddEditTransactionParams?;
+          return AddEditTransaction(
+            isUpdating: params?.isUpdating ?? false,
+            transaction: params?.transaction,
+          );
         },
       ),
     ],

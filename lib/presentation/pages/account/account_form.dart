@@ -235,6 +235,7 @@ class _AccountFormState extends State<AccountForm> {
           name: _nameController.text,
           type: _accountType,
           balance: double.parse(_balanceController.text),
+          oldBalance: double.parse(_balanceController.text),
           currency: _currencyType,
           color: _currentColor,
         );
@@ -246,6 +247,7 @@ class _AccountFormState extends State<AccountForm> {
           name: _nameController.text,
           type: _accountType,
           balance: double.parse(_balanceController.text),
+          oldBalance: double.parse(_balanceController.text),
           currency: _currencyType,
           color: _currentColor,
         );

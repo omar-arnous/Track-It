@@ -12,6 +12,7 @@ import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
 import 'package:trackit/domain/usecases/account/get_selected_account.dart';
 import 'package:trackit/domain/usecases/account/increasse_balance.dart';
+import 'package:trackit/domain/usecases/account/reverse_balance.dart';
 import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 
 part 'account_event.dart';
@@ -26,6 +27,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final GetSelectedAccountUsecase getSelectedAccount;
   final DecreaseBalanceUsecase decreaseBalance;
   final IncreaseBalanceUsecase increaseBalance;
+  final ReverseBalanceUsecase reverseBalance;
 
   AccountBloc({
     required this.getAccounts,
@@ -36,6 +38,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this.getSelectedAccount,
     required this.decreaseBalance,
     required this.increaseBalance,
+    required this.reverseBalance,
   }) : super(InitialAccountState()) {
     on<AccountEvent>((event, emit) async {
       if (event is GetAccountsEvent) {
@@ -81,6 +84,11 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         emit(LoadingAccountState());
 
         final res = await increaseBalance(event.id, event.value);
+        emit(_mapResponseToState(res, kSuccessfullEdit));
+      } else if (event is ReverseBalanceEvent) {
+        emit(LoadingAccountState());
+
+        final res = await reverseBalance(event.id);
         emit(_mapResponseToState(res, kSuccessfullEdit));
       }
     });

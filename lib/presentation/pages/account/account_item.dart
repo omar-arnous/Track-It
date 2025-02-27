@@ -28,7 +28,7 @@ class AccountItem extends StatelessWidget {
         if (actionable == true) {
           context.push(
             kAddEditAccountRoute,
-            extra: AddEditParams(
+            extra: AddEditAccountParams(
               isUpdating: true,
               account: account,
             ),
@@ -74,16 +74,19 @@ class AccountItem extends StatelessWidget {
           ? IconButton(
               onPressed: () {
                 showDeleteDialog(
-                  context,
-                  () => context.read<AccountBloc>().add(
-                        DeleteAccountEvent(
-                          id: account.id!,
-                        ),
-                      ),
-                  'delete',
-                  'Delete ${account.name}',
-                  'Are you sure you want to delete this account?',
-                  'account deleted succesfully',
+                  context: context,
+                  onConfirm: () async {
+                    context.read<AccountBloc>().add(
+                          DeleteAccountEvent(
+                            id: account.id!,
+                          ),
+                        );
+                  },
+                  label: 'delete',
+                  title: 'Delete ${account.name}',
+                  content: 'Are you sure you want to delete this account?',
+                  showSnack: true,
+                  snakMessage: 'account deleted succesfully',
                 );
               },
               icon: const Icon(

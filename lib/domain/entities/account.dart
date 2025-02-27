@@ -8,6 +8,7 @@ class Account extends Equatable {
   final String name;
   final AccountType type;
   final double balance;
+  final double oldBalance;
   final Color color;
   final CurrencyType currency;
 
@@ -16,6 +17,7 @@ class Account extends Equatable {
     required this.name,
     required this.type,
     required this.balance,
+    required this.oldBalance,
     this.color = Colors.grey,
     required this.currency,
   });

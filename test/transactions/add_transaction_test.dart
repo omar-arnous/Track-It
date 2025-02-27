@@ -38,12 +38,14 @@ void main() {
         name: 'wallet',
         type: AccountType.cash,
         balance: 0,
+        oldBalance: 0,
         currency: CurrencyType.syp,
       ),
       targetAccount: const Account(
         name: 'wallet',
         type: AccountType.cash,
         balance: 0,
+        oldBalance: 0,
         currency: CurrencyType.syp,
       ),
       category: const CategoryModel(

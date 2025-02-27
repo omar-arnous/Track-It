@@ -14,16 +14,23 @@ import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'package:trackit/presentation/pages/transation/transaction_type_widget.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
 import 'package:trackit/presentation/widgets/payment_tile.dart';
+import 'package:trackit/presentation/widgets/show_delete_confirm_dialog.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 
-class AddTransaction extends StatefulWidget {
-  const AddTransaction({super.key});
+class AddEditTransaction extends StatefulWidget {
+  final Transaction? transaction;
+  final bool isUpdating;
+  const AddEditTransaction({
+    super.key,
+    this.transaction,
+    this.isUpdating = false,
+  });
 
   @override
-  State<AddTransaction> createState() => _AddTransactionState();
+  State<AddEditTransaction> createState() => _AddEditTransactionState();
 }
 
-class _AddTransactionState extends State<AddTransaction>
+class _AddEditTransactionState extends State<AddEditTransaction>
     with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   late TextEditingController amountController;
@@ -46,14 +53,34 @@ class _AddTransactionState extends State<AddTransaction>
   void initState() {
     super.initState();
     context.read<AccountBloc>().add(GetAccountsEvent());
-    amountController = TextEditingController(text: "0");
-    noteController = TextEditingController();
-    date = DateTime.now();
-    timeOfDay = TimeOfDay.now();
-    transactionType = TransactionType.expense;
-    paymentType = PaymentType.cash;
-    currencyType = CurrencyType.syp;
     _tabController = TabController(length: 3, vsync: this);
+    if (widget.isUpdating) {
+      final transaction = widget.transaction!;
+      amountController =
+          TextEditingController(text: transaction.amount.toString());
+      noteController = TextEditingController(text: transaction.note);
+      date = transaction.date;
+      timeOfDay = transaction.time;
+      transactionType = transaction.transactionType;
+      paymentType = transaction.paymentType;
+      currencyType = transaction.currency;
+      category = transaction.category;
+      if (transactionType == TransactionType.expense) {
+        _tabController.index = 0;
+      } else if (transactionType == TransactionType.income) {
+        _tabController.index = 1;
+      } else {
+        _tabController.index = 2;
+      }
+    } else {
+      amountController = TextEditingController(text: "0");
+      noteController = TextEditingController();
+      date = DateTime.now();
+      timeOfDay = TimeOfDay.now();
+      transactionType = TransactionType.expense;
+      paymentType = PaymentType.cash;
+      currencyType = CurrencyType.syp;
+    }
   }
 
   @override
@@ -66,13 +93,22 @@ class _AddTransactionState extends State<AddTransaction>
 
   @override
   Widget build(BuildContext context) {
+    final isUpdate = widget.isUpdating;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Transaction',
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          isUpdate ? 'Edit Transaction' : 'Add Transaction',
+          style: const TextStyle(color: Colors.black),
         ),
         actions: [
+          if (isUpdate)
+            IconButton(
+              onPressed: deleteTransaction,
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            ),
           IconButton(
             onPressed: validateForm,
             icon: const Icon(Icons.check),
@@ -125,6 +161,7 @@ class _AddTransactionState extends State<AddTransaction>
                       controller: amountController,
                       label: '',
                       leading: const Text('Amount'),
+                      alignTextEnd: true,
                       trailing: Text(
                         Formatter.formatCurrency(currencyType.name),
                       ),
@@ -353,11 +390,35 @@ class _AddTransactionState extends State<AddTransaction>
     );
   }
 
+  void deleteTransaction() async {
+    await showDeleteDialog(
+      context: context,
+      onConfirm: () async {
+        context.read<TransactionBloc>().add(
+              DeleteTransactionEvent(id: widget.transaction!.id!),
+            );
+        await Future.delayed(const Duration(milliseconds: 300));
+        if (!mounted) return;
+        context.read<AccountBloc>().add(GetAccountsEvent());
+      },
+      label: 'delete',
+      title: 'Delete transaction',
+      content: 'Are you sure you want to delete this transaction',
+    );
+
+    if (!mounted) return;
+    // context.read<TransactionBloc>().add(
+    //       GetTransactionsByAccountEvent(accountId: account!.id!),
+    //     );
+    context.pop();
+  }
+
   void validateForm() {
     final isValid = formKey.currentState!.validate();
 
     if (isValid) {
       final transaction = Transaction(
+        id: widget.transaction?.id,
         transactionType: transactionType,
         amount: double.parse(amountController.text),
         paymentType: paymentType,
@@ -371,10 +432,19 @@ class _AddTransactionState extends State<AddTransaction>
         targetAccount: account!,
         category: category!,
       );
+      if (widget.isUpdating) {
+        context.read<AccountBloc>().add(
+              ReverseBalanceEvent(id: account!.id!),
+            );
+        context.read<TransactionBloc>().add(
+              UpdateTransactionEvent(transaction: transaction),
+            );
+      } else {
+        context.read<TransactionBloc>().add(
+              AddTransactionEvent(transaction: transaction),
+            );
+      }
 
-      context.read<TransactionBloc>().add(
-            AddTransactionEvent(transaction: transaction),
-          );
       if (transactionType == TransactionType.expense) {
         context.read<AccountBloc>().add(
               DecreaseBalanceEvent(

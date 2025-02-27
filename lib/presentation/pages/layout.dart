@@ -87,7 +87,7 @@ class Layout extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () => context.push(kAddTransactionRoute),
+              onPressed: () => context.push(kAddEditTransactionRoute),
               icon: const Icon(Icons.add),
             ),
           ],

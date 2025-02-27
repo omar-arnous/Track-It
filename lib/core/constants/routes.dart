@@ -7,4 +7,4 @@ const String kLayoutRoute = '/layout';
 // const String kHomeRoute = '/home';
 const String kCategoryRoute = '/category';
 const String kAddEditAccountRoute = '/add-edit-account';
-const String kAddTransactionRoute = '/add-transaction';
+const String kAddEditTransactionRoute = '/add-edit-transaction';

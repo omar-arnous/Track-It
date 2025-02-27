@@ -6,6 +6,7 @@ class FormInput extends StatefulWidget {
   bool secure;
   final bool focus;
   final bool require;
+  final bool? alignTextEnd;
   final String? label;
   final String hint;
   final Type type;
@@ -22,6 +23,7 @@ class FormInput extends StatefulWidget {
     this.require = false,
     this.leading,
     this.trailing,
+    this.alignTextEnd = false,
     required this.controller,
     required this.label,
   });
@@ -45,6 +47,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
               keyboardType: TextInputType.text,
@@ -80,6 +83,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
               keyboardType: TextInputType.emailAddress,
@@ -121,6 +125,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
               keyboardType: TextInputType.visiblePassword,
@@ -172,6 +177,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
               keyboardType: TextInputType.number,
@@ -206,6 +212,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
               keyboardType: TextInputType.text,
