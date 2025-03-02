@@ -6,6 +6,7 @@ import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
+import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'package:trackit/presentation/widgets/show_delete_confirm_dialog.dart';
 
 class AccountItem extends StatelessWidget {
@@ -36,6 +37,9 @@ class AccountItem extends StatelessWidget {
         } else {
           context.read<AccountBloc>().add(
                 SelectAccountEvent(account: account),
+              );
+          context.read<TransactionBloc>().add(
+                GetTransactionsByAccountEvent(accountId: account.id!),
               );
           context.pop();
         }

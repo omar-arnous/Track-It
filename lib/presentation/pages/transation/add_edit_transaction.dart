@@ -33,17 +33,18 @@ class AddEditTransaction extends StatefulWidget {
 class _AddEditTransactionState extends State<AddEditTransaction>
     with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
+  final FocusNode amountFocusNode = FocusNode();
   late TextEditingController amountController;
   late TextEditingController noteController;
   late DateTime date;
   late TimeOfDay timeOfDay;
   Account? account;
+  Account? targetAccount;
   Category? category;
   late TransactionType transactionType;
   late CurrencyType currencyType;
   late PaymentType paymentType;
   late TabController _tabController;
-  List<Account> accounts = [];
 
   bool expense = true;
   bool income = false;
@@ -121,7 +122,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
           listener: (context, state) {
             if (state is LoadedAccountState) {
               setState(() {
-                accounts = state.accounts;
                 account = state.accounts
                     .firstWhere((e) => e.id == state.selectedAccountId);
                 currencyType = state.accounts
@@ -159,6 +159,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     const SizedBox(height: 10),
                     FormInput(
                       controller: amountController,
+                      focusNode: amountFocusNode,
                       label: '',
                       leading: const Text('Amount'),
                       alignTextEnd: true,
@@ -191,7 +192,13 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     ),
                     const SizedBox(height: 30),
                     if (transactionType == TransactionType.transfer) ...[
-                      _selectAccount(),
+                      PaymentTile(
+                        icon: const Icon(Icons.account_balance_outlined),
+                        title: targetAccount != null
+                            ? targetAccount!.name
+                            : 'Target account',
+                        onPress: () => _selectAccount(context),
+                      ),
                     ],
                     const SizedBox(height: 8),
                     PaymentTile(
@@ -240,9 +247,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                   ),
                 )
                 .toList(),
-            onChanged: (PaymentType? newValue) {
-              setState(() => paymentType = newValue!);
-            },
+            onChanged: (PaymentType? newValue) {},
           ),
         ),
       ],
@@ -295,6 +300,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
       setState(() {
         date = pickedDate;
       });
+      amountFocusNode.unfocus();
     }
   }
 
@@ -307,39 +313,65 @@ class _AddEditTransactionState extends State<AddEditTransaction>
       setState(() {
         timeOfDay = pickedTime;
       });
+      amountFocusNode.unfocus();
     }
   }
 
-  Widget _selectAccount() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Target account',
-          style: Theme.of(context).textTheme.labelMedium,
-        ),
-        DropdownButtonHideUnderline(
-          child: DropdownButton(
-            dropdownColor: Colors.grey[100],
-            borderRadius: BorderRadius.circular(12),
-            value: account,
-            items: accounts
-                .map(
-                  (type) => DropdownMenuItem<Account>(
-                    value: account,
-                    child: Text(
-                      type.name,
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ),
-                )
-                .toList(),
-            onChanged: (Account? newValue) {
-              setState(() => account = newValue!);
-            },
-          ),
-        ),
-      ],
+  void _selectAccount(BuildContext context) async {
+    showModalBottomSheet(
+      backgroundColor: Colors.grey[100],
+      context: context,
+      builder: (context) {
+        return BlocBuilder<AccountBloc, AccountState>(
+          builder: (context, state) {
+            if (state is LoadedAccountState) {
+              final accounts = state.accounts;
+              return Container(
+                height: 300,
+                padding: const EdgeInsets.all(12),
+                child: ListView.separated(
+                  itemCount: accounts.length,
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 8);
+                  },
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        setState(() => targetAccount = accounts[index]);
+                        amountFocusNode.unfocus();
+                        context.pop();
+                      },
+                      tileColor: accounts[index].color,
+                      title: Column(
+                        children: [
+                          Text(
+                            accounts[index].name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(color: Colors.white),
+                          ),
+                          Text(
+                            accounts[index].type.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const Spinner();
+            }
+          },
+        );
+      },
     );
   }
 
@@ -364,6 +396,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     return ListTile(
                       onTap: () {
                         setState(() => category = categories[index]);
+                        amountFocusNode.unfocus();
                         context.pop();
                       },
                       leading: CircleAvatar(
@@ -429,7 +462,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         convertedAmount: 0,
         exchangeRate: 0,
         account: account!,
-        targetAccount: account!,
+        targetAccount: targetAccount!,
         category: category!,
       );
       if (widget.isUpdating) {
@@ -460,6 +493,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
               ),
             );
       } else {
+        print("");
         context.read<AccountBloc>().add(
               DecreaseBalanceEvent(
                 id: transaction.account.id!,

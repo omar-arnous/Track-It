@@ -181,7 +181,9 @@ class LocalService {
         period TEXT,
         start_date TEXT, 
         end_date TEXT ,
+        account_id INTEGER NOT NULL,
         category_id INTEGER NOT NULL,
+        FOREIGN KEY (account_id) REFERENCES $kAccountsTable (id),
         FOREIGN KEY (category_id) REFERENCES $kCategoriesTable (id)
       )
     ''');

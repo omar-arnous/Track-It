@@ -12,6 +12,7 @@ class FormInput extends StatefulWidget {
   final Type type;
   final Widget? leading;
   final Widget? trailing;
+  final FocusNode? focusNode;
   final TextEditingController controller;
 
   FormInput({
@@ -24,6 +25,7 @@ class FormInput extends StatefulWidget {
     this.leading,
     this.trailing,
     this.alignTextEnd = false,
+    this.focusNode,
     required this.controller,
     required this.label,
   });
@@ -46,6 +48,7 @@ class _FormInputState extends State<FormInput> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
@@ -82,6 +85,7 @@ class _FormInputState extends State<FormInput> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
@@ -124,6 +128,7 @@ class _FormInputState extends State<FormInput> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
@@ -176,6 +181,7 @@ class _FormInputState extends State<FormInput> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
@@ -211,6 +217,7 @@ class _FormInputState extends State<FormInput> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,

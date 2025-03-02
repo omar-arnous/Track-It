@@ -21,7 +21,12 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
   @override
   Future<List<TransactionModel>> getTransactionByAccountId(int id) async {
     final db = await dbService.database;
-    final data = await db.query(kTransactionsTable, orderBy: "date DESC");
+    final data = await db.query(
+      kTransactionsTable,
+      where: 'account_id = ?',
+      whereArgs: [id],
+      orderBy: "date DESC",
+    );
 
     if (data.isNotEmpty) {
       List<TransactionModel> transactions = [];
@@ -114,12 +119,37 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
     }
 
     final account = accounts.first;
+
     double newBalance = account['balance'].toDouble();
 
     if (transaction['type'] == TransactionType.expense.toString()) {
       newBalance += transaction['amount'];
     } else if (transaction['type'] == TransactionType.income.toString()) {
       newBalance -= transaction['amount'];
+    } else if (transaction['type'] == TransactionType.transfer.toString()) {
+      List<Map<String, dynamic>> targetAccounts = await db.query(
+        kAccountsTable,
+        where: 'id = ?',
+        whereArgs: [
+          transactions.first['target_account_id'],
+        ],
+      );
+
+      if (targetAccounts.isEmpty) {
+        throw Exception("Target account not found");
+      }
+
+      final targetAccount = targetAccounts.first;
+      double newTargetBalance = targetAccount['balance'].toDouble();
+
+      newTargetBalance -= transaction['amount'];
+      await db.update(
+        kAccountsTable,
+        {'balance': newTargetBalance},
+        where: 'id = ?',
+        whereArgs: [targetAccount['id']],
+      );
+      newBalance += transaction['amount'];
     }
 
     await db.update(
