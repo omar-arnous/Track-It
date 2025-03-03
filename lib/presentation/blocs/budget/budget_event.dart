@@ -24,8 +24,10 @@ class DeleteBudgetEvent extends BudgetEvent {
   DeleteBudgetEvent({required this.id});
 }
 
-class BudgetNotifyLimitEvent extends BudgetEvent {
-  final bool isLimit;
+class BudgetNotifyTokenEvent extends BudgetEvent {}
 
-  BudgetNotifyLimitEvent({required this.isLimit});
+class BudgetNotifyLimitEvent extends BudgetEvent {
+  final String token;
+
+  BudgetNotifyLimitEvent({required this.token});
 }

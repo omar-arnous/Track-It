@@ -8,17 +8,39 @@ final class LoadingState extends BudgetState {
 }
 
 final class IdleState extends BudgetState {
-  final Budget budget;
+  final List<Budget> budgets;
 
-  IdleState({required this.budget});
+  IdleState({required this.budgets});
 
   @override
-  List<Object> get props => [budget];
+  List<Object> get props => [budgets];
+}
+
+final class EmptyState extends BudgetState {
+  final String message;
+
+  EmptyState({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class NotifiactionTokenReceivedState extends BudgetState {
+  final String token;
+
+  NotifiactionTokenReceivedState({required this.token});
+
+  @override
+  List<Object> get props => [token];
 }
 
 final class SuccessState extends BudgetState {
+  final String message;
+
+  SuccessState({required this.message});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }
 
 final class ErrorState extends BudgetState {
