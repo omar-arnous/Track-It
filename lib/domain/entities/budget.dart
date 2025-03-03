@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget_period.dart';
-import 'package:trackit/domain/entities/category.dart';
 
 class Budget extends Equatable {
   final int? id;
