@@ -7,6 +7,7 @@ import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/config/router.dart';
+import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'firebase_options.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<AccountBloc>()..add(GetAccountsEvent()),
         ),
         BlocProvider(create: (_) => di.sl<TransactionBloc>()),
+        BlocProvider(create: (_) => di.sl<BudgetBloc>()..add(InitEvent())),
       ],
       child: MaterialApp.router(
         title: 'Track It',

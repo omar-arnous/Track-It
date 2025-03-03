@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:trackit/data/models/notification_model.dart';
 
 class FirebaseMessagingDataSource {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final FirebaseMessaging firebaseMessaging;
   final String _serverKey = "AIzaSyDtXlxNHM-KWpIY80zcsxzpllwvje7QiPI";
 
+  FirebaseMessagingDataSource({required this.firebaseMessaging});
+
   Future<String> getFcmToken() async {
-    final res = await _firebaseMessaging.getToken();
+    final res = await firebaseMessaging.getToken();
     if (res != null) {
       return res;
     }
