@@ -31,7 +31,6 @@ class BudgetsList extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: BlocConsumer<BudgetBloc, BudgetState>(
           listener: (context, state) {
-            print(state);
             if (state is SuccessState) {
               showSnackMessage(context, state.message);
             }
@@ -41,7 +40,6 @@ class BudgetsList extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            print(state);
             if (state is IdleState) {
               final budgets = state.budgets;
               return ListView.separated(

@@ -456,10 +456,9 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         convertedAmount: 0,
         exchangeRate: 0,
         account: account!,
-        targetAccount: targetAccount!,
+        targetAccount: targetAccount ?? account,
         category: category!,
       );
-      print("Transaction: $transaction");
       if (widget.isUpdating) {
         context.read<AccountBloc>().add(
               ReverseBalanceEvent(id: account!.id!),
