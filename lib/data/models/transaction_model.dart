@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart' as cloud;
 import 'package:flutter/material.dart';
 import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/data/models/category_model.dart';
+import 'package:trackit/domain/entities/account.dart';
+import 'package:trackit/domain/entities/category.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/transaction.dart';
@@ -50,6 +53,36 @@ class TransactionModel extends Transaction {
       note: json['note'],
       date: DateTime.parse(json['date']),
       time: TimeOfDay(hour: hour, minute: minute),
+      account: account,
+      targetAccount: targetAccount,
+      category: category,
+    );
+  }
+
+  factory TransactionModel.fromSnapshot(
+      cloud.QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
+      Account account,
+      Account targetAccount,
+      Category category) {
+    final parts = snapshot.data()['time'].split(":");
+    final hour = int.parse(parts[0]);
+    final minute = int.parse(parts[1]);
+
+    return TransactionModel(
+      id: snapshot.data()['id'],
+      transactionType: TransactionType.values.firstWhere(
+        (e) => e.toString() == snapshot.data()['type'],
+      ),
+      amount: snapshot.data()['amount'],
+      paymentType: PaymentType.values
+          .firstWhere((e) => e.toString() == snapshot.data()['payment_type']),
+      currency: CurrencyType.values
+          .firstWhere((e) => e.toString() == snapshot.data()['currency']),
+      date: DateTime.parse(snapshot.data()['date']),
+      time: TimeOfDay(hour: hour, minute: minute),
+      note: snapshot.data()['note'],
+      exchangeRate: snapshot.data()['exchange_rate'],
+      convertedAmount: snapshot.data()['converted_amount'],
       account: account,
       targetAccount: targetAccount,
       category: category,

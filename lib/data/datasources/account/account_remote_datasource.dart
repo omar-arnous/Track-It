@@ -19,7 +19,7 @@ class AccountRemoteDatasourceImpl implements AccountRemoteDatasource {
       for (var account in accounts) {
         final querySnapshot = await accountCollection
             .where(
-              'email',
+              'name',
               isEqualTo: account.name,
             )
             .get();

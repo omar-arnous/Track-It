@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trackit/data/models/account_model.dart';
+import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget.dart';
 import 'package:trackit/domain/entities/budget_period.dart';
 
@@ -22,6 +24,22 @@ class BudgetModel extends Budget {
       ),
       startDate: DateTime.parse(json['start_date']),
       endDate: DateTime.parse(json['end_date']),
+      account: account,
+    );
+  }
+
+  factory BudgetModel.fromSnapshot(
+    QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
+    Account account,
+  ) {
+    return BudgetModel(
+      id: snapshot.data()['id'],
+      amountLimit: snapshot.data()['amount_limit'],
+      period: BudgetPeriod.values.firstWhere(
+        (e) => e.toString() == snapshot.data()['period'],
+      ),
+      startDate: DateTime.parse(snapshot.data()['start_date']),
+      endDate: DateTime.parse(snapshot.data()['end_date']),
       account: account,
     );
   }
