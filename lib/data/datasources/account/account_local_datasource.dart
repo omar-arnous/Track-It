@@ -84,19 +84,25 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
     final db = await dbService.database;
     List<Map<String, dynamic>> accounts = await db.query(
       kAccountsTable,
-      columns: ['balance', 'old_balance'],
+      columns: ['balance', 'old_balance', 'total_expenses'],
       where: 'id = ?',
       whereArgs: [id],
     );
 
     if (accounts.isNotEmpty) {
       double currentBalance = accounts.first['balance'];
+      double totalExpenses = accounts.first['total_expenses'];
 
       double newBalance = currentBalance - value;
+      double newTotlaExpenses = totalExpenses + value;
 
       final res = await db.update(
         kAccountsTable,
-        {'balance': newBalance, 'old_balance': currentBalance},
+        {
+          'balance': newBalance,
+          'old_balance': currentBalance,
+          'total_expenses': newTotlaExpenses
+        },
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -116,19 +122,25 @@ class AccountLocalDatasourceImpl implements AccountLocalDatasource {
     final db = await dbService.database;
     List<Map<String, dynamic>> accounts = await db.query(
       kAccountsTable,
-      columns: ['balance', 'old_balance'],
+      columns: ['balance', 'old_balance', 'total_incomes'],
       where: 'id = ?',
       whereArgs: [id],
     );
 
     if (accounts.isNotEmpty) {
       double currentBalance = accounts.first['balance'];
+      double totalIncomes = accounts.first['total_incomes'];
 
       double newBalance = currentBalance + value;
+      double newTotalIncomes = totalIncomes + value;
 
       final res = await db.update(
         kAccountsTable,
-        {'balance': newBalance, 'old_balance': currentBalance},
+        {
+          'balance': newBalance,
+          'old_balance': currentBalance,
+          'total_incomes': newTotalIncomes
+        },
         where: 'id = ?',
         whereArgs: [id],
       );

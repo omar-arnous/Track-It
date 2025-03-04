@@ -9,6 +9,8 @@ class Account extends Equatable {
   final AccountType type;
   final double balance;
   final double oldBalance;
+  final double totalExpenses;
+  final double totalIncomes;
   final Color color;
   final CurrencyType currency;
 
@@ -18,10 +20,21 @@ class Account extends Equatable {
     required this.type,
     required this.balance,
     required this.oldBalance,
+    required this.totalExpenses,
+    required this.totalIncomes,
     this.color = Colors.grey,
     required this.currency,
   });
 
   @override
-  List<Object?> get props => [id, name, type, balance, color, currency];
+  List<Object?> get props => [
+        id,
+        name,
+        type,
+        balance,
+        totalExpenses,
+        totalIncomes,
+        color,
+        currency,
+      ];
 }

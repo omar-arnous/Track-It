@@ -34,6 +34,8 @@ class AccountRepositoryImpl implements AccountRepository {
         type: account.type,
         balance: account.balance,
         oldBalance: account.oldBalance,
+        totalExpenses: account.totalExpenses,
+        totalIncomes: account.totalIncomes,
         color: account.color,
         currency: account.currency,
       );
@@ -54,6 +56,8 @@ class AccountRepositoryImpl implements AccountRepository {
         type: account.type,
         balance: account.balance,
         oldBalance: account.oldBalance,
+        totalExpenses: account.totalExpenses,
+        totalIncomes: account.totalIncomes,
         color: account.color,
         currency: account.currency,
       );
@@ -94,6 +98,8 @@ class AccountRepositoryImpl implements AccountRepository {
         type: account.type,
         balance: account.balance,
         oldBalance: account.oldBalance,
+        totalExpenses: account.totalExpenses,
+        totalIncomes: account.totalIncomes,
         currency: account.currency,
       );
       await cacheDatasource.cacheAccount(accountModel);

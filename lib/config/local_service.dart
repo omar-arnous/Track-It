@@ -142,6 +142,8 @@ class LocalService {
         type TEXT,
         balance REAL,
         old_balance REAL,
+        total_expenses REAL NOT NULL DEFAULT 0,
+        total_incomes REAL NOT NULL DEFAULT 0,
         color TEXT,
         currency TEXT
       )
@@ -182,7 +184,7 @@ class LocalService {
         start_date TEXT, 
         end_date TEXT ,
         account_id INTEGER NOT NULL,
-        FOREIGN KEY (account_id) REFERENCES $kAccountsTable (id),
+        FOREIGN KEY (account_id) REFERENCES $kAccountsTable (id)
       )
     ''');
     await db.execute('''

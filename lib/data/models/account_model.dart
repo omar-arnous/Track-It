@@ -11,6 +11,8 @@ class AccountModel extends Account {
     required super.type,
     required super.balance,
     required super.oldBalance,
+    required super.totalExpenses,
+    required super.totalIncomes,
     super.color,
     required super.currency,
   });
@@ -22,6 +24,8 @@ class AccountModel extends Account {
       type: AccountType.values.firstWhere((e) => e.toString() == json['type']),
       balance: json['balance'],
       oldBalance: json['old_balance'],
+      totalExpenses: json['total_expenses'],
+      totalIncomes: json['total_incomes'],
       color: ColorConvertor.hexStringToColor(json['color']),
       currency: CurrencyType.values
           .firstWhere((e) => e.toString() == json['currency']),
@@ -37,6 +41,8 @@ class AccountModel extends Account {
           .firstWhere((e) => e.toString() == snapshot.data()['type']),
       balance: snapshot.data()['balance'],
       oldBalance: snapshot.data()['old_balance'],
+      totalExpenses: snapshot.data()['total_expenses'],
+      totalIncomes: snapshot.data()['total_incomes'],
       color: ColorConvertor.hexStringToColor(snapshot.data()['color']),
       currency: CurrencyType.values
           .firstWhere((e) => e.toString() == snapshot.data()['currency']),
@@ -50,6 +56,8 @@ class AccountModel extends Account {
       'type': type.toString(),
       'balance': balance,
       'old_balance': oldBalance,
+      'total_expenses': totalExpenses,
+      'total_incomes': totalIncomes,
       'color': ColorConvertor.colorToHexString(color),
       'currency': currency.toString(),
     };

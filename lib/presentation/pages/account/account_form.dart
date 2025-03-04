@@ -236,6 +236,8 @@ class _AccountFormState extends State<AccountForm> {
           type: _accountType,
           balance: double.parse(_balanceController.text),
           oldBalance: double.parse(_balanceController.text),
+          totalExpenses: widget.account!.totalExpenses,
+          totalIncomes: widget.account!.totalIncomes,
           currency: _currencyType,
           color: _currentColor,
         );
@@ -248,6 +250,8 @@ class _AccountFormState extends State<AccountForm> {
           type: _accountType,
           balance: double.parse(_balanceController.text),
           oldBalance: double.parse(_balanceController.text),
+          totalExpenses: 0,
+          totalIncomes: 0,
           currency: _currencyType,
           color: _currentColor,
         );

@@ -1,11 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/domain/entities/account.dart';
+import 'package:trackit/domain/entities/budget.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/presentation/pages/account/account_add_edit_page.dart';
 import 'package:trackit/presentation/pages/auth/login_page.dart';
 import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
 import 'package:trackit/presentation/pages/auth/signup_page.dart';
+import 'package:trackit/presentation/pages/budget/add_edit_budget.dart';
+import 'package:trackit/presentation/pages/budget/budgets_list.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/layout.dart';
 import 'package:trackit/presentation/pages/transation/add_edit_transaction.dart';
@@ -22,6 +25,13 @@ class AddEditTransactionParams {
   final Transaction? transaction;
 
   AddEditTransactionParams({this.transaction, this.isUpdating = false});
+}
+
+class AddEditBudgetParams {
+  final bool isUpdating;
+  final Budget? budget;
+
+  AddEditBudgetParams({this.budget, this.isUpdating = false});
 }
 
 class Routes {
@@ -66,13 +76,29 @@ class Routes {
         },
       ),
       GoRoute(
-        name: 'Add transaction',
+        name: 'Add Edit transaction',
         path: kAddEditTransactionRoute,
         builder: (context, state) {
           final params = state.extra as AddEditTransactionParams?;
           return AddEditTransaction(
             isUpdating: params?.isUpdating ?? false,
             transaction: params?.transaction,
+          );
+        },
+      ),
+      GoRoute(
+        name: 'Budgets',
+        path: kBudgetsRoute,
+        builder: (context, state) => const BudgetsList(),
+      ),
+      GoRoute(
+        name: 'Add Edit Budget',
+        path: kAddEditBudgetRoute,
+        builder: (context, state) {
+          final params = state.extra as AddEditBudgetParams?;
+          return AddEditBudget(
+            isUpdating: params?.isUpdating ?? false,
+            budget: params?.budget,
           );
         },
       ),

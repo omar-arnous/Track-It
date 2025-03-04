@@ -33,7 +33,6 @@ class AddEditTransaction extends StatefulWidget {
 class _AddEditTransactionState extends State<AddEditTransaction>
     with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
-  final FocusNode amountFocusNode = FocusNode();
   late TextEditingController amountController;
   late TextEditingController noteController;
   late DateTime date;
@@ -159,7 +158,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     const SizedBox(height: 10),
                     FormInput(
                       controller: amountController,
-                      focusNode: amountFocusNode,
                       label: '',
                       leading: const Text('Amount'),
                       alignTextEnd: true,
@@ -300,7 +298,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
       setState(() {
         date = pickedDate;
       });
-      amountFocusNode.unfocus();
     }
   }
 
@@ -313,7 +310,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
       setState(() {
         timeOfDay = pickedTime;
       });
-      amountFocusNode.unfocus();
     }
   }
 
@@ -338,7 +334,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     return ListTile(
                       onTap: () {
                         setState(() => targetAccount = accounts[index]);
-                        amountFocusNode.unfocus();
                         context.pop();
                       },
                       tileColor: accounts[index].color,
@@ -396,7 +391,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     return ListTile(
                       onTap: () {
                         setState(() => category = categories[index]);
-                        amountFocusNode.unfocus();
                         context.pop();
                       },
                       leading: CircleAvatar(
@@ -465,6 +459,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         targetAccount: targetAccount!,
         category: category!,
       );
+      print("Transaction: $transaction");
       if (widget.isUpdating) {
         context.read<AccountBloc>().add(
               ReverseBalanceEvent(id: account!.id!),
@@ -493,7 +488,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
               ),
             );
       } else {
-        print("");
         context.read<AccountBloc>().add(
               DecreaseBalanceEvent(
                 id: transaction.account.id!,

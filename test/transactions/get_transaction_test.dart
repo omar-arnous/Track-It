@@ -42,6 +42,8 @@ void main() {
           type: AccountType.cash,
           balance: 0,
           oldBalance: 0,
+          totalExpenses: 0,
+          totalIncomes: 0,
           currency: CurrencyType.syp,
         ),
         targetAccount: const Account(
@@ -49,6 +51,8 @@ void main() {
           type: AccountType.cash,
           balance: 0,
           oldBalance: 0,
+          totalExpenses: 0,
+          totalIncomes: 0,
           currency: CurrencyType.syp,
         ),
         category: const CategoryModel(

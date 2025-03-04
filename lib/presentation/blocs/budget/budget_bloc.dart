@@ -51,7 +51,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           emit(_mapResponseToState(res, "budget deleted successfully"));
         } else if (event is BudgetNotifyTokenEvent) {
           final token = await getFcmToken();
-          emit(NotifiactionTokenReceivedState(token: token));
+          add(BudgetNotifyLimitEvent(token: token));
         } else if (event is BudgetNotifyLimitEvent) {
           final notification = Notification(
             title: "Budget Warning",
@@ -59,23 +59,38 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
             token: event.token,
           );
           await sendNotification(notification);
+          // emit();
         }
       },
     );
   }
 
   BudgetState _mapGetResponseToState(Either<Failure, List<Budget>> res) {
-    return res.fold((failure) => EmptyState(message: _getMessage(failure)),
-        (budgets) => IdleState(budgets: budgets));
+    return res.fold(
+      (failure) => EmptyState(message: _getMessage(failure)),
+      (budgets) {
+        for (final budget in budgets) {
+          if (budget.amountLimit <= budget.account.totalExpenses) {
+            add(BudgetNotifyTokenEvent());
+          }
+        }
+        return IdleState(budgets: budgets);
+      },
+    );
   }
 
   BudgetState _mapResponseToState(Either<Failure, Unit> res, String message) {
     return res.fold((failure) => ErrorState(message: _getMessage(failure)),
-        (_) => SuccessState(message: message));
+        (_) {
+      add(GetBudgetsEvent());
+      return SuccessState(message: message);
+    });
   }
 
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
+      case EmptyDatabaseFailure:
+        return 'No budgets yet, create one';
       case DatabaseAddFailure:
         return '$kFailureAdd budget';
       case DatabaseEditFailure:
