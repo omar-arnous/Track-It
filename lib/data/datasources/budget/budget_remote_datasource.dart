@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:trackit/core/errors/exceptions.dart';
+import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/data/models/budget_model.dart';
-import 'package:trackit/domain/entities/account.dart';
 
 abstract class BudgetRemoteDatasource {
-  Stream<Iterable<BudgetModel>> getBudgets(Account account);
+  Stream<Iterable<BudgetModel>> getBudgets();
   Future<Unit> addBudgets(List<BudgetModel> budgets);
 }
 
@@ -39,11 +39,28 @@ class BudgetRemoteDatasourceImpl implements BudgetRemoteDatasource {
   }
 
   @override
-  Stream<Iterable<BudgetModel>> getBudgets(Account account) {
+  Stream<Iterable<BudgetModel>> getBudgets() {
     final budgetCollection = firestore.collection('budgets');
 
-    final budgets = budgetCollection.snapshots().map((event) => event.docs
-        .map((snapshot) => BudgetModel.fromSnapshot(snapshot, account)));
+    final budgets = budgetCollection.snapshots().asyncMap((event) async {
+      return Future.wait(
+        event.docs.map(
+          (snapshot) async {
+            final data = snapshot.data();
+
+            final accountId = data['account_id'];
+            final account =
+                await firestore.collection('accounts').doc(accountId).get();
+            return BudgetModel.fromSnapshot(
+              snapshot,
+              AccountModel.fromJson(
+                account.data() ?? {},
+              ),
+            );
+          },
+        ),
+      );
+    });
 
     return budgets;
   }

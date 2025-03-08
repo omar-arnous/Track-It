@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackit/config/local_service.dart';
+import 'package:trackit/core/network/network_info.dart';
 import 'package:trackit/data/datasources/account/account_cache_datasource.dart';
 import 'package:trackit/data/datasources/account/account_local_datasource.dart';
 import 'package:trackit/data/datasources/account/account_remote_datasource.dart';
@@ -221,6 +223,9 @@ Future<void> init() async {
     ),
   );
 
+  // Core
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+
   // external
   final database = LocalService.instance;
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -233,4 +238,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => firebaseAuth);
   sl.registerLazySingleton(() => fireStore);
   sl.registerLazySingleton(() => messaging);
+  sl.registerLazySingleton(() => InternetConnectionChecker.instance);
 }

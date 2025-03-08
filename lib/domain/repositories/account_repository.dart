@@ -4,6 +4,8 @@ import 'package:trackit/domain/entities/account.dart';
 
 abstract class AccountRepository {
   Future<Either<Failure, List<Account>>> getAccounts();
+  Future<Either<Failure, List<Account>>> restoreAccounts();
+  Future<Either<Failure, Unit>> backupAccounts(List<Account> accounts);
   Future<Either<Failure, Unit>> addAccount(Account account);
   Future<Either<Failure, Unit>> editAccount(Account account);
   Future<Either<Failure, Unit>> deleteAccount(int id);
