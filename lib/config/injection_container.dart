@@ -172,15 +172,23 @@ Future<void> init() async {
     () => AccountRepositoryImpl(
       localDatasource: sl(),
       cacheDatasource: sl(),
+      remoteDatasource: sl(),
+      networkInfo: sl(),
     ),
   );
   sl.registerLazySingleton<TransactionRepository>(
     () => TransactionRepositoryImpl(
       localDatasource: sl(),
+      remoteDatasource: sl(),
+      networkInfo: sl(),
     ),
   );
   sl.registerLazySingleton<BudgetRepository>(
-    () => BudgetRepositoryImpl(localDatasource: sl()),
+    () => BudgetRepositoryImpl(
+      localDatasource: sl(),
+      remoteDatasource: sl(),
+      networkInfo: sl(),
+    ),
   );
   sl.registerLazySingleton<NotificationRepository>(
     () => NotificationRepositoryImpl(dataSource: sl()),
