@@ -19,6 +19,7 @@ class SettingsPage extends StatelessWidget {
           title: 'Backup data',
           onPress: () => context.read<BackupBloc>().add(BackupData()),
         ),
+        const SizedBox(height: 20),
         const SettingTile(title: 'My Budgets', path: kBudgetsRoute),
       ],
     );

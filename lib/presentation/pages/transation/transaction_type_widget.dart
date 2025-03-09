@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackit/core/constants/colors.dart';
 
 class TransactionTypeWidget extends StatelessWidget {
   final TabController controller;
@@ -14,19 +15,23 @@ class TransactionTypeWidget extends StatelessWidget {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        // TODO: change based on theme
+        color: kWhiteColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: TabBar(
         controller: controller,
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-          color: Colors.black,
+          // TODO: change based on theme
+          color: kBlackColor,
           borderRadius: BorderRadius.circular(8),
         ),
         dividerColor: Colors.transparent,
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.black,
+        // TODO: change based on theme
+        labelColor: kWhiteColor,
+        // TODO: change based on theme
+        unselectedLabelColor: kBlackColor,
         labelPadding: EdgeInsets.zero,
         onTap: onPress,
         tabs: const [

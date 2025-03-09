@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/category.dart';
@@ -98,7 +99,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
       appBar: AppBar(
         title: Text(
           isUpdate ? 'Edit Transaction' : 'Add Transaction',
-          style: const TextStyle(color: Colors.black),
         ),
         actions: [
           if (isUpdate)
@@ -106,7 +106,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
               onPressed: deleteTransaction,
               icon: const Icon(
                 Icons.delete,
-                color: Colors.red,
+                color: kRedColor,
               ),
             ),
           IconButton(
@@ -231,7 +231,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
-            dropdownColor: Colors.grey[100],
+            dropdownColor: kGreyColor,
             borderRadius: BorderRadius.circular(12),
             value: paymentType,
             items: PaymentType.values
@@ -262,7 +262,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
-            dropdownColor: Colors.grey[100],
+            dropdownColor: kGreyColor,
             borderRadius: BorderRadius.circular(12),
             value: currencyType,
             items: CurrencyType.values
@@ -315,7 +315,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
 
   void _selectAccount(BuildContext context) async {
     showModalBottomSheet(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: kGreyColor,
       context: context,
       builder: (context) {
         return BlocBuilder<AccountBloc, AccountState>(
@@ -344,7 +344,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
-                                .copyWith(color: Colors.white),
+                                .copyWith(color: kWhiteColor),
                           ),
                           Text(
                             accounts[index].type.name,
@@ -352,7 +352,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                                 .textTheme
                                 .labelMedium!
                                 .copyWith(
-                                  color: Colors.white,
+                                  color: kWhiteColor,
                                 ),
                           ),
                         ],
@@ -372,7 +372,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
 
   void _selectCategory(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: kGreyColor,
       context: context,
       builder: (context) {
         return BlocBuilder<CategoryBloc, CategoryState>(
@@ -394,7 +394,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                         context.pop();
                       },
                       leading: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
+                        backgroundColor: kGreyColor,
                         child: Icon(
                           categories[index].icon,
                           color: categories[index].color,

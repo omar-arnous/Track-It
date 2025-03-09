@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/presentation/widgets/show_snack_message.dart';
 
 Future<void> showDeleteDialog({
@@ -20,7 +21,10 @@ Future<void> showDeleteDialog({
         actions: [
           TextButton(
             onPressed: () => context.pop(),
-            child: const Text('Cancel'),
+            child: Text(
+              'Cancel',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
           TextButton(
             onPressed: () async {
@@ -33,6 +37,10 @@ Future<void> showDeleteDialog({
             },
             child: Text(
               label,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: kRedColor),
             ),
           ),
         ],

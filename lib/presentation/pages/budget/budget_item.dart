@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trackit/config/router.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/budget.dart';
@@ -30,31 +31,19 @@ class BudgetItem extends StatelessWidget {
           ),
         );
       },
-      tileColor: Colors.grey[100],
       contentPadding: const EdgeInsets.all(8),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${Formatter.formatBalance(budget.amountLimit)} ${Formatter.formatCurrency(budget.account.currency.name)}",
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Colors.black,
-                ),
-          ),
-          Text(
-            budget.account.name,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Colors.black,
-                ),
-          ),
+              "${Formatter.formatBalance(budget.amountLimit)} ${Formatter.formatCurrency(budget.account.currency.name)}",
+              style: Theme.of(context).textTheme.bodyLarge),
+          Text(budget.account.name,
+              style: Theme.of(context).textTheme.bodyMedium),
           Row(
             children: [
-              Text(
-                budget.period.name,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Colors.black,
-                    ),
-              ),
+              Text(budget.period.name,
+                  style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ],
@@ -74,7 +63,7 @@ class BudgetItem extends StatelessWidget {
             }),
         icon: const Icon(
           Icons.delete,
-          color: Colors.red,
+          color: kRedColor,
         ),
       ),
     );

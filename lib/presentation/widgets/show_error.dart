@@ -11,7 +11,10 @@ class ShowError {
         actions: [
           TextButton(
             onPressed: () => context.pop(),
-            child: const Text('OK'),
+            child: Text(
+              'OK',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
         ],
       ),

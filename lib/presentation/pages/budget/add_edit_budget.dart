@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget.dart';
@@ -67,7 +68,6 @@ class _AddEditBudgetState extends State<AddEditBudget> {
       appBar: AppBar(
         title: Text(
           isUpdate ? 'Edit Budget' : 'Add Budget',
-          style: const TextStyle(color: Colors.black),
         ),
         actions: [
           IconButton(
@@ -163,7 +163,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
-            dropdownColor: Colors.grey[100],
+            dropdownColor: kGreyColor,
             borderRadius: BorderRadius.circular(12),
             value: period,
             items: BudgetPeriod.values
@@ -188,7 +188,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
 
   void _selectAccount(BuildContext context) async {
     showModalBottomSheet(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: kGreyColor,
       context: context,
       builder: (context) {
         return BlocBuilder<AccountBloc, AccountState>(
@@ -217,7 +217,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
-                                .copyWith(color: Colors.white),
+                                .copyWith(color: kWhiteColor),
                           ),
                           Text(
                             accounts[index].type.name,
@@ -225,7 +225,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
                                 .textTheme
                                 .labelMedium!
                                 .copyWith(
-                                  color: Colors.white,
+                                  color: kWhiteColor,
                                 ),
                           ),
                         ],

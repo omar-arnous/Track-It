@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 
 class UserInfo extends StatelessWidget {
@@ -13,7 +14,6 @@ class UserInfo extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -35,21 +35,25 @@ class UserInfo extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
+              // TODO: listen for theme and change color based on it
+              color: kBlackColor,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Row(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   child: Center(
                     child: Text(
                       "A",
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
-                Text("Username"),
+                const SizedBox(width: 20),
+                Text(
+                  "Username",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ],
             ),
           );

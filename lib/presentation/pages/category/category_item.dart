@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/domain/entities/category.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -7,10 +8,10 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Colors.transparent,
       contentPadding: const EdgeInsets.all(5),
       leading: CircleAvatar(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: kWhiteColor,
         child: Icon(
           categoryItem.icon,
           color: categoryItem.color,

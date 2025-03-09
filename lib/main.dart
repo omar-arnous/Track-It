@@ -21,6 +21,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await di.init();
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   const SystemUiOverlayStyle(
+  //     statusBarColor: kWhiteColor,
+  //     statusBarIconBrightness: Brightness.dark,
+  //     systemNavigationBarColor: kWhiteColor,
+  //     systemNavigationBarIconBrightness: Brightness.dark,
+  //   ),
+  // );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

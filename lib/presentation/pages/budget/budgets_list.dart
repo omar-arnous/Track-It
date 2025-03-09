@@ -16,10 +16,7 @@ class BudgetsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Budgets',
-          style: TextStyle(color: Colors.black),
-        ),
+        title: const Text('Budgets'),
         actions: [
           IconButton(
             onPressed: () => context.push(kAddEditBudgetRoute),

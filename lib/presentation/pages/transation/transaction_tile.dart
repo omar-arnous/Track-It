@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trackit/config/router.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/payment_type.dart';
@@ -22,7 +23,7 @@ class TransactionTile extends StatelessWidget {
         ),
       ),
       leading: CircleAvatar(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: kGreyColor,
         child: Icon(
           transaction.category.icon,
           color: transaction.category.color,
@@ -59,10 +60,10 @@ class TransactionTile extends StatelessWidget {
                     : Formatter.formatBalance(transaction.amount),
             style: Theme.of(context).textTheme.labelMedium!.copyWith(
                   color: transaction.transactionType == TransactionType.expense
-                      ? Colors.red[400]
+                      ? kRedColor
                       : transaction.transactionType == TransactionType.income
-                          ? Colors.green[400]
-                          : Colors.amber[400],
+                          ? kPrimaryColor
+                          : kSecondaryColor,
                 ),
           ),
           Text(

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/data/models/category_model.dart';
 import 'package:trackit/data/models/transaction_model.dart';
 import 'package:trackit/domain/entities/account.dart';
@@ -56,7 +57,7 @@ void main() {
         id: 1,
         name: 'test',
         icon: Icons.add,
-        color: Colors.grey,
+        color: kGreyColor,
       ),
     );
 

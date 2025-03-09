@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/domain/entities/account_type.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
 
@@ -22,7 +23,7 @@ class Account extends Equatable {
     required this.oldBalance,
     required this.totalExpenses,
     required this.totalIncomes,
-    this.color = Colors.grey,
+    this.color = kGreyColor,
     required this.currency,
   });
 

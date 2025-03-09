@@ -22,59 +22,57 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<AppBloc, AppState>(
-        builder: (context, state) {
-          if (state is LoadingAppState) {
-            return const Scaffold(body: Spinner());
-          } else if (state is LoadedAppState) {
-            return Scaffold(
-              appBar: buildAppBar(context, state.selectedIndex),
-              body: Padding(
-                padding: const EdgeInsets.all(15),
-                child: screens[state.selectedIndex],
-              ),
-              bottomNavigationBar: Container(
-                margin: const EdgeInsets.all(15),
-                height: 80,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: BottomNavigationBar(
-                    currentIndex: state.selectedIndex,
-                    onTap: (index) {
-                      context.read<AppBloc>().add(
-                            SetSelectedIndexEvent(
-                              selectedIndex: index,
-                            ),
-                          );
-                    },
-                    items: const [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home_outlined),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.account_balance_outlined),
-                        label: 'Accounts',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.layers),
-                        label: 'Categories',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.settings),
-                        label: 'Settings',
-                      ),
-                    ],
-                  ),
+    return BlocBuilder<AppBloc, AppState>(
+      builder: (context, state) {
+        if (state is LoadingAppState) {
+          return const Scaffold(body: Spinner());
+        } else if (state is LoadedAppState) {
+          return Scaffold(
+            appBar: buildAppBar(context, state.selectedIndex),
+            body: Padding(
+              padding: const EdgeInsets.all(15),
+              child: screens[state.selectedIndex],
+            ),
+            bottomNavigationBar: Container(
+              margin: const EdgeInsets.all(15),
+              height: 80,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: BottomNavigationBar(
+                  currentIndex: state.selectedIndex,
+                  onTap: (index) {
+                    context.read<AppBloc>().add(
+                          SetSelectedIndexEvent(
+                            selectedIndex: index,
+                          ),
+                        );
+                  },
+                  items: const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home_outlined),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.account_balance_outlined),
+                      label: 'Accounts',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.layers),
+                      label: 'Categories',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'Settings',
+                    ),
+                  ],
                 ),
               ),
-            );
-          } else {
-            return const EmptyPage();
-          }
-        },
-      ),
+            ),
+          );
+        } else {
+          return const EmptyPage();
+        }
+      },
     );
   }
 
@@ -82,10 +80,7 @@ class Layout extends StatelessWidget {
     switch (index) {
       case 0:
         return AppBar(
-          title: const Text(
-            'TrackIt',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: const Text('TrackIt'),
           actions: [
             IconButton(
               onPressed: () => context.push(kAddEditTransactionRoute),
@@ -95,10 +90,7 @@ class Layout extends StatelessWidget {
         );
       case 1:
         return AppBar(
-          title: const Text(
-            'Accounts',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: const Text('Accounts'),
           actions: [
             IconButton(
               onPressed: () => context.push(kAddEditAccountRoute),
@@ -108,24 +100,15 @@ class Layout extends StatelessWidget {
         );
       case 2:
         return AppBar(
-          title: const Text(
-            'Categories',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: const Text('Categories'),
         );
       case 3:
         return AppBar(
-          title: const Text(
-            'Settings',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: const Text('Settings'),
         );
       default:
         return AppBar(
-          title: const Text(
-            'TrackIt',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: const Text('TrackIt'),
         );
     }
   }

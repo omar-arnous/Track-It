@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trackit/config/router.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
@@ -51,26 +52,26 @@ class AccountItem extends StatelessWidget {
         children: [
           Text(
             account.name,
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.bodyLarge!.fontFamily,
-              color: Colors.white,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: kWhiteColor),
           ),
           Text(
             account.type.name,
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.bodyMedium!.fontFamily,
-              color: Colors.white,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: kWhiteColor),
           ),
           Text(
             '${Formatter.formatBalance(account.balance)} ${Formatter.formatCurrency(
               account.currency.name,
             )}',
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.labelLarge!.fontFamily,
-              color: Colors.white,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(color: kWhiteColor),
           ),
         ],
       ),
@@ -95,7 +96,7 @@ class AccountItem extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.delete,
-                color: Colors.white,
+                color: kWhiteColor,
               ),
             )
           : null,

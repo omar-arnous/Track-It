@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/account_type.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
@@ -29,7 +30,7 @@ class _AccountFormState extends State<AccountForm> {
   late TextEditingController _balanceController;
   AccountType _accountType = AccountType.cash;
   CurrencyType _currencyType = CurrencyType.usd;
-  Color _currentColor = Colors.grey;
+  Color _currentColor = kGreyColor;
 
   @override
   void initState() {
@@ -200,7 +201,7 @@ class _AccountFormState extends State<AccountForm> {
               builder: (context) {
                 return AlertDialog(
                   content: BlockPicker(
-                    pickerColor: Colors.white,
+                    pickerColor: kWhiteColor,
                     onColorChanged: (color) {
                       setState(() => _currentColor = color);
                     },

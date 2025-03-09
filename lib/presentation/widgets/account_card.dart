@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/presentation/pages/account/accounts_list_dialog.dart';
@@ -13,7 +14,7 @@ class AccountCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      color: account == null ? Colors.grey : account!.color,
+      color: account == null ? kGreyColor : account!.color,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Row(
@@ -25,29 +26,23 @@ class AccountCard extends StatelessWidget {
               children: [
                 Text(
                   account == null ? 'account name' : account!.name,
-                  style: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.displayLarge!.fontFamily,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: kWhiteColor,
+                      ),
                 ),
                 Text(
                   account == null ? 'account type' : account!.type.name,
-                  style: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.labelMedium!.fontFamily,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: kWhiteColor,
+                      ),
                 ),
                 Text(
                   '${Formatter.formatBalance(account == null ? 0 : account!.balance)} ${Formatter.formatCurrency(
                     account == null ? 'usd' : account!.currency.name,
                   )}',
-                  style: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.bodyLarge!.fontFamily,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: kWhiteColor,
+                      ),
                 ),
               ],
             ),
@@ -62,7 +57,7 @@ class AccountCard extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.more_horiz,
-                color: Colors.white,
+                color: kWhiteColor,
               ),
               alignment: Alignment.topLeft,
             ),
