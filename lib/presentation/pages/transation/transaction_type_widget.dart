@@ -15,23 +15,27 @@ class TransactionTypeWidget extends StatelessWidget {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        // TODO: change based on theme
-        color: kWhiteColor,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? kBlackColor
+            : kWhiteColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: TabBar(
         controller: controller,
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-          // TODO: change based on theme
-          color: kBlackColor,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? kWhiteColor
+              : kBlackColor,
           borderRadius: BorderRadius.circular(8),
         ),
         dividerColor: Colors.transparent,
-        // TODO: change based on theme
-        labelColor: kWhiteColor,
-        // TODO: change based on theme
-        unselectedLabelColor: kBlackColor,
+        labelColor: Theme.of(context).brightness == Brightness.dark
+            ? kBlackColor
+            : kWhiteColor,
+        unselectedLabelColor: Theme.of(context).brightness == Brightness.dark
+            ? kWhiteColor
+            : kBlackColor,
         labelPadding: EdgeInsets.zero,
         onTap: onPress,
         tabs: const [

@@ -138,6 +138,11 @@ class TrackItTheme {
           borderSide: BorderSide(color: Colors.transparent), // Invisible border
         ),
       ),
+      switchTheme: const SwitchThemeData(
+        thumbColor: WidgetStatePropertyAll(kBlackColor),
+        overlayColor: WidgetStatePropertyAll(kBlackColor),
+        trackColor: WidgetStatePropertyAll(kWhiteColor),
+      ),
       listTileTheme: const ListTileThemeData(
         iconColor: kBlackColor,
         textColor: kBlackColor,
@@ -252,6 +257,11 @@ class TrackItTheme {
           borderRadius: BorderRadius.all(Radius.circular(8)),
           borderSide: BorderSide(color: Colors.transparent), // Invisible border
         ),
+      ),
+      switchTheme: const SwitchThemeData(
+        thumbColor: WidgetStatePropertyAll(kPrimaryColor),
+        overlayColor: WidgetStatePropertyAll(kPrimaryColor),
+        trackColor: WidgetStatePropertyAll(kWhiteColor),
       ),
       listTileTheme: const ListTileThemeData(
         iconColor: kWhiteColor,

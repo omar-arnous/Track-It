@@ -35,8 +35,9 @@ class UserInfo extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              // TODO: listen for theme and change color based on it
-              color: kBlackColor,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? kBlackColor
+                  : kWhiteColor,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(

@@ -11,6 +11,7 @@ import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
+import 'package:trackit/presentation/widgets/spinner.dart';
 import 'firebase_options.dart';
 
 import 'package:trackit/config/injection_container.dart' as di;
@@ -59,10 +60,19 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.sl<TransactionBloc>()),
         BlocProvider(create: (_) => di.sl<BudgetBloc>()..add(InitEvent())),
       ],
-      child: MaterialApp.router(
-        title: 'Track It',
-        theme: TrackItTheme.light(),
-        routerConfig: routes.getRouter,
+      child: BlocBuilder<AppBloc, AppState>(
+        builder: (context, state) {
+          if (state is LoadedAppState) {
+            final isDark = state.isDark;
+            return MaterialApp.router(
+              title: 'Track It',
+              theme: isDark ? TrackItTheme.dark() : TrackItTheme.light(),
+              routerConfig: routes.getRouter,
+            );
+          } else {
+            return const Spinner();
+          }
+        },
       ),
     );
   }
