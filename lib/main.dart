@@ -7,6 +7,7 @@ import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/config/router.dart';
+import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
     final routes = Routes();
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => di.sl<BackupBloc>()),
         BlocProvider(
           create: (_) => di.sl<AppBloc>()..add(InitializeAppEvent()),
         ),

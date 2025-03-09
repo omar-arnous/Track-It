@@ -13,9 +13,11 @@ import 'package:trackit/data/datasources/app/app_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_cache_datasource.dart';
 import 'package:trackit/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:trackit/data/datasources/budget/budget_local_datasource.dart';
+import 'package:trackit/data/datasources/budget/budget_remote_datasource.dart';
 import 'package:trackit/data/datasources/category/category_local_datasource.dart';
 import 'package:trackit/data/datasources/notification/firebase_messaging_data_source.dart';
 import 'package:trackit/data/datasources/transaction/transaction_local_datasource.dart';
+import 'package:trackit/data/datasources/transaction/transaction_remote_datasource.dart';
 import 'package:trackit/data/repositories/account_repository_impl.dart';
 import 'package:trackit/data/repositories/app_repository_impl.dart';
 import 'package:trackit/data/repositories/auth_repository_impl.dart';
@@ -31,12 +33,14 @@ import 'package:trackit/domain/repositories/category_repository.dart';
 import 'package:trackit/domain/repositories/notification_repository.dart';
 import 'package:trackit/domain/repositories/transaction_repository.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
+import 'package:trackit/domain/usecases/account/backup_accounts.dart';
 import 'package:trackit/domain/usecases/account/decrease_balance.dart';
 import 'package:trackit/domain/usecases/account/delete_account.dart';
 import 'package:trackit/domain/usecases/account/edit_account.dart';
 import 'package:trackit/domain/usecases/account/get_accounts.dart';
 import 'package:trackit/domain/usecases/account/get_selected_account.dart';
 import 'package:trackit/domain/usecases/account/increasse_balance.dart';
+import 'package:trackit/domain/usecases/account/restore_accounts.dart';
 import 'package:trackit/domain/usecases/account/reverse_balance.dart';
 import 'package:trackit/domain/usecases/account/set_selected_account.dart';
 import 'package:trackit/domain/usecases/app/get_onboarding_state.dart';
@@ -44,16 +48,20 @@ import 'package:trackit/domain/usecases/app/get_theme.dart';
 import 'package:trackit/domain/usecases/app/set_onboarding_state.dart';
 import 'package:trackit/domain/usecases/app/set_theme.dart';
 import 'package:trackit/domain/usecases/budget/add_budget.dart';
+import 'package:trackit/domain/usecases/budget/backup_budget.dart';
 import 'package:trackit/domain/usecases/budget/delete_budget.dart';
 import 'package:trackit/domain/usecases/budget/get_budget.dart';
+import 'package:trackit/domain/usecases/budget/restore_budget.dart';
 import 'package:trackit/domain/usecases/budget/update_budget.dart';
 import 'package:trackit/domain/usecases/category/add_category.dart';
 import 'package:trackit/domain/usecases/category/get_categories.dart';
 import 'package:trackit/domain/usecases/notification/get_fcm_token.dart';
 import 'package:trackit/domain/usecases/notification/send_notification.dart';
 import 'package:trackit/domain/usecases/transaction/add_transaction.dart';
+import 'package:trackit/domain/usecases/transaction/backup_transactions.dart';
 import 'package:trackit/domain/usecases/transaction/delete_transaction.dart';
 import 'package:trackit/domain/usecases/transaction/get_transactions_by_account_id.dart';
+import 'package:trackit/domain/usecases/transaction/restore_transactions.dart';
 import 'package:trackit/domain/usecases/transaction/update_transaction.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
 import 'package:trackit/domain/usecases/user/login.dart';
@@ -62,6 +70,7 @@ import 'package:trackit/domain/usecases/user/reset_password.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
+import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
@@ -125,6 +134,17 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => BackupBloc(
+      backupAccounts: sl(),
+      restoreAccounts: sl(),
+      backupBudget: sl(),
+      restoreBudget: sl(),
+      backupTransactions: sl(),
+      restoreTransactions: sl(),
+    ),
+  );
+
   // usecases
   sl.registerLazySingleton(() => SetOnboardingStateUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetOnboardingStateUsecase(repository: sl()));
@@ -157,6 +177,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteBudgetUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetFcmTokenUsecase(repository: sl()));
   sl.registerLazySingleton(() => SendNotification(repository: sl()));
+  sl.registerLazySingleton(() => BackupAccountsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RestoreAccountsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => BackupBudgetUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RestoreBudgetUsecase(repository: sl()));
+  sl.registerLazySingleton(() => BackupTransactionsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RestoreTransactionsUsecase(repository: sl()));
 
   // repositories
   sl.registerLazySingleton<AppRepository>(
@@ -220,15 +246,17 @@ Future<void> init() async {
   sl.registerLazySingleton<TransactionLocalDatasource>(
     () => TransactionLocalDatasourceImpl(dbService: sl()),
   );
+  sl.registerLazySingleton<TransactionRemoteDatasource>(
+    () => TransactionRemoteDatasourceImpl(firestore: sl()),
+  );
   sl.registerLazySingleton<FirebaseMessagingDataSource>(
-    () => FirebaseMessagingDataSource(
-      firebaseMessaging: sl(),
-    ),
+    () => FirebaseMessagingDataSource(firebaseMessaging: sl()),
   );
   sl.registerLazySingleton<BudgetLocalDatasource>(
-    () => BudgetLocalDatasourceImpl(
-      dbService: sl(),
-    ),
+    () => BudgetLocalDatasourceImpl(dbService: sl()),
+  );
+  sl.registerLazySingleton<BudgetRemoteDatasource>(
+    () => BudgetRemoteDatasourceImpl(firestore: sl()),
   );
 
   // Core
