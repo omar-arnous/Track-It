@@ -4,7 +4,7 @@ import 'package:trackit/domain/entities/transaction.dart';
 
 abstract class TransactionRepository {
   Future<Either<Failure, List<Transaction>>> getTransactionsByAccountId(int id);
-  Future<Either<Failure, List<Transaction>>> restoreTransactions();
+  Future<Either<Failure, Unit>> restoreTransactions();
   Future<Either<Failure, Unit>> backupTransactions(
       List<Transaction> transactions);
   Future<Either<Failure, Unit>> addTransaction(Transaction transaction);

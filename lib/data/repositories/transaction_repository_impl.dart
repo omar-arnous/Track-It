@@ -126,12 +126,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, List<Transaction>>> restoreTransactions() async {
+  Future<Either<Failure, Unit>> restoreTransactions() async {
     if (await networkInfo.isConnected) {
       try {
         final stream = remoteDatasource.getTransactions();
         final transactions = await convertStreamToFuture(stream);
-        return Right(transactions);
+        for (var transaction in transactions) {
+          localDatasource.addTransaction(transaction);
+        }
+        return const Right(unit);
       } catch (_) {
         return Left(ServerFailure());
       }
@@ -140,15 +143,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
     }
   }
 
-  Future<List<Transaction>> convertStreamToFuture(
+  Future<List<TransactionModel>> convertStreamToFuture(
       Stream<Iterable<TransactionModel>> stream) async {
-    final allAccounts = await stream
+    final allTransactions = await stream
         .map((iterable) => iterable
             .toList()) // Convert each Iterable<AccountModel> to List<AccountModel>
-        .fold<List<Transaction>>(
+        .fold<List<TransactionModel>>(
             [],
             (previous, current) =>
                 previous..addAll(current)); // Collect all lists into one
-    return allAccounts;
+    return allTransactions;
   }
 }

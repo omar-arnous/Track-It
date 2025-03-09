@@ -104,12 +104,15 @@ class BudgetRepositoryImpl implements BudgetRepository {
   }
 
   @override
-  Future<Either<Failure, List<Budget>>> restoreBudgets() async {
+  Future<Either<Failure, Unit>> restoreBudgets() async {
     if (await networkInfo.isConnected) {
       try {
         final stream = remoteDatasource.getBudgets();
         final budgets = await convertStreamToFuture(stream);
-        return Right(budgets);
+        for (var budget in budgets) {
+          localDatasource.addBudget(budget);
+        }
+        return const Right(unit);
       } catch (_) {
         return Left(ServerFailure());
       }
@@ -118,15 +121,15 @@ class BudgetRepositoryImpl implements BudgetRepository {
     }
   }
 
-  Future<List<Budget>> convertStreamToFuture(
+  Future<List<BudgetModel>> convertStreamToFuture(
       Stream<Iterable<BudgetModel>> stream) async {
-    final allAccounts = await stream
+    final allBudgets = await stream
         .map((iterable) => iterable
             .toList()) // Convert each Iterable<AccountModel> to List<AccountModel>
-        .fold<List<Budget>>(
+        .fold<List<BudgetModel>>(
             [],
             (previous, current) =>
                 previous..addAll(current)); // Collect all lists into one
-    return allAccounts;
+    return allBudgets;
   }
 }

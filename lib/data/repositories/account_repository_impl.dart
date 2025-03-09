@@ -180,12 +180,15 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<Either<Failure, List<Account>>> restoreAccounts() async {
+  Future<Either<Failure, Unit>> restoreAccounts() async {
     if (await networkInfo.isConnected) {
       try {
         final stream = remoteDatasource.getAccounts();
         final accounts = await convertStreamToFuture(stream);
-        return Right(accounts);
+        for (var account in accounts) {
+          localDatasource.addAccount(account);
+        }
+        return const Right(unit);
       } catch (_) {
         return Left(ServerFailure());
       }
@@ -194,12 +197,12 @@ class AccountRepositoryImpl implements AccountRepository {
     }
   }
 
-  Future<List<Account>> convertStreamToFuture(
+  Future<List<AccountModel>> convertStreamToFuture(
       Stream<Iterable<AccountModel>> stream) async {
     final allAccounts = await stream
         .map((iterable) => iterable
             .toList()) // Convert each Iterable<AccountModel> to List<AccountModel>
-        .fold<List<Account>>(
+        .fold<List<AccountModel>>(
             [],
             (previous, current) =>
                 previous..addAll(current)); // Collect all lists into one

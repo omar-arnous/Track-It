@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:trackit/core/errors/failures.dart';
-import 'package:trackit/domain/entities/budget.dart';
 import 'package:trackit/domain/repositories/budget_repository.dart';
 
 class RestoreBudgetUsecase {
@@ -8,7 +7,7 @@ class RestoreBudgetUsecase {
 
   RestoreBudgetUsecase({required this.repository});
 
-  Future<Either<Failure, List<Budget>>> call() async {
+  Future<Either<Failure, Unit>> call() async {
     return await repository.restoreBudgets();
   }
 }
