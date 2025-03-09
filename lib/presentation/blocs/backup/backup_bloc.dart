@@ -35,13 +35,13 @@ class BackupBloc extends Bloc<BackupEvent, BackupState> {
     on<BackupEvent>((event, emit) async {
       bool res = false;
       if (event is BackupData) {
-        final accountsRes = await backupAccounts(event.accounts);
+        final accountsRes = await backupAccounts();
         res = _completeBackup(accountsRes);
         if (res == true) {
-          final budgetRes = await backupBudget(event.budgets);
+          final budgetRes = await backupBudget();
           res = _completeBackup(budgetRes);
           if (res == true) {
-            final transactionRes = await backupTransactions(event.transactions);
+            final transactionRes = await backupTransactions();
             emit(_mapResponseToState(
                 transactionRes, 'Backup has been done successfully'));
           } else {
@@ -81,8 +81,10 @@ class BackupBloc extends Bloc<BackupEvent, BackupState> {
 
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure():
+      case ServerFailure:
         return 'Connection error, Unable to backup/restore data';
+      case EmptyDatabaseFailure:
+        return 'No data to backup';
       default:
         return kGenericFailureMessage;
     }

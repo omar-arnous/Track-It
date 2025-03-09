@@ -91,32 +91,34 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> backupTransactions(
-      List<Transaction> transactions) async {
+  Future<Either<Failure, Unit>> backupTransactions() async {
     if (await networkInfo.isConnected) {
-      final List<TransactionModel> transactionsData = [];
+      // final List<TransactionModel> transactionsData = [];
       try {
-        for (var transaction in transactions) {
-          final transactionData = TransactionModel(
-            id: transaction.id,
-            transactionType: transaction.transactionType,
-            amount: transaction.amount,
-            paymentType: transaction.paymentType,
-            currency: transaction.currency,
-            exchangeRate: transaction.exchangeRate,
-            convertedAmount: transaction.convertedAmount,
-            note: transaction.note,
-            date: transaction.date,
-            time: transaction.time,
-            account: transaction.account,
-            targetAccount: transaction.targetAccount,
-            category: transaction.category,
-          );
+        final transactions = await localDatasource.getTransactions();
+        // for (var transaction in transactions) {
+        //   final transactionData = TransactionModel(
+        //     id: transaction.id,
+        //     transactionType: transaction.transactionType,
+        //     amount: transaction.amount,
+        //     paymentType: transaction.paymentType,
+        //     currency: transaction.currency,
+        //     exchangeRate: transaction.exchangeRate,
+        //     convertedAmount: transaction.convertedAmount,
+        //     note: transaction.note,
+        //     date: transaction.date,
+        //     time: transaction.time,
+        //     account: transaction.account,
+        //     targetAccount: transaction.targetAccount,
+        //     category: transaction.category,
+        //   );
 
-          transactionsData.add(transactionData);
-        }
-        await remoteDatasource.addTransactions(transactionsData);
+        //   transactionsData.add(transactionData);
+        // }
+        await remoteDatasource.addTransactions(transactions);
         return const Right(unit);
+      } on EmptyDatabaseException {
+        return Left(EmptyDatabaseFailure());
       } on FirestoreAddException {
         return Left(ServerFailure());
       }

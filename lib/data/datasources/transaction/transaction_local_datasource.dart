@@ -9,6 +9,7 @@ import 'package:trackit/domain/entities/transaction_type.dart';
 
 abstract class TransactionLocalDatasource {
   Future<List<TransactionModel>> getTransactionByAccountId(int id);
+  Future<List<TransactionModel>> getTransactions();
   Future<Unit> addTransaction(TransactionModel transaction);
   Future<Unit> updateTransaction(TransactionModel transaction);
   Future<Unit> deleteTransaction(int id);
@@ -170,5 +171,42 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
     }
 
     return Future.value(unit);
+  }
+
+  @override
+  Future<List<TransactionModel>> getTransactions() async {
+    final db = await dbService.database;
+    final data = await db.query(kTransactionsTable);
+
+    if (data.isNotEmpty) {
+      List<TransactionModel> transactions = [];
+      for (var transaction in data) {
+        final accountData = await db.query(
+          kAccountsTable,
+          where: 'id = ?',
+          whereArgs: [transaction['account_id']],
+        );
+        final account = AccountModel.fromJson(accountData.first);
+        final targetAccountData = await db.query(
+          kAccountsTable,
+          where: 'id = ?',
+          whereArgs: [transaction['target_account_id']],
+        );
+        final targetAccount = AccountModel.fromJson(targetAccountData.first);
+        final categoryData = await db.query(
+          kCategoriesTable,
+          where: 'id = ?',
+          whereArgs: [transaction['category_id']],
+        );
+        final category = CategoryModel.fromJson(categoryData.first);
+        transactions.add(
+          TransactionModel.fromJson(
+              transaction, account, targetAccount, category),
+        );
+      }
+      return transactions;
+    } else {
+      throw EmptyDatabaseException();
+    }
   }
 }

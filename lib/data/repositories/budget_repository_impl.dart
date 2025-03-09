@@ -77,24 +77,27 @@ class BudgetRepositoryImpl implements BudgetRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> backupBudgets(List<Budget> budgets) async {
+  Future<Either<Failure, Unit>> backupBudgets() async {
     if (await networkInfo.isConnected) {
-      final List<BudgetModel> budgetsData = [];
+      // final List<BudgetModel> budgetsData = [];
       try {
-        for (var budget in budgets) {
-          final budgetData = BudgetModel(
-            id: budget.id,
-            amountLimit: budget.amountLimit,
-            period: budget.period,
-            startDate: budget.startDate,
-            endDate: budget.endDate,
-            account: budget.account,
-          );
+        final budgets = await localDatasource.getBudgets();
+        // for (var budget in budgets) {
+        //   final budgetData = BudgetModel(
+        //     id: budget.id,
+        //     amountLimit: budget.amountLimit,
+        //     period: budget.period,
+        //     startDate: budget.startDate,
+        //     endDate: budget.endDate,
+        //     account: budget.account,
+        //   );
 
-          budgetsData.add(budgetData);
-        }
-        await remoteDatasource.addBudgets(budgetsData);
+        //   budgetsData.add(budgetData);
+        // }
+        await remoteDatasource.addBudgets(budgets);
         return const Right(unit);
+      } on EmptyDatabaseException {
+        return Left(EmptyDatabaseFailure());
       } on FirestoreAddException {
         return Left(ServerFailure());
       }

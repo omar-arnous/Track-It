@@ -150,26 +150,27 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> backupAccounts(List<Account> accounts) async {
+  Future<Either<Failure, Unit>> backupAccounts() async {
     if (await networkInfo.isConnected) {
-      final List<AccountModel> accountsData = [];
+      // final List<AccountModel> accountsData = [];
       try {
-        for (var account in accounts) {
-          final accountData = AccountModel(
-            id: account.id,
-            name: account.name,
-            type: account.type,
-            balance: account.balance,
-            oldBalance: account.oldBalance,
-            totalExpenses: account.totalExpenses,
-            totalIncomes: account.totalIncomes,
-            color: account.color,
-            currency: account.currency,
-          );
+        final accounts = await localDatasource.getAccounts();
+        // for (var account in accounts) {
+        //   final accountData = AccountModel(
+        //     id: account.id,
+        //     name: account.name,
+        //     type: account.type,
+        //     balance: account.balance,
+        //     oldBalance: account.oldBalance,
+        //     totalExpenses: account.totalExpenses,
+        //     totalIncomes: account.totalIncomes,
+        //     color: account.color,
+        //     currency: account.currency,
+        //   );
 
-          accountsData.add(accountData);
-        }
-        await remoteDatasource.addAccounts(accountsData);
+        //   accountsData.add(accountData);
+        // }
+        await remoteDatasource.addAccounts(accounts);
         return const Right(unit);
       } on FirestoreAddException {
         return Left(ServerFailure());
