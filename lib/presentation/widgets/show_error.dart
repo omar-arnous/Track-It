@@ -6,8 +6,14 @@ class ShowError {
     return showAdaptiveDialog(
       context: context,
       builder: (context) => AlertDialog.adaptive(
-        title: const Text('Something went wrong'),
-        content: Text(message),
+        title: Text(
+          'Something went wrong',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        content: Text(
+          message,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         actions: [
           TextButton(
             onPressed: () => context.pop(),

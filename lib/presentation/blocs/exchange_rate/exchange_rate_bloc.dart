@@ -23,7 +23,7 @@ class ExchangeRateBloc extends Bloc<ExchangeRateEvent, ExchangeRateState> {
     required this.updateExchangeRate,
   }) : super(LoadingState()) {
     on<ExchangeRateEvent>((event, emit) async {
-      if (event is InitEvent || event is GetExchangeRatesEvent) {
+      if (event is InitExchangeRateEvent || event is GetExchangeRatesEvent) {
         final res = await getExchangeRates();
         emit(_mapGetResponseToState(res));
       } else if (event is AddExchangeRateEvent) {
@@ -48,7 +48,10 @@ class ExchangeRateBloc extends Bloc<ExchangeRateEvent, ExchangeRateState> {
       Either<Failure, Unit> res, String message) {
     return res.fold(
       (failure) => EmptyState(message: _getMessage(failure)),
-      (_) => SuccessState(message: message),
+      (_) {
+        add(GetExchangeRatesEvent());
+        return SuccessState(message: message);
+      },
     );
   }
 

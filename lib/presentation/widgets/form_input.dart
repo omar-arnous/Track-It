@@ -4,6 +4,7 @@ enum Type { text, password, email, number, textarea }
 
 class FormInput extends StatefulWidget {
   bool secure;
+  bool disable;
   final bool focus;
   final bool require;
   final bool? alignTextEnd;
@@ -18,6 +19,7 @@ class FormInput extends StatefulWidget {
     super.key,
     this.secure = false,
     this.focus = false,
+    this.disable = false,
     this.type = Type.text,
     this.hint = '',
     this.require = false,
@@ -25,7 +27,7 @@ class FormInput extends StatefulWidget {
     this.trailing,
     this.alignTextEnd = false,
     required this.controller,
-    required this.label,
+    this.label,
   });
 
   @override
@@ -47,6 +49,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              enabled: widget.disable ? false : true,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
@@ -83,6 +86,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              enabled: widget.disable ? false : true,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
@@ -125,6 +129,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              enabled: widget.disable ? false : true,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
@@ -177,6 +182,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              enabled: widget.disable ? false : true,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,
@@ -212,6 +218,7 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              enabled: widget.disable ? false : true,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,
               autofocus: widget.focus,

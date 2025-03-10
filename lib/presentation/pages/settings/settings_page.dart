@@ -40,6 +40,8 @@ class SettingsPage extends StatelessWidget {
               const SizedBox(height: 20),
               const SettingTile(title: 'My Budgets', path: kBudgetsRoute),
               const SizedBox(height: 20),
+              const SettingTile(title: 'Exchange Rates', path: kExchangeRates),
+              const SizedBox(height: 20),
               SettingActionTile(
                 title: 'Backup data',
                 onPress: () => context.read<BackupBloc>().add(BackupData()),

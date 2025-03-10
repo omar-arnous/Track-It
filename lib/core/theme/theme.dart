@@ -198,6 +198,7 @@ class TrackItTheme {
         ),
         checkmarkColor: kWhiteColor,
       ),
+      indicatorColor: kPrimaryColor,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         backgroundColor: kBlackColor,
@@ -259,9 +260,9 @@ class TrackItTheme {
         ),
       ),
       switchTheme: const SwitchThemeData(
-        thumbColor: WidgetStatePropertyAll(kPrimaryColor),
-        overlayColor: WidgetStatePropertyAll(kPrimaryColor),
-        trackColor: WidgetStatePropertyAll(kWhiteColor),
+        thumbColor: WidgetStatePropertyAll(kBlackColor),
+        overlayColor: WidgetStatePropertyAll(kBlackColor),
+        trackColor: WidgetStatePropertyAll(kPrimaryColor),
       ),
       listTileTheme: const ListTileThemeData(
         iconColor: kWhiteColor,
@@ -317,6 +318,7 @@ class TrackItTheme {
         ),
         checkmarkColor: kBlackColor,
       ),
+      indicatorColor: kPrimaryColor,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         backgroundColor: kBlackColor,

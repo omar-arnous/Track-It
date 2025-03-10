@@ -46,13 +46,13 @@ class UserInfo extends StatelessWidget {
                 const CircleAvatar(
                   child: Center(
                     child: Text(
-                      "A",
+                      "U",
                     ),
                   ),
                 ),
                 const SizedBox(width: 20),
                 Text(
-                  "Username",
+                  "Unknown",
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

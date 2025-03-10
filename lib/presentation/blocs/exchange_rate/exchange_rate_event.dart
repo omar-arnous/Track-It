@@ -2,7 +2,7 @@ part of 'exchange_rate_bloc.dart';
 
 sealed class ExchangeRateEvent {}
 
-class InitEvent extends ExchangeRateEvent {}
+class InitExchangeRateEvent extends ExchangeRateEvent {}
 
 class GetExchangeRatesEvent extends ExchangeRateEvent {}
 

@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/theme/theme.dart';
+import 'package:trackit/domain/entities/currency_type.dart';
+import 'package:trackit/domain/entities/exchange_rate.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
@@ -10,6 +12,7 @@ import 'package:trackit/config/router.dart';
 import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
+import 'package:trackit/presentation/blocs/exchange_rate/exchange_rate_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 import 'firebase_options.dart';
@@ -59,6 +62,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => di.sl<TransactionBloc>()),
         BlocProvider(create: (_) => di.sl<BudgetBloc>()..add(InitEvent())),
+        BlocProvider(
+          create: (_) =>
+              di.sl<ExchangeRateBloc>()..add(GetExchangeRatesEvent()),
+        ),
       ],
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {

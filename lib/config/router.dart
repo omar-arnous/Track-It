@@ -10,6 +10,7 @@ import 'package:trackit/presentation/pages/auth/signup_page.dart';
 import 'package:trackit/presentation/pages/budget/add_edit_budget.dart';
 import 'package:trackit/presentation/pages/budget/budgets_list.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
+import 'package:trackit/presentation/pages/exchange_rate/exchange_rate_list.dart';
 import 'package:trackit/presentation/pages/layout.dart';
 import 'package:trackit/presentation/pages/transation/add_edit_transaction.dart';
 
@@ -101,6 +102,11 @@ class Routes {
             budget: params?.budget,
           );
         },
+      ),
+      GoRoute(
+        name: 'Exchange Rates',
+        path: kExchangeRates,
+        builder: (context, state) => const ExchangeRateList(),
       ),
     ],
   );

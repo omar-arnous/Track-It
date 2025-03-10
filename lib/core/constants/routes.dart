@@ -10,3 +10,4 @@ const String kAddEditAccountRoute = '/add-edit-account';
 const String kAddEditTransactionRoute = '/add-edit-transaction';
 const String kBudgetsRoute = '/budgets';
 const String kAddEditBudgetRoute = '/add-edit-budget';
+const String kExchangeRates = '/exchange-rates';

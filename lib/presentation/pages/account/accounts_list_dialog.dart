@@ -26,9 +26,11 @@ class AccountsListDialog extends StatelessWidget {
                   context.pop();
                   context.push(kAddEditAccountRoute);
                 },
-                leading: const Icon(
+                leading: Icon(
                   Icons.add,
-                  color: kBlackColor,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? kWhiteColor
+                      : kBlackColor,
                 ),
                 title: Text(
                   'Add new account',
