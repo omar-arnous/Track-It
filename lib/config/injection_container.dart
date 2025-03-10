@@ -15,6 +15,7 @@ import 'package:trackit/data/datasources/auth/auth_remote_datasource.dart';
 import 'package:trackit/data/datasources/budget/budget_local_datasource.dart';
 import 'package:trackit/data/datasources/budget/budget_remote_datasource.dart';
 import 'package:trackit/data/datasources/category/category_local_datasource.dart';
+import 'package:trackit/data/datasources/exchange_rate/exchange_rate_local_data_source.dart';
 import 'package:trackit/data/datasources/notification/firebase_messaging_data_source.dart';
 import 'package:trackit/data/datasources/transaction/transaction_local_datasource.dart';
 import 'package:trackit/data/datasources/transaction/transaction_remote_datasource.dart';
@@ -23,6 +24,7 @@ import 'package:trackit/data/repositories/app_repository_impl.dart';
 import 'package:trackit/data/repositories/auth_repository_impl.dart';
 import 'package:trackit/data/repositories/budget_repository_impl.dart';
 import 'package:trackit/data/repositories/category_repository_impl.dart';
+import 'package:trackit/data/repositories/exchange_rate_repository_impl.dart';
 import 'package:trackit/data/repositories/notification_repository_impl.dart';
 import 'package:trackit/data/repositories/transaction_repository_impl.dart';
 import 'package:trackit/domain/repositories/account_repository.dart';
@@ -30,6 +32,7 @@ import 'package:trackit/domain/repositories/app_repository.dart';
 import 'package:trackit/domain/repositories/auth_repository.dart';
 import 'package:trackit/domain/repositories/budget_repository.dart';
 import 'package:trackit/domain/repositories/category_repository.dart';
+import 'package:trackit/domain/repositories/exchange_rate_repository.dart';
 import 'package:trackit/domain/repositories/notification_repository.dart';
 import 'package:trackit/domain/repositories/transaction_repository.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
@@ -55,6 +58,9 @@ import 'package:trackit/domain/usecases/budget/restore_budget.dart';
 import 'package:trackit/domain/usecases/budget/update_budget.dart';
 import 'package:trackit/domain/usecases/category/add_category.dart';
 import 'package:trackit/domain/usecases/category/get_categories.dart';
+import 'package:trackit/domain/usecases/exchange_rate/add_exchange_rate.dart';
+import 'package:trackit/domain/usecases/exchange_rate/get_exchange_rates.dart';
+import 'package:trackit/domain/usecases/exchange_rate/update_exchange_rate.dart';
 import 'package:trackit/domain/usecases/notification/get_fcm_token.dart';
 import 'package:trackit/domain/usecases/notification/send_notification.dart';
 import 'package:trackit/domain/usecases/transaction/add_transaction.dart';
@@ -73,6 +79,7 @@ import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
+import 'package:trackit/presentation/blocs/exchange_rate/exchange_rate_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 
 final sl = GetIt.instance;
@@ -145,6 +152,14 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => ExchangeRateBloc(
+      getExchangeRates: sl(),
+      addExchangeRate: sl(),
+      updateExchangeRate: sl(),
+    ),
+  );
+
   // usecases
   sl.registerLazySingleton(() => SetOnboardingStateUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetOnboardingStateUsecase(repository: sl()));
@@ -183,6 +198,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RestoreBudgetUsecase(repository: sl()));
   sl.registerLazySingleton(() => BackupTransactionsUsecase(repository: sl()));
   sl.registerLazySingleton(() => RestoreTransactionsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetExchangeRatesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AddExchangeRateUsecase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateExchangeRateUsecase(repository: sl()));
 
   // repositories
   sl.registerLazySingleton<AppRepository>(
@@ -218,6 +236,11 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<NotificationRepository>(
     () => NotificationRepositoryImpl(dataSource: sl()),
+  );
+  sl.registerLazySingleton<ExchangeRateRepository>(
+    () => ExchangeRateRepositoryImpl(
+      localDataSource: sl(),
+    ),
   );
 
   // datasources
@@ -257,6 +280,11 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<BudgetRemoteDatasource>(
     () => BudgetRemoteDatasourceImpl(firestore: sl()),
+  );
+  sl.registerLazySingleton<ExchangeRateLocalDataSource>(
+    () => ExchangeRateLocalDataSourceImpl(
+      dbService: sl(),
+    ),
   );
 
   // Core
