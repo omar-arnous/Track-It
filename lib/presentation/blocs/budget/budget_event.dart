@@ -1,6 +1,6 @@
 part of 'budget_bloc.dart';
 
-abstract class BudgetEvent {}
+sealed class BudgetEvent {}
 
 class InitEvent extends BudgetEvent {}
 

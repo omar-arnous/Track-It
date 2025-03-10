@@ -71,6 +71,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
       (budgets) {
         for (final budget in budgets) {
           if (budget.amountLimit <= budget.account.totalExpenses) {
+            // TODO: Configure the ability to handle the period
             add(BudgetNotifyTokenEvent());
           }
         }
