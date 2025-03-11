@@ -11,6 +11,7 @@ import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
+import 'package:trackit/presentation/blocs/exchange_rate/exchange_rate_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'package:trackit/presentation/pages/transation/transaction_type_widget.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
@@ -487,18 +488,32 @@ class _AddEditTransactionState extends State<AddEditTransaction>
               ),
             );
       } else {
-        context.read<AccountBloc>().add(
-              DecreaseBalanceEvent(
-                id: transaction.account.id!,
-                value: transaction.amount,
-              ),
-            );
-        context.read<AccountBloc>().add(
-              IncreaseBalanceEvent(
-                id: transaction.targetAccount!.id!,
-                value: transaction.amount,
-              ),
-            );
+        final rateState = context.read<ExchangeRateBloc>().state;
+        if (rateState is IdleState) {
+          final rate = rateState.exchangeRates.first.rate;
+          double targetAmount = 0;
+          if (account!.currency == CurrencyType.syp &&
+              targetAccount!.currency == CurrencyType.usd) {
+            targetAmount = transaction.amount / rate;
+          } else if (account!.currency == CurrencyType.usd &&
+              targetAccount!.currency == CurrencyType.syp) {
+            targetAmount = transaction.amount * rate;
+          } else {
+            targetAmount = transaction.amount;
+          }
+          context.read<AccountBloc>().add(
+                DecreaseBalanceEvent(
+                  id: transaction.account.id!,
+                  value: transaction.amount,
+                ),
+              );
+          context.read<AccountBloc>().add(
+                IncreaseBalanceEvent(
+                  id: transaction.targetAccount!.id!,
+                  value: targetAmount,
+                ),
+              );
+        }
       }
       context.pop();
     }

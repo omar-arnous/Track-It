@@ -70,8 +70,12 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
       (failure) => EmptyState(message: _getMessage(failure)),
       (budgets) {
         for (final budget in budgets) {
-          if (budget.amountLimit <= budget.account.totalExpenses &&
-              budget.endDate == DateTime.now()) {
+          if (budget.endDate == DateTime.now()) {
+            add(DeleteBudgetEvent(id: budget.id!));
+          }
+
+          if (budget.amountLimit <= budget.account.totalExpenses) {
+            // TODO: figure out the functionality of notifying users (daily, weekly, monthly)
             add(BudgetNotifyTokenEvent());
           }
         }

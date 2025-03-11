@@ -31,7 +31,6 @@ class ExchangeRateList extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            print(state);
             if (state is LoadingState) {
               return const Spinner();
             } else if (state is EmptyState) {

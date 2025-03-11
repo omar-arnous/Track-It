@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trackit/core/constants/colors.dart';
@@ -190,13 +191,12 @@ class TrackItTheme {
       chipTheme: ChipThemeData(
         backgroundColor: kWhiteColor,
         labelStyle: lightTextTheme.labelMedium,
-        selectedColor: kPrimaryColor,
-        secondaryLabelStyle:
-            lightTextTheme.labelMedium!.copyWith(color: kWhiteColor),
+        selectedColor: kPrimaryColor.withAlpha(150),
+        secondaryLabelStyle: lightTextTheme.labelMedium,
         iconTheme: const IconThemeData(
           color: kBlackColor,
         ),
-        checkmarkColor: kWhiteColor,
+        checkmarkColor: kBlackColor,
       ),
       indicatorColor: kPrimaryColor,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -311,12 +311,12 @@ class TrackItTheme {
       chipTheme: ChipThemeData(
         backgroundColor: kBlackColor,
         labelStyle: darkTextTheme.labelMedium,
-        selectedColor: kPrimaryColor,
+        selectedColor: kPrimaryColor.withAlpha(150),
         secondaryLabelStyle: darkTextTheme.labelMedium,
         iconTheme: const IconThemeData(
           color: kWhiteColor,
         ),
-        checkmarkColor: kBlackColor,
+        checkmarkColor: kWhiteColor,
       ),
       indicatorColor: kPrimaryColor,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(

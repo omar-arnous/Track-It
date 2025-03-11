@@ -5,6 +5,7 @@ import 'package:trackit/core/errors/exceptions.dart';
 import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/data/models/category_model.dart';
 import 'package:trackit/data/models/transaction_model.dart';
+import 'package:trackit/domain/entities/currency_type.dart';
 import 'package:trackit/domain/entities/transaction_type.dart';
 
 abstract class TransactionLocalDatasource {
@@ -136,6 +137,13 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
         ],
       );
 
+      List<Map<String, dynamic>> exchangeRates =
+          await db.query(kExchangeRateTable);
+
+      if (exchangeRates.isEmpty) {
+        throw Exception("No exchange rate found");
+      }
+
       if (targetAccounts.isEmpty) {
         throw Exception("Target account not found");
       }
@@ -143,14 +151,28 @@ class TransactionLocalDatasourceImpl implements TransactionLocalDatasource {
       final targetAccount = targetAccounts.first;
       double newTargetBalance = targetAccount['balance'].toDouble();
 
-      newTargetBalance -= transaction['amount'];
+      final exchangeRate = exchangeRates.first;
+      double rate = exchangeRate['rate'].toDouble();
+
+      if (account['currency'] == CurrencyType.syp &&
+          targetAccount['currency'] == CurrencyType.usd) {
+        newBalance += transaction['amount'];
+        newTargetBalance -= transaction['amount'] / rate;
+      } else if (account['currency'] == CurrencyType.usd &&
+          targetAccount['currency'] == CurrencyType.syp) {
+        newBalance += transaction['amount'];
+        newTargetBalance -= transaction['amount'] * rate;
+      } else {
+        newBalance += transaction['amount'];
+        newTargetBalance -= transaction['amount'];
+      }
+
       await db.update(
         kAccountsTable,
         {'balance': newTargetBalance},
         where: 'id = ?',
         whereArgs: [targetAccount['id']],
       );
-      newBalance += transaction['amount'];
     }
 
     await db.update(

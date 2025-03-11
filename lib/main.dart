@@ -3,8 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/theme/theme.dart';
-import 'package:trackit/domain/entities/currency_type.dart';
-import 'package:trackit/domain/entities/exchange_rate.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
