@@ -194,7 +194,10 @@ class _AccountFormState extends State<AccountForm> {
           ],
         ),
         TextButton(
-          child: const Text('Select'),
+          child: Text(
+            'Select',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
           onPressed: () {
             showDialog(
               context: context,
@@ -211,7 +214,10 @@ class _AccountFormState extends State<AccountForm> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text('save'),
+                      child: Text(
+                        'save',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
                     )
                   ],
                 );

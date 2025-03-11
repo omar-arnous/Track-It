@@ -65,7 +65,8 @@ class _FormInputState extends State<FormInput> {
                   children: [
                     widget.leading ?? const SizedBox(), // Leading text
                     const SizedBox(
-                        width: 10), // Space between leading and input
+                      width: 10,
+                    ), // Space between leading and input
                   ],
                 ),
                 suffix: widget.trailing,

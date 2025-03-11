@@ -79,44 +79,43 @@ class _AddEditBudgetState extends State<AddEditBudget> {
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FormInput(
-                    require: true,
-                    controller: amountLimitController,
-                    label: '',
-                    leading: const Text('Amount limit'),
-                    type: Type.number,
-                  ),
-                  const SizedBox(height: 30),
-                  _budgetPeriod(),
-                  const SizedBox(height: 30),
-                  PaymentTile(
-                    icon: const Icon(Icons.calendar_month),
-                    title: 'Start Date',
-                    value: Formatter.formatDate(startDate),
-                    onPress: () => selectStartDate(context),
-                  ),
-                  const SizedBox(height: 8),
-                  PaymentTile(
-                    icon: const Icon(Icons.calendar_month),
-                    title: 'End Date',
-                    value: Formatter.formatDate(endDate),
-                    onPress: () => selectEndDate(context),
-                  ),
-                  const SizedBox(height: 8),
-                  PaymentTile(
-                    icon: const Icon(Icons.account_balance_outlined),
-                    title: 'Account',
-                    value: account != null ? account!.name : '',
-                    onPress: () => _selectAccount(context),
-                  ),
-                ],
-              ),
-            )),
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FormInput(
+                  controller: amountLimitController,
+                  leading: const Text('Amount limit'),
+                  type: Type.number,
+                ),
+                const SizedBox(height: 30),
+                _budgetPeriod(),
+                const SizedBox(height: 30),
+                PaymentTile(
+                  icon: const Icon(Icons.calendar_month),
+                  title: 'Start Date',
+                  value: Formatter.formatDate(startDate),
+                  onPress: () => selectStartDate(context),
+                ),
+                const SizedBox(height: 8),
+                PaymentTile(
+                  icon: const Icon(Icons.calendar_month),
+                  title: 'End Date',
+                  value: Formatter.formatDate(endDate),
+                  onPress: () => selectEndDate(context),
+                ),
+                const SizedBox(height: 8),
+                PaymentTile(
+                  icon: const Icon(Icons.account_balance_outlined),
+                  title: 'Account',
+                  value: account != null ? account!.name : '',
+                  onPress: () => _selectAccount(context),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -163,7 +162,9 @@ class _AddEditBudgetState extends State<AddEditBudget> {
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
-            dropdownColor: kGreyColor,
+            dropdownColor: Theme.of(context).brightness == Brightness.dark
+                ? kBlackColor
+                : kGreyColor,
             borderRadius: BorderRadius.circular(12),
             value: period,
             items: BudgetPeriod.values
@@ -188,7 +189,9 @@ class _AddEditBudgetState extends State<AddEditBudget> {
 
   void _selectAccount(BuildContext context) async {
     showModalBottomSheet(
-      backgroundColor: kGreyColor,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? kBlackColor
+          : kGreyColor,
       context: context,
       builder: (context) {
         return BlocBuilder<AccountBloc, AccountState>(

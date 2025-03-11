@@ -159,7 +159,6 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     const SizedBox(height: 10),
                     FormInput(
                       controller: amountController,
-                      label: '',
                       leading: const Text('Amount'),
                       alignTextEnd: true,
                       trailing: Text(
@@ -232,7 +231,9 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
-            dropdownColor: kGreyColor,
+            dropdownColor: Theme.of(context).brightness == Brightness.dark
+                ? kBlackColor
+                : kGreyColor,
             borderRadius: BorderRadius.circular(12),
             value: paymentType,
             items: PaymentType.values
@@ -263,7 +264,9 @@ class _AddEditTransactionState extends State<AddEditTransaction>
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
-            dropdownColor: kGreyColor,
+            dropdownColor: Theme.of(context).brightness == Brightness.dark
+                ? kBlackColor
+                : kGreyColor,
             borderRadius: BorderRadius.circular(12),
             value: currencyType,
             items: CurrencyType.values
@@ -316,7 +319,9 @@ class _AddEditTransactionState extends State<AddEditTransaction>
 
   void _selectAccount(BuildContext context) async {
     showModalBottomSheet(
-      backgroundColor: kGreyColor,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? kBlackColor
+          : kGreyColor,
       context: context,
       builder: (context) {
         return BlocBuilder<AccountBloc, AccountState>(
@@ -373,7 +378,9 @@ class _AddEditTransactionState extends State<AddEditTransaction>
 
   void _selectCategory(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: kGreyColor,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? kBlackColor
+          : kGreyColor,
       context: context,
       builder: (context) {
         return BlocBuilder<CategoryBloc, CategoryState>(
