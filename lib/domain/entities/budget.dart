@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:trackit/domain/entities/account.dart';
-import 'package:trackit/domain/entities/budget_period.dart';
+import 'package:trackit/domain/entities/period.dart';
 
 class Budget extends Equatable {
   final int? id;
   final double amountLimit;
-  final BudgetPeriod period;
+  final Period period;
   final DateTime startDate;
   final DateTime endDate;
   final Account account;

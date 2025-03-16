@@ -5,7 +5,7 @@ import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget.dart';
-import 'package:trackit/domain/entities/budget_period.dart';
+import 'package:trackit/domain/entities/period.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
@@ -29,7 +29,7 @@ class AddEditBudget extends StatefulWidget {
 class _AddEditBudgetState extends State<AddEditBudget> {
   final formKey = GlobalKey<FormState>();
   late TextEditingController amountLimitController;
-  late BudgetPeriod period;
+  late Period period;
   late DateTime startDate;
   late DateTime endDate;
   Account? account;
@@ -49,7 +49,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
     }
 
     amountLimitController = TextEditingController();
-    period = BudgetPeriod.monthly;
+    period = Period.monthly;
     startDate = DateTime.now();
     endDate = DateTime.now();
     super.initState();
@@ -167,9 +167,9 @@ class _AddEditBudgetState extends State<AddEditBudget> {
                 : kWhiteColor,
             borderRadius: BorderRadius.circular(12),
             value: period,
-            items: BudgetPeriod.values
+            items: Period.values
                 .map(
-                  (type) => DropdownMenuItem<BudgetPeriod>(
+                  (type) => DropdownMenuItem<Period>(
                     value: type,
                     child: Text(
                       type.name,
@@ -178,7 +178,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
                   ),
                 )
                 .toList(),
-            onChanged: (BudgetPeriod? newValue) {
+            onChanged: (Period? newValue) {
               setState(() => period = newValue!);
             },
           ),

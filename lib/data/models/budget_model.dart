@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget.dart';
-import 'package:trackit/domain/entities/budget_period.dart';
+import 'package:trackit/domain/entities/period.dart';
 
 class BudgetModel extends Budget {
   const BudgetModel({
@@ -19,7 +19,7 @@ class BudgetModel extends Budget {
     return BudgetModel(
       id: json['id'],
       amountLimit: json['amount_limit'],
-      period: BudgetPeriod.values.firstWhere(
+      period: Period.values.firstWhere(
         (e) => e.toString() == json['period'],
       ),
       startDate: DateTime.parse(json['start_date']),
@@ -35,7 +35,7 @@ class BudgetModel extends Budget {
     return BudgetModel(
       id: snapshot.data()['id'],
       amountLimit: snapshot.data()['amount_limit'],
-      period: BudgetPeriod.values.firstWhere(
+      period: Period.values.firstWhere(
         (e) => e.toString() == snapshot.data()['period'],
       ),
       startDate: DateTime.parse(snapshot.data()['start_date']),
