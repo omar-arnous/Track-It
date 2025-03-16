@@ -233,7 +233,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
           child: DropdownButton(
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
-                : kGreyColor,
+                : kWhiteColor,
             borderRadius: BorderRadius.circular(12),
             value: paymentType,
             items: PaymentType.values
@@ -266,7 +266,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
           child: DropdownButton(
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
-                : kGreyColor,
+                : kWhiteColor,
             borderRadius: BorderRadius.circular(12),
             value: currencyType,
             items: CurrencyType.values
@@ -321,7 +321,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
     showModalBottomSheet(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? kBlackColor
-          : kGreyColor,
+          : kWhiteColor,
       context: context,
       builder: (context) {
         return BlocBuilder<AccountBloc, AccountState>(
@@ -380,7 +380,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
     showModalBottomSheet(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? kBlackColor
-          : kGreyColor,
+          : kWhiteColor,
       context: context,
       builder: (context) {
         return BlocBuilder<CategoryBloc, CategoryState>(
@@ -396,6 +396,9 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     return const SizedBox(height: 8);
                   },
                   itemBuilder: (context, index) {
+                    setState(() {
+                      category = categories.firstWhere((cat) => cat.id == 14);
+                    });
                     return ListTile(
                       onTap: () {
                         setState(() => category = categories[index]);

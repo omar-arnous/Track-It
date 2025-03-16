@@ -164,7 +164,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
           child: DropdownButton(
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
-                : kGreyColor,
+                : kWhiteColor,
             borderRadius: BorderRadius.circular(12),
             value: period,
             items: BudgetPeriod.values
@@ -191,7 +191,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
     showModalBottomSheet(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? kBlackColor
-          : kGreyColor,
+          : kWhiteColor,
       context: context,
       builder: (context) {
         return BlocBuilder<AccountBloc, AccountState>(
