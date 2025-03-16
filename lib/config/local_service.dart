@@ -202,11 +202,13 @@ class LocalService {
     await db.execute('''
       CREATE TABLE $kRecurringTransactionsTable (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        payment_type TEXT NOT NULL,
         amount REAL NOT NULL,
         currency TEXT NOT NULL,
         frequency TEXT,
         next_due_date TEXT,
         created_at TEXT,
+        note TEXT,
         account_id INTEGER NOT NULL,
         category_id INTEGER NOT NULL,
         FOREIGN KEY (account_id) REFERENCES $kAccountsTable (id),
