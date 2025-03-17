@@ -1,7 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:trackit/core/constants/db_constants.dart';
+import 'package:trackit/data/models/account_model.dart';
+import 'package:trackit/data/models/category_model.dart';
+import 'package:trackit/data/models/transaction_model.dart';
+import 'package:trackit/domain/entities/currency_type.dart';
+import 'package:trackit/domain/entities/payment_type.dart';
 import 'package:trackit/domain/entities/period.dart';
+import 'package:trackit/domain/entities/transaction_type.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -48,6 +55,31 @@ void callbackDispatcher() {
           where: 'id = ?',
           whereArgs: [recurringPayment['id']],
         );
+        List<Map<String, dynamic>> accounts = await db.query(
+          kAccountsTable,
+          where: "id = ?",
+          whereArgs: [recurringPayment['account_id']],
+        );
+        List<Map<String, dynamic>> categories = await db.query(
+          kCategoriesTable,
+          where: "id = ?",
+          whereArgs: [recurringPayment['category_id']],
+        );
+        final transaction = TransactionModel(
+          transactionType: TransactionType.expense,
+          amount: amount,
+          paymentType: PaymentType.values.firstWhere(
+              (e) => e.toString() == recurringPayment['payment_type']),
+          currency: CurrencyType.values
+              .firstWhere((e) => e.toString() == recurringPayment['currency']),
+          note: recurringPayment['note'],
+          date: DateTime.now(),
+          time: TimeOfDay.now(),
+          account: AccountModel.fromJson(accounts.first),
+          targetAccount: AccountModel.fromJson(accounts.first),
+          category: CategoryModel.fromJson(categories.first),
+        );
+        await db.insert(kTransactionsTable, transaction.toJson());
         await sendNotification("Recurring Payment Proccessed",
             "A payment of $amount was sent.", "Recurring Payment Notification");
       }

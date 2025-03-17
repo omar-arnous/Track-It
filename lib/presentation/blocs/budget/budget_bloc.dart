@@ -42,13 +42,13 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           emit(_mapGetResponseToState(res));
         } else if (event is AddBudgetEvent) {
           final res = await addBudget(event.budget);
-          emit(_mapResponseToState(res, "budget added successfully"));
+          emit(_mapResponseToState(res, "Budget added successfully"));
         } else if (event is UpdateBudgetEvent) {
           final res = await updateBudget(event.budget);
-          emit(_mapResponseToState(res, "budget updated successfully"));
+          emit(_mapResponseToState(res, "Budget updated successfully"));
         } else if (event is DeleteBudgetEvent) {
           final res = await deleteBudget(event.id);
-          emit(_mapResponseToState(res, "budget deleted successfully"));
+          emit(_mapResponseToState(res, "Budget deleted successfully"));
         } else if (event is BudgetNotifyTokenEvent) {
           final token = await getFcmToken();
           add(BudgetNotifyLimitEvent(token: token));
