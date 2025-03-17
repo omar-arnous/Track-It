@@ -17,6 +17,8 @@ import 'package:trackit/data/datasources/budget/budget_remote_datasource.dart';
 import 'package:trackit/data/datasources/category/category_local_datasource.dart';
 import 'package:trackit/data/datasources/exchange_rate/exchange_rate_local_data_source.dart';
 import 'package:trackit/data/datasources/notification/firebase_messaging_data_source.dart';
+import 'package:trackit/data/datasources/recurring/recurring_local_datasource.dart';
+import 'package:trackit/data/datasources/recurring/recurring_remote_datasource.dart';
 import 'package:trackit/data/datasources/transaction/transaction_local_datasource.dart';
 import 'package:trackit/data/datasources/transaction/transaction_remote_datasource.dart';
 import 'package:trackit/data/repositories/account_repository_impl.dart';
@@ -26,6 +28,7 @@ import 'package:trackit/data/repositories/budget_repository_impl.dart';
 import 'package:trackit/data/repositories/category_repository_impl.dart';
 import 'package:trackit/data/repositories/exchange_rate_repository_impl.dart';
 import 'package:trackit/data/repositories/notification_repository_impl.dart';
+import 'package:trackit/data/repositories/recurring_repository_impl.dart';
 import 'package:trackit/data/repositories/transaction_repository_impl.dart';
 import 'package:trackit/domain/repositories/account_repository.dart';
 import 'package:trackit/domain/repositories/app_repository.dart';
@@ -34,6 +37,7 @@ import 'package:trackit/domain/repositories/budget_repository.dart';
 import 'package:trackit/domain/repositories/category_repository.dart';
 import 'package:trackit/domain/repositories/exchange_rate_repository.dart';
 import 'package:trackit/domain/repositories/notification_repository.dart';
+import 'package:trackit/domain/repositories/recurring_repository.dart';
 import 'package:trackit/domain/repositories/transaction_repository.dart';
 import 'package:trackit/domain/usecases/account/add_account.dart';
 import 'package:trackit/domain/usecases/account/backup_accounts.dart';
@@ -63,6 +67,12 @@ import 'package:trackit/domain/usecases/exchange_rate/get_exchange_rates.dart';
 import 'package:trackit/domain/usecases/exchange_rate/update_exchange_rate.dart';
 import 'package:trackit/domain/usecases/notification/get_fcm_token.dart';
 import 'package:trackit/domain/usecases/notification/send_notification.dart';
+import 'package:trackit/domain/usecases/recurring/add_recuring_payment.dart';
+import 'package:trackit/domain/usecases/recurring/backup_recurring_payments.dart';
+import 'package:trackit/domain/usecases/recurring/delete_recurring_payment.dart';
+import 'package:trackit/domain/usecases/recurring/edit_recurring_payment.dart';
+import 'package:trackit/domain/usecases/recurring/get_recurring_payments.dart';
+import 'package:trackit/domain/usecases/recurring/restore_recurring_payments.dart';
 import 'package:trackit/domain/usecases/transaction/add_transaction.dart';
 import 'package:trackit/domain/usecases/transaction/backup_transactions.dart';
 import 'package:trackit/domain/usecases/transaction/delete_transaction.dart';
@@ -80,6 +90,7 @@ import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/blocs/budget/budget_bloc.dart';
 import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/exchange_rate/exchange_rate_bloc.dart';
+import 'package:trackit/presentation/blocs/recurring/reccurring_bloc.dart';
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 
 final sl = GetIt.instance;
@@ -162,6 +173,15 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => ReccurringBloc(
+      getRecurringPayments: sl(),
+      addRecurringPayment: sl(),
+      editRecurringPayment: sl(),
+      deleteRecurringPayment: sl(),
+    ),
+  );
+
   // usecases
   sl.registerLazySingleton(() => SetOnboardingStateUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetOnboardingStateUsecase(repository: sl()));
@@ -203,6 +223,16 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetExchangeRatesUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddExchangeRateUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateExchangeRateUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetRecurringPaymentsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AddRecurringPaymentsUsecase(repository: sl()));
+  sl.registerLazySingleton(
+      () => EditRecurringPaymentsUsecase(repository: sl()));
+  sl.registerLazySingleton(
+      () => DeleteRecurringPaymentsUsecase(repository: sl()));
+  sl.registerLazySingleton(
+      () => BackupRecurringPaymentsUsecase(repository: sl()));
+  sl.registerLazySingleton(
+      () => RestoreRecurringPaymentsUsecase(repository: sl()));
 
   // repositories
   sl.registerLazySingleton<AppRepository>(
@@ -242,6 +272,13 @@ Future<void> init() async {
   sl.registerLazySingleton<ExchangeRateRepository>(
     () => ExchangeRateRepositoryImpl(
       localDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<RecurringRepository>(
+    () => RecurringRepositoryImpl(
+      localDatasource: sl(),
+      networkInfo: sl(),
+      remoteDatasource: sl(),
     ),
   );
 
@@ -289,6 +326,17 @@ Future<void> init() async {
   sl.registerLazySingleton<ExchangeRateLocalDataSource>(
     () => ExchangeRateLocalDataSourceImpl(
       dbService: sl(),
+    ),
+  );
+  sl.registerLazySingleton<RecurringLocalDatasource>(
+    () => RecurringLocalDatasourceImpl(
+      dbService: sl(),
+    ),
+  );
+  sl.registerLazySingleton<RecurringRemoteDatasource>(
+    () => RecurringRemoteDatasourceImpl(
+      dbService: sl(),
+      firestore: sl(),
     ),
   );
 
