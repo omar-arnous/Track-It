@@ -10,6 +10,8 @@ import 'package:trackit/domain/usecases/account/backup_accounts.dart';
 import 'package:trackit/domain/usecases/account/restore_accounts.dart';
 import 'package:trackit/domain/usecases/budget/backup_budget.dart';
 import 'package:trackit/domain/usecases/budget/restore_budget.dart';
+import 'package:trackit/domain/usecases/recurring/backup_recurring_payments.dart';
+import 'package:trackit/domain/usecases/recurring/restore_recurring_payments.dart';
 import 'package:trackit/domain/usecases/transaction/backup_transactions.dart';
 import 'package:trackit/domain/usecases/transaction/restore_transactions.dart';
 
@@ -23,6 +25,8 @@ class BackupBloc extends Bloc<BackupEvent, BackupState> {
   final RestoreBudgetUsecase restoreBudget;
   final BackupTransactionsUsecase backupTransactions;
   final RestoreTransactionsUsecase restoreTransactions;
+  final BackupRecurringPaymentsUsecase backupRecurringPayments;
+  final RestoreRecurringPaymentsUsecase restoreRecurringPayments;
 
   BackupBloc({
     required this.backupAccounts,
@@ -31,6 +35,8 @@ class BackupBloc extends Bloc<BackupEvent, BackupState> {
     required this.restoreBudget,
     required this.backupTransactions,
     required this.restoreTransactions,
+    required this.backupRecurringPayments,
+    required this.restoreRecurringPayments,
   }) : super(LoadingState()) {
     on<BackupEvent>((event, emit) async {
       bool res = false;
@@ -42,8 +48,14 @@ class BackupBloc extends Bloc<BackupEvent, BackupState> {
           res = _completeBackup(budgetRes);
           if (res == true) {
             final transactionRes = await backupTransactions();
-            emit(_mapResponseToState(
-                transactionRes, 'Backup has been done successfully'));
+            res = _completeBackup(transactionRes);
+            if (res == true) {
+              final recurringPaymentsRes = await backupRecurringPayments();
+              emit(
+                _mapResponseToState(
+                    recurringPaymentsRes, 'Backup has been done successfully'),
+              );
+            }
           } else {
             emit(ErrorState(message: 'Backup has not been completed'));
           }
@@ -58,8 +70,14 @@ class BackupBloc extends Bloc<BackupEvent, BackupState> {
           res = _completeBackup(budgetRes);
           if (res == true) {
             final transactionRes = await restoreTransactions();
-            emit(_mapResponseToState(
-                transactionRes, 'Data has been restored successfully'));
+            res = _completeBackup(transactionRes);
+            if (res == true) {
+              final recurringPaymentsRes = await restoreRecurringPayments();
+              emit(
+                _mapResponseToState(recurringPaymentsRes,
+                    'Data has been restored successfully'),
+              );
+            }
           } else {
             emit(ErrorState(message: 'Cannot restore data'));
           }

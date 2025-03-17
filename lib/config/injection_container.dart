@@ -149,6 +149,8 @@ Future<void> init() async {
       restoreBudget: sl(),
       backupTransactions: sl(),
       restoreTransactions: sl(),
+      backupRecurringPayments: sl(),
+      restoreRecurringPayments: sl(),
     ),
   );
 
