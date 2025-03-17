@@ -270,7 +270,10 @@ Future<void> init() async {
     () => TransactionLocalDatasourceImpl(dbService: sl()),
   );
   sl.registerLazySingleton<TransactionRemoteDatasource>(
-    () => TransactionRemoteDatasourceImpl(firestore: sl()),
+    () => TransactionRemoteDatasourceImpl(
+      firestore: sl(),
+      dbService: sl(),
+    ),
   );
   sl.registerLazySingleton<FirebaseMessagingDataSource>(
     () => FirebaseMessagingDataSource(firebaseMessaging: sl()),

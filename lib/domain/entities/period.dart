@@ -1,1 +1,1 @@
-enum Period { daily, monthly, yearly }
+enum Period { daily, weekly, monthly }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:trackit/config/local_service.dart';
+import 'package:trackit/core/constants/db_constants.dart';
 import 'package:trackit/core/errors/exceptions.dart';
 import 'package:trackit/data/models/account_model.dart';
 import 'package:trackit/data/models/category_model.dart';
@@ -12,7 +14,11 @@ abstract class TransactionRemoteDatasource {
 
 class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
   FirebaseFirestore firestore;
-  TransactionRemoteDatasourceImpl({required this.firestore});
+  LocalService dbService;
+  TransactionRemoteDatasourceImpl({
+    required this.firestore,
+    required this.dbService,
+  });
   @override
   Future<Unit> addTransactions(List<TransactionModel> transactions) async {
     try {
@@ -25,7 +31,7 @@ class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
             )
             .get();
 
-        if (querySnapshot.docs.isNotEmpty) {
+        if (querySnapshot.docs.isEmpty) {
           continue;
         }
 
@@ -39,11 +45,11 @@ class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
   }
 
   @override
-  Stream<Iterable<TransactionModel>> getTransactions() {
+  Stream<Iterable<TransactionModel>> getTransactions() async* {
     final transactionCollection = firestore.collection('transactions');
+    final db = await dbService.database;
 
-    final transactions =
-        transactionCollection.snapshots().asyncMap((event) async {
+    yield* transactionCollection.snapshots().asyncMap((event) async {
       return Future.wait(
         event.docs.map(
           (snapshot) async {
@@ -59,19 +65,55 @@ class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
                 .collection('accounts')
                 .doc(targetAccountId)
                 .get();
-            final category =
-                await firestore.collection('categories').doc(categoryId).get();
+            final category = await db.query(
+              kCategoriesTable,
+              where: "id = ?",
+              whereArgs: [categoryId],
+            );
             return TransactionModel.fromSnapshot(
               snapshot,
               AccountModel.fromJson(account.data() ?? {}),
               AccountModel.fromJson(targetAccount.data() ?? {}),
-              CategoryModel.fromJson(category.data() ?? {}),
+              CategoryModel.fromJson(category.first),
             );
           },
         ),
       );
     });
 
-    return transactions;
+    // final transactions =
+    //     transactionCollection.snapshots().asyncMap((event) async {
+    //   return Future.wait(
+    //     event.docs.map(
+    //       (snapshot) async {
+    //         final data = snapshot.data();
+
+    //         final accountId = data['account_id'];
+    //         final targetAccountId = data['target_account_id'];
+    //         final categoryId = data['category_id'];
+
+    //         final account =
+    //             await firestore.collection('accounts').doc(accountId).get();
+    //         final targetAccount = await firestore
+    //             .collection('accounts')
+    //             .doc(targetAccountId)
+    //             .get();
+    //         final category = await db.query(
+    //           kCategoriesTable,
+    //           where: "id = ?",
+    //           whereArgs: [categoryId],
+    //         );
+    //         return TransactionModel.fromSnapshot(
+    //           snapshot,
+    //           AccountModel.fromJson(account.data() ?? {}),
+    //           AccountModel.fromJson(targetAccount.data() ?? {}),
+    //           CategoryModel.fromJson(category.first),
+    //         );
+    //       },
+    //     ),
+    //   );
+    // });
+
+    // return transactions;
   }
 }

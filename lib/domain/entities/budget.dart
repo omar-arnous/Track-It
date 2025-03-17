@@ -7,6 +7,7 @@ class Budget extends Equatable {
   final double amountLimit;
   final Period period;
   final DateTime startDate;
+  final DateTime nextDueDate;
   final DateTime endDate;
   final Account account;
 
@@ -15,6 +16,7 @@ class Budget extends Equatable {
     required this.amountLimit,
     required this.period,
     required this.startDate,
+    required this.nextDueDate,
     required this.endDate,
     required this.account,
   });

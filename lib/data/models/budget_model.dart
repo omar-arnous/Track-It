@@ -10,6 +10,7 @@ class BudgetModel extends Budget {
     required super.amountLimit,
     required super.period,
     required super.startDate,
+    required super.nextDueDate,
     required super.endDate,
     required super.account,
   });
@@ -23,6 +24,7 @@ class BudgetModel extends Budget {
         (e) => e.toString() == json['period'],
       ),
       startDate: DateTime.parse(json['start_date']),
+      nextDueDate: DateTime.parse(json['next_due_date']),
       endDate: DateTime.parse(json['end_date']),
       account: account,
     );
@@ -39,6 +41,7 @@ class BudgetModel extends Budget {
         (e) => e.toString() == snapshot.data()['period'],
       ),
       startDate: DateTime.parse(snapshot.data()['start_date']),
+      nextDueDate: DateTime.parse(snapshot.data()['next_due_date']),
       endDate: DateTime.parse(snapshot.data()['end_date']),
       account: account,
     );
@@ -50,6 +53,7 @@ class BudgetModel extends Budget {
       "amount_limit": amountLimit,
       "period": period.toString(),
       "start_date": startDate.toIso8601String(),
+      "next_due_date": nextDueDate.toIso8601String(),
       "end_date": endDate.toIso8601String(),
       "account_id": account.id,
     };

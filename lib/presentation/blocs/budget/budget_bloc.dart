@@ -75,7 +75,6 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
           }
 
           if (budget.amountLimit <= budget.account.totalExpenses) {
-            // TODO: figure out the functionality of notifying users (daily, weekly, monthly)
             add(BudgetNotifyTokenEvent());
           }
         }

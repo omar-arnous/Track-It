@@ -194,6 +194,7 @@ class LocalService {
         amount_limit REAL,
         period TEXT,
         start_date TEXT, 
+        next_due_date TEXT,
         end_date TEXT ,
         account_id INTEGER NOT NULL,
         FOREIGN KEY (account_id) REFERENCES $kAccountsTable (id)

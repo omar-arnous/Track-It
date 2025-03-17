@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workmanager/workmanager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +15,15 @@ import 'package:trackit/presentation/blocs/exchange_rate/exchange_rate_bloc.dart
 import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 import 'firebase_options.dart';
+import 'core/utils/background_tasks.dart';
 
 import 'package:trackit/config/injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+  Workmanager().registerPeriodicTask("check_payments", "processPayments",
+      frequency: const Duration(hours: 24));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
