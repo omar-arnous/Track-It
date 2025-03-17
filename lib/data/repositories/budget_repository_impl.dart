@@ -36,6 +36,7 @@ class BudgetRepositoryImpl implements BudgetRepository {
         amountLimit: budget.amountLimit,
         period: budget.period,
         startDate: budget.startDate,
+        nextDueDate: budget.nextDueDate,
         endDate: budget.endDate,
         account: budget.account,
       );
@@ -55,6 +56,7 @@ class BudgetRepositoryImpl implements BudgetRepository {
         amountLimit: budget.amountLimit,
         period: budget.period,
         startDate: budget.startDate,
+        nextDueDate: budget.nextDueDate,
         endDate: budget.endDate,
         account: budget.account,
       );
