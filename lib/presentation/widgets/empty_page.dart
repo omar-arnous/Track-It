@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmptyPage extends StatelessWidget {
   final String? message;
@@ -6,11 +7,17 @@ class EmptyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget emptyStateWidget = SvgPicture.asset(
+      "assets/empty.svg",
+      semanticsLabel: 'Empty State',
+    );
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Expanded(child: emptyStateWidget),
           Text(
             message ?? '',
             style: Theme.of(context).textTheme.bodyLarge,

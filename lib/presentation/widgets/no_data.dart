@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NoData extends StatelessWidget {
   final String? message;
@@ -6,16 +7,18 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget emptyStateWidget = SvgPicture.asset(
+      "assets/empty.svg",
+      semanticsLabel: 'Empty State',
+      height: 200,
+      width: double.infinity,
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Expanded(
-        //   child: Image.asset(
-        //     'assets/empty.png',
-        //     width: double.infinity,
-        //     height: MediaQuery.of(context).size.height * 0.2,
-        //   ),
-        // ),
+        emptyStateWidget,
+        const SizedBox(height: 20),
         Text(
           message ?? '',
           style: Theme.of(context).textTheme.labelLarge,

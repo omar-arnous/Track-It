@@ -35,6 +35,7 @@ dependencies:
   internet_connection_checker: ^3.0.1
   flutter_local_notifications: ^19.0.0
   workmanager: ^0.5.2
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
