@@ -64,7 +64,7 @@ class ReccurringBloc extends Bloc<RecurringEvent, RecurringState> {
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
       case EmptyDatabaseFailure:
-        return 'No recurring payments yet, create one';
+        return 'No Recurring payments yet';
       case DatabaseAddFailure:
         return '$kFailureAdd recurring payment';
       case DatabaseEditFailure:

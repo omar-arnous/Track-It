@@ -128,7 +128,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
       case EmptyDatabaseFailure:
-        return 'No Accounts';
+        return 'No Accounts yet';
       case DatabaseAddFailure:
         return '$kFailureAdd account';
       case DatabaseEditFailure:

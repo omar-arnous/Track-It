@@ -94,7 +94,7 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
       case EmptyDatabaseFailure:
-        return 'No budgets yet, create one';
+        return 'No Budgets yet';
       case DatabaseAddFailure:
         return '$kFailureAdd budget';
       case DatabaseEditFailure:

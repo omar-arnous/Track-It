@@ -58,7 +58,7 @@ class ExchangeRateBloc extends Bloc<ExchangeRateEvent, ExchangeRateState> {
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
       case EmptyDatabaseFailure:
-        return 'No exchange rates yet, create one';
+        return 'No Exchange rates yet';
       case DatabaseAddFailure:
         return '$kFailureAdd exchange rate';
       case DatabaseEditFailure:
