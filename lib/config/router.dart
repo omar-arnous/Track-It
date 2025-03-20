@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget.dart';
+import 'package:trackit/domain/entities/recurring.dart';
 import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/presentation/pages/account/account_add_edit_page.dart';
 import 'package:trackit/presentation/pages/auth/login_page.dart';
@@ -12,6 +13,7 @@ import 'package:trackit/presentation/pages/budget/budgets_list.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/exchange_rate/exchange_rate_list.dart';
 import 'package:trackit/presentation/pages/layout.dart';
+import 'package:trackit/presentation/pages/recurring/recurring_payments_list.dart';
 import 'package:trackit/presentation/pages/transation/add_edit_transaction.dart';
 
 class AddEditAccountParams {
@@ -33,6 +35,14 @@ class AddEditBudgetParams {
   final Budget? budget;
 
   AddEditBudgetParams({this.budget, this.isUpdating = false});
+}
+
+class AddEditRecurringPaymentParams {
+  final bool isUpdating;
+  final Recurring? recurringPayment;
+
+  AddEditRecurringPaymentParams(
+      {this.recurringPayment, this.isUpdating = false});
 }
 
 class Routes {
@@ -107,6 +117,16 @@ class Routes {
         name: 'Exchange Rates',
         path: kExchangeRates,
         builder: (context, state) => const ExchangeRateList(),
+      ),
+      GoRoute(
+        name: 'Recurring Payments',
+        path: kRecurringPaymentsRoute,
+        builder: (context, state) => const RecurringPaymentsList(),
+      ),
+      GoRoute(
+        name: 'Add Edit Recurring Payment',
+        path: kAddEditRecurringPaymentRoute,
+        builder: (context, state) => const RecurringPaymentsList(),
       ),
     ],
   );

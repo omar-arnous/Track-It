@@ -107,7 +107,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountState _mapGetResponseToState(
       Either<Failure, List<Account>> res, int? id) {
     return res.fold(
-      (failure) => ErrorAccountState(message: _getMessage(failure)),
+      (failure) => EmptyAccountState(message: _getMessage(failure)),
       (accounts) => LoadedAccountState(
         accounts: accounts,
         selectedAccountId: id ?? accounts[0].id!,
@@ -128,7 +128,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
       case EmptyDatabaseFailure:
-        return kEmptyDatabaseFailureMessage;
+        return 'No Accounts';
       case DatabaseAddFailure:
         return '$kFailureAdd account';
       case DatabaseEditFailure:

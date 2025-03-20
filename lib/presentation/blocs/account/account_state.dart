@@ -21,6 +21,15 @@ class LoadedAccountState extends AccountState {
   List<Object?> get props => [accounts, selectedAccountId];
 }
 
+class EmptyAccountState extends AccountState {
+  final String message;
+
+  const EmptyAccountState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
 class SuccessAccountState extends AccountState {
   final String message;
   const SuccessAccountState({required this.message});

@@ -63,6 +63,8 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
   String _getMessage(Failure failure) {
     switch (failure.runtimeType) {
+      case EmptyDatabaseFailure:
+        return 'No Transactions';
       case DatabaseAddFailure:
         return '$kFailureAdd transaction';
       case DatabaseEditFailure:

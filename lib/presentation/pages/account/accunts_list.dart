@@ -27,9 +27,9 @@ class AccountsList extends StatelessWidget {
               return const SizedBox(height: 20);
             },
           );
-        } else if (state is ErrorAccountState) {
+        } else if (state is EmptyAccountState) {
           return EmptyPage(
-            message: '${state.message} accounts yet, create one',
+            message: state.message,
           );
         } else {
           return Center(
