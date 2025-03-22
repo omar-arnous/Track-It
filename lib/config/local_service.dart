@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/constants/db_constants.dart';
 import 'package:trackit/data/models/category_model.dart';
 
@@ -9,121 +10,121 @@ List<CategoryModel> defaultCategories = [
     id: 1,
     name: 'Food & Drinks',
     icon: Icons.restaurant_menu,
-    color: Colors.red,
+    color: kRedColor,
   ),
   const CategoryModel(
     id: 2,
     name: 'Vehicle Service',
     icon: Icons.car_crash,
-    color: Colors.red,
+    color: kRedColor,
   ),
   const CategoryModel(
     id: 3,
     name: 'Health, Beauty',
     icon: Icons.brush,
-    color: Colors.pink,
+    color: kPinkColor,
   ),
   const CategoryModel(
     id: 4,
     name: 'HealthCare, Doctor',
     icon: Icons.healing,
-    color: Colors.green,
+    color: kGreenColor,
   ),
   const CategoryModel(
     id: 5,
     name: 'Bills',
     icon: Icons.receipt,
-    color: Colors.green,
+    color: kGreenColor,
   ),
   const CategoryModel(
     id: 6,
     name: 'Income',
     icon: Icons.wallet,
-    color: Colors.green,
+    color: kGreenColor,
   ),
   const CategoryModel(
     id: 7,
     name: 'Financial Expenses',
     icon: Icons.payment,
-    color: Colors.green,
+    color: kGreenColor,
   ),
   const CategoryModel(
     id: 8,
     name: 'Electrical devices',
     icon: Icons.electric_bolt,
-    color: Colors.orange,
+    color: kOrangeColor,
   ),
   const CategoryModel(
     id: 9,
     name: 'Communication, PC',
     icon: Icons.phone,
-    color: Colors.orange,
+    color: kOrangeColor,
   ),
   const CategoryModel(
     id: 10,
     name: 'Housing',
     icon: Icons.house,
-    color: Colors.orange,
+    color: kOrangeColor,
   ),
   const CategoryModel(
     id: 11,
     name: 'Investments',
     icon: Icons.line_axis,
-    color: Colors.yellow,
+    color: kYellowColor,
   ),
   const CategoryModel(
     id: 12,
     name: 'Salary',
     icon: Icons.attach_money,
-    color: Colors.yellow,
+    color: kYellowColor,
   ),
   const CategoryModel(
     id: 13,
     name: 'Fees',
     icon: Icons.account_balance,
-    color: Colors.yellow,
+    color: kYellowColor,
   ),
   const CategoryModel(
     id: 14,
     name: 'Transfer, Withdraw',
     icon: Icons.currency_exchange,
-    color: Colors.yellow,
+    color: kYellowColor,
   ),
   const CategoryModel(
     id: 15,
     name: 'Enteirtainment',
     icon: Icons.movie,
-    color: Colors.blue,
+    color: kBlueColor,
   ),
   const CategoryModel(
     id: 16,
     name: 'Travel',
     icon: Icons.beach_access,
-    color: Colors.blue,
+    color: kBlueColor,
   ),
   const CategoryModel(
     id: 17,
     name: 'Shopping',
     icon: Icons.shopping_bag,
-    color: Colors.blue,
+    color: kBlueColor,
   ),
   const CategoryModel(
     id: 18,
     name: 'Transport',
     icon: Icons.bus_alert,
-    color: Colors.grey,
+    color: kGreyColor,
   ),
   const CategoryModel(
     id: 19,
     name: 'Charity, Gift',
     icon: Icons.card_giftcard,
-    color: Colors.grey,
+    color: kGreyColor,
   ),
   const CategoryModel(
     id: 20,
     name: 'Other',
     icon: Icons.menu,
-    color: Colors.grey,
+    color: kGreyColor,
   ),
 ];
 

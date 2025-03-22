@@ -15,6 +15,7 @@ import 'package:trackit/presentation/blocs/category/category_bloc.dart';
 import 'package:trackit/presentation/blocs/recurring/reccurring_bloc.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
 import 'package:trackit/presentation/widgets/payment_tile.dart';
+import 'package:trackit/presentation/widgets/show_delete_confirm_dialog.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 
 class AddEditRecurringPayment extends StatefulWidget {
@@ -84,6 +85,14 @@ class _AddEditRecurringPaymentState extends State<AddEditRecurringPayment> {
           isUpdate ? 'Edit Recurring Payment' : 'Add Recurring Payment',
         ),
         actions: [
+          if (isUpdate)
+            IconButton(
+              onPressed: deleteRecurringPayment,
+              icon: const Icon(
+                Icons.delete,
+                color: kRedColor,
+              ),
+            ),
           IconButton(
             onPressed: validateForm,
             icon: const Icon(Icons.check),
@@ -393,6 +402,26 @@ class _AddEditRecurringPaymentState extends State<AddEditRecurringPayment> {
         startDate = pickedDate;
       });
     }
+  }
+
+  void deleteRecurringPayment() async {
+    await showDeleteDialog(
+      context: context,
+      onConfirm: () async {
+        context.read<ReccurringBloc>().add(
+              DeleteRecuringPaymentEvent(id: widget.recurringPayment!.id!),
+            );
+        await Future.delayed(const Duration(milliseconds: 300));
+        if (!mounted) return;
+        context.read<AccountBloc>().add(GetAccountsEvent());
+      },
+      label: 'delete',
+      title: 'Delete recurring payment',
+      content: 'Are you sure you want to delete this recurring payment',
+    );
+
+    if (!mounted) return;
+    context.pop();
   }
 
   void validateForm() {

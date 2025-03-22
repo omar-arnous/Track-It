@@ -7,6 +7,7 @@ import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/recurring.dart';
 import 'package:trackit/presentation/blocs/recurring/reccurring_bloc.dart';
+import 'package:trackit/presentation/widgets/show_delete_confirm_dialog.dart';
 
 class RecurringPaymentItem extends StatelessWidget {
   final Recurring recurringPayment;
@@ -33,11 +34,19 @@ class RecurringPaymentItem extends StatelessWidget {
         ),
       ),
       onDismissed: (direction) {
-        context.read<ReccurringBloc>().add(
-              DeleteRecuringPaymentEvent(
-                id: recurringPayment.id!,
-              ),
-            );
+        showDeleteDialog(
+          context: context,
+          onConfirm: () async {
+            context.read<ReccurringBloc>().add(
+                  DeleteRecuringPaymentEvent(
+                    id: recurringPayment.id!,
+                  ),
+                );
+          },
+          label: 'delete',
+          title: 'Delete recurring payment',
+          content: 'Are you sure you want to delete this recurring payment',
+        );
       },
       child: ListTile(
         shape: RoundedRectangleBorder(
