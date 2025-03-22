@@ -113,6 +113,7 @@ class TrackItTheme {
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: lightTextTheme.labelMedium,
         labelStyle: lightTextTheme.labelLarge,
+        suffixStyle: lightTextTheme.labelLarge,
         floatingLabelAlignment: FloatingLabelAlignment.start,
         activeIndicatorBorder: const BorderSide(),
         filled: true,
@@ -233,6 +234,7 @@ class TrackItTheme {
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: darkTextTheme.labelMedium,
         labelStyle: darkTextTheme.labelLarge,
+        suffixStyle: darkTextTheme.labelLarge,
         floatingLabelAlignment: FloatingLabelAlignment.start,
         activeIndicatorBorder: const BorderSide(),
         filled: true,

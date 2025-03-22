@@ -6,5 +6,5 @@ const Color kLightColor = Color(0xffF7F7F7);
 const Color kDarkColor = Color(0xff151515); // 1D1616
 const Color kWhiteColor = Color(0xffF1F1F1);
 const Color kBlackColor = Color(0xff252525);
-const Color kGreyColor = Color(0xff9DC08B);
+const Color kGreyColor = Color(0xFF959695);
 const Color kRedColor = Color(0xffE52020);

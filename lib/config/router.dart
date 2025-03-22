@@ -13,6 +13,7 @@ import 'package:trackit/presentation/pages/budget/budgets_list.dart';
 import 'package:trackit/presentation/pages/category/category_list.dart';
 import 'package:trackit/presentation/pages/exchange_rate/exchange_rate_list.dart';
 import 'package:trackit/presentation/pages/layout.dart';
+import 'package:trackit/presentation/pages/recurring/add_edit_recurring_payment.dart';
 import 'package:trackit/presentation/pages/recurring/recurring_payments_list.dart';
 import 'package:trackit/presentation/pages/transation/add_edit_transaction.dart';
 
@@ -126,7 +127,13 @@ class Routes {
       GoRoute(
         name: 'Add Edit Recurring Payment',
         path: kAddEditRecurringPaymentRoute,
-        builder: (context, state) => const RecurringPaymentsList(),
+        builder: (context, state) {
+          final params = state.extra as AddEditRecurringPaymentParams?;
+          return AddEditRecurringPayment(
+            isUpdating: params?.isUpdating ?? false,
+            recurringPayment: params?.recurringPayment,
+          );
+        },
       ),
     ],
   );

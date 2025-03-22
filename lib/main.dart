@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackit/presentation/blocs/recurring/reccurring_bloc.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -68,6 +69,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               di.sl<ExchangeRateBloc>()..add(GetExchangeRatesEvent()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              di.sl<ReccurringBloc>()..add(GetRecurringPaymentsEvent()),
         ),
       ],
       child: BlocBuilder<AppBloc, AppState>(
