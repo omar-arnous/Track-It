@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/constants/routes.dart';
-import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
 import 'package:trackit/presentation/pages/settings/setting_tile.dart';
 import 'package:trackit/presentation/pages/transation/transaction_list.dart';
 import 'package:trackit/presentation/widgets/Spinner.dart';
 import 'package:trackit/presentation/widgets/account_card.dart';
-import 'package:trackit/presentation/widgets/expense_pie_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

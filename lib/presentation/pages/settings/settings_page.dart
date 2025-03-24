@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/constants/routes.dart';
+import 'package:trackit/domain/entities/period.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/backup/backup_bloc.dart';
 import 'package:trackit/presentation/pages/settings/setting_action_tile.dart';
@@ -8,8 +9,15 @@ import 'package:trackit/presentation/pages/settings/setting_tile.dart';
 import 'package:trackit/presentation/pages/settings/user_info.dart';
 import 'package:trackit/presentation/widgets/spinner.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  Period reportType = Period.weekly;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +58,7 @@ class SettingsPage extends StatelessWidget {
               SettingActionTile(
                 title: 'Backup data',
                 onPress: () => context.read<BackupBloc>().add(BackupData()),
-                trailing: Icons.cloud_upload_outlined,
+                trailing: const Icon(Icons.cloud_upload_outlined),
               ),
             ],
           );

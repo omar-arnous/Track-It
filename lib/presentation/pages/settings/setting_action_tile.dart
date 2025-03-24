@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SettingActionTile extends StatelessWidget {
   final void Function() onPress;
   final String title;
-  final IconData? trailing;
+  final Widget? trailing;
   const SettingActionTile({
     super.key,
     required this.title,
@@ -19,7 +19,7 @@ class SettingActionTile extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.labelLarge,
       ),
-      trailing: trailing != null ? Icon(trailing) : null,
+      trailing: trailing,
     );
   }
 }

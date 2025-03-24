@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^2.0.17
   font_awesome_flutter: ^10.8.0
   fl_chart: ^0.66.2
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -50,3 +51,10 @@ flutter:
 
   assets:
     - assets/
+
+flutter_native_splash:
+  color: "#F7F7F7"
+  image: assets/logo_light.png
+
+  # color_dark: "#252525"
+  # image_dark: assets/logo_dark.png

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trackit/core/constants/colors.dart';
-import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
-import 'package:trackit/presentation/blocs/transaction/transaction_bloc.dart';
 import 'package:trackit/presentation/pages/settings/last_month_comparison.dart';
-import 'package:trackit/presentation/widgets/account_card.dart';
 import 'package:trackit/presentation/widgets/balance_card.dart';
 import 'package:trackit/presentation/widgets/empty_page.dart';
 import 'package:trackit/presentation/widgets/expense_pie_chart.dart';
