@@ -18,7 +18,7 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       color: Theme.of(context).brightness == Brightness.light
           ? kWhiteColor

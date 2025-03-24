@@ -18,7 +18,7 @@ class TransactionTypeWidget extends StatelessWidget {
         color: Theme.of(context).brightness == Brightness.dark
             ? kBlackColor
             : kWhiteColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: TabBar(
         controller: controller,

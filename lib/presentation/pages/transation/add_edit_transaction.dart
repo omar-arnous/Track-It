@@ -234,7 +234,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
                 : kWhiteColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             value: paymentType,
             items: PaymentType.values
                 .map(
@@ -267,7 +267,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
                 : kWhiteColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             value: currencyType,
             items: CurrencyType.values
                 .map(

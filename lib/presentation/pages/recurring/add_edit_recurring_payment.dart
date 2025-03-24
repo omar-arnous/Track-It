@@ -191,7 +191,7 @@ class _AddEditRecurringPaymentState extends State<AddEditRecurringPayment> {
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
                 : kWhiteColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             value: paymentType,
             items: PaymentType.values
                 .map(
@@ -224,7 +224,7 @@ class _AddEditRecurringPaymentState extends State<AddEditRecurringPayment> {
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
                 : kWhiteColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             value: currencyType,
             items: CurrencyType.values
                 .map(
@@ -259,7 +259,7 @@ class _AddEditRecurringPaymentState extends State<AddEditRecurringPayment> {
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
                 : kWhiteColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             value: frequency,
             items: Period.values
                 .map(

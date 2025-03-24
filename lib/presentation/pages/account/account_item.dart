@@ -24,7 +24,7 @@ class AccountItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       onTap: () {
         if (actionable == true) {

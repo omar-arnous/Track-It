@@ -166,7 +166,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
             dropdownColor: Theme.of(context).brightness == Brightness.dark
                 ? kBlackColor
                 : kWhiteColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
             value: period,
             items: Period.values
                 .map(
