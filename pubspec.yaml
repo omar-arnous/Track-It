@@ -39,6 +39,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   fl_chart: ^0.66.2
   flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -56,5 +57,17 @@ flutter_native_splash:
   color: "#F7F7F7"
   image: assets/logo_light.png
 
-  # color_dark: "#252525"
-  # image_dark: assets/logo_dark.png
+  color_dark: "#252525"
+  image_dark: assets/logo_light.png
+
+  android: true
+  ios: true
+  web: false
+  android_gravity: center
+  ios_content_mode: center
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo_light.png"
+  remove_alpha_ios: true

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
@@ -43,6 +44,9 @@ class _LoginPageState extends State<LoginPage> {
         if (state is Authenticated) {
           context.go(kLayoutRoute);
         } else if (state is AuthError) {
+          setState(() {
+            isLoading = false;
+          });
           await showAdaptiveDialog(
             context: context,
             builder: (context) {
@@ -90,12 +94,21 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 24),
                         Row(
                           children: [
-                            const Text('Forget password?'),
+                            Text('Forget password?',
+                                style: Theme.of(context).textTheme.bodyLarge),
                             TextButton(
                               onPressed: () {
                                 context.go(kResetPasswordRoute);
                               },
-                              child: const Text('Reset password'),
+                              child: Text(
+                                'Reset password',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: kPrimaryColor,
+                                    ),
+                              ),
                             ),
                           ],
                         ),
@@ -139,7 +152,15 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () {
                                 context.push(kSignUpRoute);
                               },
-                              child: const Text('Signup'),
+                              child: Text(
+                                'Signup',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: kPrimaryColor,
+                                    ),
+                              ),
                             ),
                           ],
                         )

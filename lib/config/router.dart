@@ -49,8 +49,7 @@ class AddEditRecurringPaymentParams {
 
 class Routes {
   final _router = GoRouter(
-    // initialLocation: '/spalsh',
-    initialLocation: kLayoutRoute,
+    initialLocation: kSignUpRoute,
     routes: [
       GoRoute(
         name: 'Sign Up',

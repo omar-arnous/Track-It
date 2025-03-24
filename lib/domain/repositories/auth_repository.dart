@@ -4,7 +4,10 @@ import 'package:trackit/domain/entities/user.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, User>> createUser(
-      String email, String name, String password);
+    String email,
+    String name,
+    String password,
+  );
   Future<Either<Failure, User>> logIn(String email, String password);
   Future<Unit> logOut();
   Future<Unit> resetPassword(String email);

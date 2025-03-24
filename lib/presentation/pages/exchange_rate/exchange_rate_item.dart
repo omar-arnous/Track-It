@@ -43,25 +43,32 @@ class _ExchangeRateItemState extends State<ExchangeRateItem> {
             : kWhiteColor,
         borderRadius: BorderRadius.circular(8),
       ),
-      // TODO: add latest update
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ExhangeRateInput(
-            title: Formatter.formatCurrency(
-              widget.exchangeRate.baseCurrency.name,
-            ),
-            disable: true,
-            controller: baseController,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ExhangeRateInput(
+                title: Formatter.formatCurrency(
+                  widget.exchangeRate.baseCurrency.name,
+                ),
+                disable: true,
+                controller: baseController,
+              ),
+              const Icon(Icons.currency_exchange),
+              ExhangeRateInput(
+                title: Formatter.formatCurrency(
+                  widget.exchangeRate.targetCurrency.name,
+                ),
+                controller: targetController,
+                exchangeRate: widget.exchangeRate,
+              ),
+            ],
           ),
-          const Icon(Icons.currency_exchange),
-          ExhangeRateInput(
-            title: Formatter.formatCurrency(
-              widget.exchangeRate.targetCurrency.name,
-            ),
-            controller: targetController,
-            exchangeRate: widget.exchangeRate,
+          Text(
+            'Latest update: ${Formatter.formatDate(widget.exchangeRate.updatedAt)}',
           ),
         ],
       ),

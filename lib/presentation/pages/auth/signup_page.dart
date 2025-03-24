@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trackit/core/constants/colors.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
@@ -43,6 +44,9 @@ class _SignUpPageState extends State<SignUpPage> {
         if (state is Authenticated) {
           context.go(kLayoutRoute);
         } else if (state is AuthError) {
+          setState(() {
+            isLoading = false;
+          });
           await showAdaptiveDialog(
             context: context,
             builder: (context) {
@@ -131,7 +135,15 @@ class _SignUpPageState extends State<SignUpPage> {
                               onPressed: () {
                                 context.go(kLogInRoute);
                               },
-                              child: const Text('Login'),
+                              child: Text(
+                                'Login',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: kPrimaryColor,
+                                    ),
+                              ),
                             ),
                           ],
                         )
