@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/presentation/blocs/account/account_bloc.dart';
+import 'package:trackit/presentation/pages/settings/setting_tile.dart';
 import 'package:trackit/presentation/pages/transation/transaction_list.dart';
 import 'package:trackit/presentation/widgets/Spinner.dart';
 import 'package:trackit/presentation/widgets/account_card.dart';
+import 'package:trackit/presentation/widgets/expense_pie_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Account account;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             if (state is LoadingAccountState) {
               return const Spinner();
             } else if (state is LoadedAccountState) {
-              account = state.accounts.firstWhere(
+              final account = state.accounts.firstWhere(
                 (account) => account.id == state.selectedAccountId,
               );
               return AccountCard(account: account);
@@ -42,7 +43,11 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         const SizedBox(height: 24),
-        const Text('Pie Chart'),
+        const SettingTile(
+          title: 'Analytics',
+          path: kAnalyticsPage,
+          trailing: Icons.line_axis_outlined,
+        ),
         const SizedBox(height: 24),
         Text(
           'Transactions',
@@ -50,11 +55,6 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(height: 8),
         const TransactionList(),
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //   ],
-        // ),
       ],
     );
   }

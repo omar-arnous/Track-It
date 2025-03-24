@@ -15,6 +15,7 @@ import 'package:trackit/presentation/pages/exchange_rate/exchange_rate_list.dart
 import 'package:trackit/presentation/pages/layout.dart';
 import 'package:trackit/presentation/pages/recurring/add_edit_recurring_payment.dart';
 import 'package:trackit/presentation/pages/recurring/recurring_payments_list.dart';
+import 'package:trackit/presentation/pages/settings/analytics_page.dart';
 import 'package:trackit/presentation/pages/transation/add_edit_transaction.dart';
 
 class AddEditAccountParams {
@@ -134,6 +135,11 @@ class Routes {
             recurringPayment: params?.recurringPayment,
           );
         },
+      ),
+      GoRoute(
+        name: 'Analytics Page',
+        path: kAnalyticsPage,
+        builder: (context, state) => const AnalyticsPage(),
       ),
     ],
   );

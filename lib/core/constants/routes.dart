@@ -13,3 +13,4 @@ const String kAddEditBudgetRoute = '/add-edit-budget';
 const String kExchangeRates = '/exchange-rates';
 const String kRecurringPaymentsRoute = '/recurring-payments';
 const String kAddEditRecurringPaymentRoute = '/add-edit-recurring-payment';
+const String kAnalyticsPage = '/analytics-page';

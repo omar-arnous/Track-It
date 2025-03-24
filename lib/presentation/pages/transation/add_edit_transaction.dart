@@ -396,16 +396,13 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     return const SizedBox(height: 8);
                   },
                   itemBuilder: (context, index) {
-                    setState(() {
-                      category = categories.firstWhere((cat) => cat.id == 14);
-                    });
                     return ListTile(
                       onTap: () {
                         setState(() => category = categories[index]);
                         context.pop();
                       },
                       leading: CircleAvatar(
-                        backgroundColor: kGreyColor,
+                        backgroundColor: kWhiteColor,
                         child: Icon(
                           categories[index].icon,
                           color: categories[index].color,

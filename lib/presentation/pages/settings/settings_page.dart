@@ -38,6 +38,8 @@ class SettingsPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
+              const SettingTile(title: 'Analytics', path: kAnalyticsPage),
+              const SizedBox(height: 20),
               const SettingTile(title: 'My Budgets', path: kBudgetsRoute),
               const SizedBox(height: 20),
               const SettingTile(
@@ -48,6 +50,7 @@ class SettingsPage extends StatelessWidget {
               SettingActionTile(
                 title: 'Backup data',
                 onPress: () => context.read<BackupBloc>().add(BackupData()),
+                trailing: Icons.cloud_upload_outlined,
               ),
             ],
           );

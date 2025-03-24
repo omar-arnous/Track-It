@@ -18,90 +18,59 @@ class RecurringPaymentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(recurringPayment.id.toString()),
-      direction: DismissDirection.endToStart,
-      background: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: kRedColor,
-        ),
-        alignment: Alignment.centerRight,
-        child: const Icon(
-          Icons.delete_forever,
-          color: kWhiteColor,
-          size: 40.0,
-        ),
+    return ListTile(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      onDismissed: (direction) {
-        showDeleteDialog(
-          context: context,
-          onConfirm: () async {
-            context.read<ReccurringBloc>().add(
-                  DeleteRecuringPaymentEvent(
-                    id: recurringPayment.id!,
-                  ),
-                );
-          },
-          label: 'delete',
-          title: 'Delete recurring payment',
-          content: 'Are you sure you want to delete this recurring payment',
+      onTap: () {
+        context.push(
+          kAddEditRecurringPaymentRoute,
+          extra: AddEditRecurringPaymentParams(
+            isUpdating: true,
+            recurringPayment: recurringPayment,
+          ),
         );
       },
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+      contentPadding: const EdgeInsets.all(8),
+      leading: CircleAvatar(
+        backgroundColor: kWhiteColor,
+        child: Icon(
+          recurringPayment.category.icon,
+          color: recurringPayment.category.color,
         ),
-        onTap: () {
-          context.push(
-            kAddEditRecurringPaymentRoute,
-            extra: AddEditRecurringPaymentParams(
-              isUpdating: true,
-              recurringPayment: recurringPayment,
-            ),
-          );
-        },
-        contentPadding: const EdgeInsets.all(8),
-        leading: CircleAvatar(
-          backgroundColor: kWhiteColor,
-          child: Icon(
-            recurringPayment.category.icon,
-            color: recurringPayment.category.color,
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            recurringPayment.account.name,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              recurringPayment.account.name,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Text(
-              recurringPayment.frequency.name,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            Text(
-              recurringPayment.note ?? '',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
-            ),
-          ],
-        ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              '-${Formatter.formatBalance(recurringPayment.amount)} ${Formatter.formatCurrency(recurringPayment.currencyType.name)}',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            Text(
-              Formatter.formatDate(recurringPayment.nextDueDate),
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
-        ),
+          Text(
+            recurringPayment.frequency.name,
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          Text(
+            recurringPayment.note ?? '',
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
+          ),
+        ],
+      ),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            '-${Formatter.formatBalance(recurringPayment.amount)} ${Formatter.formatCurrency(recurringPayment.currencyType.name)}',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          Text(
+            Formatter.formatDate(recurringPayment.nextDueDate),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }

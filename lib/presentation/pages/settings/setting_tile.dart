@@ -4,10 +4,12 @@ import 'package:go_router/go_router.dart';
 class SettingTile extends StatelessWidget {
   final String path;
   final String title;
+  final IconData? trailing;
   const SettingTile({
     super.key,
     required this.title,
     required this.path,
+    this.trailing,
   });
 
   @override
@@ -18,7 +20,9 @@ class SettingTile extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.labelLarge,
       ),
-      trailing: const Icon(Icons.keyboard_arrow_right),
+      trailing: trailing != null
+          ? Icon(trailing)
+          : const Icon(Icons.keyboard_arrow_right),
     );
   }
 }
