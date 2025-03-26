@@ -80,6 +80,7 @@ import 'package:trackit/domain/usecases/transaction/get_transactions_by_account_
 import 'package:trackit/domain/usecases/transaction/restore_transactions.dart';
 import 'package:trackit/domain/usecases/transaction/update_transaction.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
+import 'package:trackit/domain/usecases/user/get_authenticated_user.dart';
 import 'package:trackit/domain/usecases/user/login.dart';
 import 'package:trackit/domain/usecases/user/logout.dart';
 import 'package:trackit/domain/usecases/user/reset_password.dart';
@@ -111,6 +112,7 @@ Future<void> init() async {
       login: sl(),
       logout: sl(),
       resetPassword: sl(),
+      getAuthenticatedUser: sl(),
     ),
   );
 
@@ -190,6 +192,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LoginUsecase(repository: sl()));
   sl.registerLazySingleton(() => LogoutUsecase(repository: sl()));
   sl.registerLazySingleton(() => CreateUserUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetAuthenticatedUserUsecase(repository: sl()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddCategoryUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));

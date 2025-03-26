@@ -61,4 +61,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Unit> resetPassword(String email) async {
     return await remoteDatasource.resetPassword(email);
   }
+
+  @override
+  Future<Either<Failure, User>> getAuthenticatedUser() async {
+    try {
+      final user = await remoteDatasource.getUser();
+      return Right(user);
+    } on UserNotLoggedInAuthException {
+      return Left(UserNotFoundAuthFailure());
+    }
+  }
 }

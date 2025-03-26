@@ -8,6 +8,7 @@ abstract class AuthRepository {
     String name,
     String password,
   );
+  Future<Either<Failure, User>> getAuthenticatedUser();
   Future<Either<Failure, User>> logIn(String email, String password);
   Future<Unit> logOut();
   Future<Unit> resetPassword(String email);

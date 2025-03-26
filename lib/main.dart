@@ -57,7 +57,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<AppBloc>()..add(InitializeAppEvent()),
         ),
-        BlocProvider(create: (_) => di.sl<AuthBloc>()),
+        BlocProvider(
+          create: (_) => di.sl<AuthBloc>()..add(CheckAuthenticatedEvent()),
+        ),
         BlocProvider(
           create: (_) => di.sl<CategoryBloc>()..add(GetCategoriesEvent()),
         ),

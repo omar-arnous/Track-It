@@ -9,6 +9,7 @@ abstract class AuthRemoteDatasource {
   Future<UserModel> signIn(String email, String password);
   Future<Unit> resetPassword(String email);
   Future<Unit> signOut();
+  Future<UserModel> getUser();
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -87,5 +88,21 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<Unit> resetPassword(String email) async {
     await firebaseAuth.sendPasswordResetEmail(email: email);
     return Future.value(unit);
+  }
+
+  @override
+  Future<UserModel> getUser() async {
+    final user = firebaseAuth.currentUser;
+
+    if (user != null) {
+      DocumentSnapshot userDoc =
+          await firestore.collection('users').doc(user.uid).get();
+      final userModel = UserModel.fromJson(
+        userDoc.data() as Map<String, dynamic>,
+      );
+      return Future.value(userModel);
+    } else {
+      throw UserNotLoggedInAuthException();
+    }
   }
 }

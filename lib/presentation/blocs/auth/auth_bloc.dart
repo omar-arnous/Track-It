@@ -5,6 +5,7 @@ import 'package:trackit/core/errors/failures.dart';
 import 'package:trackit/core/strings/failures.dart';
 import 'package:trackit/domain/entities/user.dart';
 import 'package:trackit/domain/usecases/user/create_user.dart';
+import 'package:trackit/domain/usecases/user/get_authenticated_user.dart';
 import 'package:trackit/domain/usecases/user/login.dart';
 import 'package:trackit/domain/usecases/user/logout.dart';
 import 'package:trackit/domain/usecases/user/reset_password.dart';
@@ -17,14 +18,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUsecase login;
   final LogoutUsecase logout;
   final ResetPasswordUsecase resetPassword;
+  final GetAuthenticatedUserUsecase getAuthenticatedUser;
 
   AuthBloc({
     required this.createUser,
     required this.login,
     required this.logout,
     required this.resetPassword,
+    required this.getAuthenticatedUser,
   }) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
+      if (event is CheckAuthenticatedEvent) {
+        final res = await getAuthenticatedUser();
+        emit(_mapResponseToState(res));
+      }
       if (event is SignUpEvent) {
         emit(AuthLoading());
         try {
