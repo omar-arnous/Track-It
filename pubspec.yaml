@@ -55,10 +55,10 @@ flutter:
 
 flutter_native_splash:
   color: "#F7F7F7"
-  image: assets/logo_light.png
+  image: assets/logo.png
 
-  color_dark: "#252525"
-  image_dark: assets/logo_light.png
+  color_dark: "#F7F7F7"
+  image_dark: assets/logo.png
 
   android: true
   ios: true
@@ -69,5 +69,5 @@ flutter_native_splash:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/logo_light.png"
+  image_path: "assets/logo.png"
   remove_alpha_ios: true
