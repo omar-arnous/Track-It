@@ -30,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is CheckAuthenticatedEvent) {
         final res = await getAuthenticatedUser();
-        emit(_mapResponseToState(res));
+        emit(_mapAuthResponseToState(res));
       }
       if (event is SignUpEvent) {
         emit(AuthLoading());
@@ -65,6 +65,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await resetPassword(event.email);
       }
     });
+  }
+
+  AuthState _mapAuthResponseToState(Either<Failure, User> res) {
+    return res.fold(
+      (_) => AuthInitial(),
+      (user) => Authenticated(user),
+    );
   }
 
   AuthState _mapResponseToState(Either<Failure, User> res) {

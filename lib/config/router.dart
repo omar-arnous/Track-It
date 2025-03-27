@@ -1,9 +1,12 @@
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/budget.dart';
 import 'package:trackit/domain/entities/recurring.dart';
 import 'package:trackit/domain/entities/transaction.dart';
+import 'package:trackit/presentation/blocs/app/app_bloc.dart';
+import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/pages/account/account_add_edit_page.dart';
 import 'package:trackit/presentation/pages/auth/login_page.dart';
 import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
@@ -49,6 +52,24 @@ class AddEditRecurringPaymentParams {
 
 class Routes {
   final _router = GoRouter(
+    redirect: (context, state) {
+      final authState = context.read<AuthBloc>().state;
+      final appState = context.read<AppBloc>().state;
+
+      if (appState is LoadedAppState) {
+        final onBoardingState = appState.onBoardingState;
+        if (onBoardingState) {
+          if (authState is Authenticated) {
+            return kLayoutRoute;
+          }
+        } else {
+          // TODO: return onBoardingScreen
+          return null;
+        }
+      }
+
+      return null;
+    },
     initialLocation: kSignUpRoute,
     routes: [
       GoRoute(
