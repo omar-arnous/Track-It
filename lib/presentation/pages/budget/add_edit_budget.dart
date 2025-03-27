@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/constants/colors.dart';
+import 'package:trackit/core/utils/amount_formater.dart';
 import 'package:trackit/core/utils/background_tasks.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
@@ -88,6 +89,7 @@ class _AddEditBudgetState extends State<AddEditBudget> {
                 FormInput(
                   controller: amountLimitController,
                   leading: const Text('Amount limit'),
+                  formatter: AmountInputFormatter(),
                   type: Type.number,
                 ),
                 const SizedBox(height: 30),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trackit/core/constants/colors.dart';
+import 'package:trackit/core/utils/amount_formater.dart';
 import 'package:trackit/core/utils/formatter.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/category.dart';
@@ -160,6 +161,7 @@ class _AddEditTransactionState extends State<AddEditTransaction>
                     FormInput(
                       controller: amountController,
                       leading: const Text('Amount'),
+                      formatter: AmountInputFormatter(),
                       alignTextEnd: true,
                       trailing: Text(
                         Formatter.formatCurrency(currencyType.name),

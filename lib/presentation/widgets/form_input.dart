@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum Type { text, password, email, number, textarea }
 
@@ -14,6 +15,7 @@ class FormInput extends StatefulWidget {
   final Widget? leading;
   final Widget? trailing;
   final TextEditingController controller;
+  final TextInputFormatter? formatter;
 
   FormInput({
     super.key,
@@ -28,6 +30,7 @@ class FormInput extends StatefulWidget {
     this.alignTextEnd = false,
     required this.controller,
     this.label,
+    this.formatter,
   });
 
   @override
@@ -183,6 +186,8 @@ class _FormInputState extends State<FormInput> {
             ),
             TextFormField(
               controller: widget.controller,
+              inputFormatters:
+                  widget.formatter != null ? [widget.formatter!] : [],
               enabled: widget.disable ? false : true,
               textAlign: widget.alignTextEnd! ? TextAlign.end : TextAlign.start,
               obscureText: widget.secure,

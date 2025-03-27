@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:trackit/core/constants/colors.dart';
+import 'package:trackit/core/utils/amount_formater.dart';
 import 'package:trackit/domain/entities/account.dart';
 import 'package:trackit/domain/entities/account_type.dart';
 import 'package:trackit/domain/entities/currency_type.dart';
@@ -74,6 +75,7 @@ class _AccountFormState extends State<AccountForm> {
           FormInput(
             controller: _balanceController,
             label: 'Initial balance',
+            formatter: AmountInputFormatter(),
             type: Type.number,
           ),
           const SizedBox(height: 15),
