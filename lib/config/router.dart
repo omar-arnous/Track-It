@@ -52,27 +52,34 @@ class AddEditRecurringPaymentParams {
 }
 
 class Routes {
+  static bool _hasRedirected = false;
+
   final _router = GoRouter(
     redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
       final appState = context.read<AppBloc>().state;
 
+      if (_hasRedirected) {
+        return null;
+      }
+
       if (appState is LoadedAppState) {
         final onBoardingState = appState.onBoardingState;
-        if (onBoardingState == true) {
-          if (authState is Authenticated) {
-            return kLayoutRoute;
-          } else {
-            return null;
-          }
-        } else {
+
+        if (!onBoardingState) {
+          _hasRedirected = true;
           return kOnBoardingRoute;
+        }
+
+        if (onBoardingState && authState is Authenticated) {
+          _hasRedirected = true;
+          return kLayoutRoute;
         }
       }
 
       return null;
     },
-    initialLocation: kOnBoardingRoute,
+    initialLocation: kLayoutRoute,
     routes: [
       GoRoute(
         name: 'Sign Up',
