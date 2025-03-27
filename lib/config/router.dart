@@ -8,6 +8,7 @@ import 'package:trackit/domain/entities/transaction.dart';
 import 'package:trackit/presentation/blocs/app/app_bloc.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/pages/account/account_add_edit_page.dart';
+import 'package:trackit/presentation/pages/app/onboarding_page.dart';
 import 'package:trackit/presentation/pages/auth/login_page.dart';
 import 'package:trackit/presentation/pages/auth/reset_password_page.dart';
 import 'package:trackit/presentation/pages/auth/signup_page.dart';
@@ -58,19 +59,20 @@ class Routes {
 
       if (appState is LoadedAppState) {
         final onBoardingState = appState.onBoardingState;
-        if (onBoardingState) {
+        if (onBoardingState == true) {
           if (authState is Authenticated) {
             return kLayoutRoute;
+          } else {
+            return null;
           }
         } else {
-          // TODO: return onBoardingScreen
-          return null;
+          return kOnBoardingRoute;
         }
       }
 
       return null;
     },
-    initialLocation: kSignUpRoute,
+    initialLocation: kOnBoardingRoute,
     routes: [
       GoRoute(
         name: 'Sign Up',
@@ -86,6 +88,11 @@ class Routes {
         name: 'Reset Password',
         path: kResetPasswordRoute,
         builder: (context, state) => const ResetPasswordPage(),
+      ),
+      GoRoute(
+        name: 'Onboarding',
+        path: kOnBoardingRoute,
+        builder: (context, state) => const OnboardingPage(),
       ),
       GoRoute(
         name: 'Layout',

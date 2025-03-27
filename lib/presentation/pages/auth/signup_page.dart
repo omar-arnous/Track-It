@@ -6,7 +6,6 @@ import 'package:trackit/core/constants/routes.dart';
 import 'package:trackit/presentation/blocs/auth/auth_bloc.dart';
 import 'package:trackit/presentation/widgets/form_button.dart';
 import 'package:trackit/presentation/widgets/form_input.dart';
-import 'package:trackit/presentation/widgets/spinner.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
